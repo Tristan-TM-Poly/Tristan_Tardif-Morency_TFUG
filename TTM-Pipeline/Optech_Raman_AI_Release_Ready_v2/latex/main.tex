@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{hyperref}
+
+\title{Optech Raman AI: Résultats de pipeline}
+\author{TTM (Polytechnique Montréal)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Résumé}
+Ce document présente les étapes du pipeline (conversion, prétraitement, extraction de features, modélisation) et un aperçu des métriques.
+
+\section{Pipeline}
+\begin{itemize}
+\item Conversion CSV $\rightarrow$ Parquet
+\item Prétraitement (Savitzky--Golay, baseline ALS, normalisation à l'aire)
+\item Features physiques (pics, positions, aires)
+\item Modélisation bayésienne multi-sorties (exemple)
+\end{itemize}
+
+\section{Métriques}
+\input{metrics_table.tex}
+
+\bibliographystyle{ieeetr}
+\bibliography{references}
+\end{document}

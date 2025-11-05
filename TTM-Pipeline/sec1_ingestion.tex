@@ -1,0 +1,91 @@
+
+\section{Acquisition \& Ingestion (Section 1)}
+
+\subsection{Objectif \& périmètre}
+Centraliser et uniformiser toutes les entrées (spectres + métadonnées) en un schéma unique fiable, prêt pour le prétraitement, avec contrats d'E/S, validation, traçabilité et performance (lots, streaming). Résultat: spectres monotones en cm$^{-1}$ croissant, colonnes standardisées, métadonnées minimales typées, sérialisation Parquet + manifest, journal d'ingestion append-only.
+
+\subsection{Contrat d'entrée (fichiers bruts)}
+\textbf{Formats supportés} : CSV/TXT (\texttt{wavenumber} en cm$^{-1}$ ou \texttt{wavelength\_nm}, \texttt{intensity}), Parquet (mêmes colonnes). Les fichiers fournisseurs (SPC, etc.) passent par un convertisseur externe.
+\textbf{Obligatoire}: un axe exploitable et l'intensité; métadonnées minimales: \texttt{laser\_nm}, \texttt{pol} $\in$ \{\texttt{parallel, perp, unknown}\}, \texttt{tint\_ms} ou \texttt{accumulations}, \texttt{site}, \texttt{lot}.
+
+\subsection{Normalisation d'unités et conversion}
+Si \texttt{wavelength\_nm} est fourni, conversion en nombre d'onde via
+\begin{equation}
+\nu~(\text{cm}^{-1})=\left(\frac{1}{\lambda_{\text{laser}}(\text{nm})}-\frac{1}{\lambda_{\text{scatt}}(\text{nm})}\right)\times 10^7.
+\end{equation}
+Forcer l'axe croissant (tri, inversion si nécessaire), dédoublonner, et vérifier les plages plausibles (par défaut $200 \le \nu \le 4000$ cm$^{-1}$, configurable).
+
+\subsection{Validation et nettoyage}
+Colonnes requises présentes; types numériques valides; axe strictement croissant; \texttt{NaN}/\texttt{Inf} interdits (fichiers mis en quarantaine). SNR brut estimé pour baromètre de qualité: $SNR_0 = \frac{Q_{95}(y)-\mathrm{median}(y)}{1.4826\cdot \mathrm{MAD}(\Delta y)}$.
+
+\subsection{Métadonnées (minimales) \& enrichissement}
+Minimum: \texttt{laser\_nm}, \texttt{pol}, \texttt{tint\_ms} ou \texttt{accumulations}, \texttt{site}, \texttt{lot}. Enrichissement automatique depuis le chemin (ex.: \texttt{/532nm/parallel/}) et ajout de \texttt{instrument} depuis la config. Si un champ minimal manque: \textit{warning} + valeur \texttt{unknown}; si axe inexploitable: \textit{erreur} bloquante.
+
+\subsection{Sérialisation \& manifest}
+Parquet recommandé (types forcés: axe \texttt{float64}, intensité \texttt{float32}); compression \texttt{snappy}/\texttt{zstd}. Manifest JSON d'ingestion listant: fichiers, \#points, \texttt{sha256}, champs méta, erreurs et temps d'ingestion.
+\begin{verbatim}
+artifacts/
+  ingest/
+    spectra.parquet
+    manifest.json
+    errors.csv
+\end{verbatim}
+
+\subsection{Performance (lots / streaming)}
+Lecture paresseuse (chunks CSV), concat mémoire minimale, Parquet concaténé. Mode streaming: watcher de dossier, mini-batchs (8–32), backpressure si file> N. Mémoire: éviter les copies, \texttt{float32} pour l'intensité.
+
+\subsection{Journalisation, erreurs \& reprise}
+Log structuré: fichier, temps, n_points, flags (axis\_not\_monotone, missing\_meta, unit\_coercion), SNR brut. \texttt{errors.csv} pour les rejets. Reprise idempotente via manifest (ne retraiter que les nouveaux/échoués).
+
+\subsection{KPIs d'ingestion}
+\% valides vs rejetés, temps moyen/med par fichier, taille moyenne (points/spectre), complétude méta, SNR brut médian.
+
+\subsection{Tests (unitaires \& intégration)}
+Unitaires: conversion nm$\rightarrow$cm$^{-1}$, monotonicité/tri, détection axes invalides, validation de types.
+Intégration: dossier mixte $\rightarrow$ \texttt{spectra.parquet} + \texttt{manifest.json}; malformés $\rightarrow$ \texttt{errors.csv}; seed stable $\rightarrow$ manifest identique (hashs).
+
+\subsection{Pseudo-code d'ingestion}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def ingest_folder(in_dir, instrument):
+    manifest, errors = [], []
+    for file in sorted(list_files(in_dir)):
+        try:
+            raw = read_any(file)  # csv/txt/parquet
+            if 'wavenumber' in raw:
+                x = to_float(raw['wavenumber'])
+            elif 'wavelength_nm' in raw and meta_has('laser_nm', file):
+                x = nm_to_cm1(raw['wavelength_nm'], get_meta('laser_nm', file))
+            else:
+                raise ValueError("No usable axis")
+
+            y = to_float(raw['intensity'])
+
+            x, y, flags = enforce_monotone(x, y)
+            validate_ranges(x, y)  # plausible ranges, finite
+
+            meta = load_minimal_meta(file)
+            meta = enrich_meta_from_path(meta, file, instrument)
+            snr0 = estimate_snr_raw(x, y)
+
+            append_to_parquet(x, y, meta, "artifacts/ingest/spectra.parquet")
+            manifest.append(report_line(file, len(x), flags, snr0))
+        except Exception as e:
+            errors.append({'file': file, 'error': str(e)})
+    write_json("artifacts/ingest/manifest.json", {'entries': manifest})
+    if errors: write_csv("artifacts/ingest/errors.csv", errors)
+\end{lstlisting}
+
+\subsection{Quick wins}
+\begin{itemize}[nosep]
+\item Auto-détection d'axe + inversion si décroissant.
+\item Manifest détaillé (hash, SNR brut, flags) pour audit \& reprise.
+\item Parquet unique concaténé + schéma figé (types stables).
+\item Quarantaine des fichiers rejetés (\texttt{ingest/quarantine/}).
+\item Hooks d'extraction méta depuis le chemin pour combler les manques.
+\end{itemize}
+
+\subsection{Intégration au code}
+Étendre \texttt{optech\_raman\_ai7/io.py} (\texttt{list\_files}, \texttt{append\_to\_parquet}, \texttt{write\_manifest}, \texttt{write\_errors}) et ajouter \texttt{ingest.py} (conversion nm$\rightarrow$cm$^{-1}$, monotonicité, SNR brut, enrichissement méta). Dans \texttt{run.py}: appeler l'ingestion si \texttt{input\_path} est un dossier non synthétique.
+
+\subsection{Risques \& parades}
+Fichiers hétérogènes (en-têtes/séparateurs) $\rightarrow$ heuristiques + options CLI; unités mélangées $\rightarrow$ blocage explicite + doc; très gros fichiers $\rightarrow$ lecture par morceaux; métadonnées manquantes $\rightarrow$ enrichissement heuristique + flags + politique de rejet configurable.

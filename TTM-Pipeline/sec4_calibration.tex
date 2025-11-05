@@ -1,0 +1,74 @@
+
+\section{Calibration de l'axe spectral (\texorpdfstring{$\lambda \rightarrow \mathrm{cm}^{-1}$}{lambda->cm-1}) (Section 4)}
+
+\subsection{Objectif}
+Assurer une conversion précise \emph{pixel $\rightarrow$ longueur d'onde $\rightarrow$ nombre d'onde (cm$^{-1}$)} et une estimation de la résolution spectrale. La calibration fournit un mapping stable, des incertitudes, et un contrôle dérive.
+
+\subsection{Principes physiques}
+\textbf{Grating} (réseau) : $m\lambda = d(\sin \alpha + \sin \beta)$, avec ordre $m$, pas $d$, angles d'incidence $\alpha$ et de diffraction $\beta$. Autour d'un pixel central $p_0$ (géométrie quasi-Littrow), on linéarise la dispersion et on retient un modèle polynômial:
+\begin{equation}
+\lambda(p) = a_0 + a_1 (p-p_0) + a_2 (p-p_0)^2 + a_3 (p-p_0)^3.
+\end{equation}
+\textbf{Conversion Raman} : pour une excitation à $\lambda_L$,
+\begin{equation}
+\nu~(\mathrm{cm}^{-1}) = \left(\frac{1}{\lambda_L(\mathrm{nm})} - \frac{1}{\lambda_S(\mathrm{nm})}\right) \times 10^7.
+\end{equation}
+
+\subsection{Incertitudes (propagation)}
+Soit $\sigma_{\lambda_S}$ l'incertitude sur $\lambda_S$ issue du fit et $\sigma_{\lambda_L}$ celle de la ligne laser:
+\begin{equation}
+\sigma_{\nu}^2 \simeq \left(\frac{10^7}{\lambda_S^2}\right)^2 \sigma_{\lambda_S}^2 + \left(\frac{10^7}{\lambda_L^2}\right)^2 \sigma_{\lambda_L}^2.
+\end{equation}
+On trace $\sigma_{\nu}$ pour documenter la précision effective en cm$^{-1}$.
+
+\subsection{Standards et cibles}
+\begin{itemize}[nosep]
+\item \textbf{Rayleigh} ($\nu=0$) pour ancrer le zéro (si observable/notch mesurable).
+\item \textbf{Gaz néon/argon} : raies étroites pour dispersion $\lambda(p)$.
+\item \textbf{Solide de référence} (Si $\sim$520.7~cm$^{-1}$, diamant 1332~cm$^{-1}$) pour vérifier la conversion Raman et la résolution.
+\end{itemize}
+
+\subsection{Algorithme de calibration}
+\begin{enumerate}[nosep]
+\item Acquérir $K$ spectres de référence (temps court, plusieurs accumulations).
+\item Détecter les raies et \emph{centroïder} par fit Voigt ($\lambda_{S,k} \pm \sigma_k$).
+\item Résoudre le mapping $\lambda(p)$ par régression pondérée (poids $1/\sigma_k^2$); choisir l'ordre $1$--$3$ par AIC/BIC.
+\item Convertir en $\nu$ via $\lambda_L$; vérifier que les raies connues retombent à $\nu$ attendus (RMSE).
+\item Estimer la \textbf{résolution} $\delta \nu$ par largeur (FWHM) de raies étroites (déconvolution instrumentale si besoin).
+\item Exporter \texttt{calibration.json}: coefficients $(a_0..a_3)$, $p_0$, $\lambda_L$, RMSE, $\delta\nu$, validité (plage de $p$).
+\end{enumerate}
+
+\subsection{Contrôle-qualité et dérive}
+\begin{itemize}[nosep]
+\item \textbf{Vérif. journalière}: mesurer 1--2 raies, recalculer l'offset; alerter si $\Delta \nu > \tau_{\mathrm{drift}}$ (ex.: $>0.5$~cm$^{-1}$).
+\item \textbf{Température}: consigner $T$ et corriger si une dépendance $\Delta \nu (T)$ est observée.
+\item \textbf{Notch/Edge}: si filtre déplace/élargit Rayleigh, ignorer la région masquée et ancrer sur raies proches.
+\end{itemize}
+
+\subsection{Pseudo-code}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def calibrate_axis(calib_spectra, lambda_L_nm, p0):
+    # 1) peak picking + Voigt centroid
+    peaks = []
+    for spec in calib_spectra:
+        for pk in detect_lines(spec):
+            lam, sig = fit_voigt_centroid(spec, pk)
+            peaks.append({"p": pk.pixel, "lambda": lam, "sigma": sig})
+    # 2) weighted polynomial fit lambda(p)
+    X = design_matrix([r["p"]-p0 for r in peaks], order=3)
+    y = np.array([r["lambda"] for r in peaks])
+    w = 1/np.maximum(np.array([r["sigma"] for r in peaks])**2, 1e-18)
+    a = weighted_ls(X, y, w, order_select="aic")
+    # 3) resolution from narrow lines (FWHM)
+    delta_nu = estimate_resolution_cm1(calib_spectra, lambda_L_nm, a, p0)
+    # 4) RMSE check
+    rmse = compute_rmse(peaks, a, p0)
+    return {"a":a, "p0":p0, "lambda_L":lambda_L_nm, "delta_nu":delta_nu, "rmse":rmse}
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item RMSE $\le$ 0.2--0.5~cm$^{-1}$ sur la plage utile; $\delta \nu$ cohérent avec la grille/fente.
+\item Vérification croisée sur Si/diamant: écart $<0.5$~cm$^{-1}$.
+\item Export \texttt{calibration.json} versionné et relu au runtime; \texttt{spectral\_resolution\_cm1} renseigné en méta.
+\end{itemize}

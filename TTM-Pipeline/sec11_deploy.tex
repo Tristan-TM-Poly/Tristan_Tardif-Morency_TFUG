@@ -1,0 +1,95 @@
+
+\section{Déploiement \& Intégration (runtime, versions, CI/CD, QA auto) (Section 11)}
+
+\subsection{Objectif}
+Exécuter le pipeline de manière \textbf{reproductible}, \textbf{traçable} et \textbf{automatisée} en labo et en production: gestion d'environnements (Conda/Docker), configuration versionnée, orchestrations (CLI/\texttt{make}/CI), hooks QA/validation, et génération systématique des artefacts.
+
+\subsection{Environnements \& reproductibilité}
+\paragraph{Conda} Fichier \texttt{environment.yml} (CPU/GPU). \textbf{Règle}: pinner les versions critiques (\texttt{numpy}, \texttt{scipy}, \texttt{pandas}, \texttt{numba}, \texttt{matplotlib}).
+\paragraph{Docker} Image \texttt{optech-raman-ai7:\{version\}} avec UID/GID non-root, volume \texttt{/data} en lecture/écriture, entrée \texttt{make all}. \textbf{Principe}: \emph{build once, run anywhere}.
+
+\subsection{Configuration \& profils}
+Fichier \texttt{config/config.yaml} versionné, profils par \texttt{site}/\texttt{instrument}. Hérite d'un \texttt{default}, surcharge par profil puis par \texttt{run}. Champs clés:
+\begin{itemize}[nosep]
+\item \textbf{ingest}: racines d'entrée, mapping fournisseurs, formats attendus.
+\item \textbf{qa}: seuils \texttt{snr0}, \texttt{sat\_pct}, \texttt{cosmic}.
+\item \textbf{calibration}: laser, ordre poly, seuils dérive.
+\item \textbf{preprocess}: \texttt{asls} $\lambda,\gamma$, \texttt{sg} fen\^etre/ordre, normalisation.
+\item \textbf{peaks}: prominence, distance, bornes Voigt, politique de fusion.
+\item \textbf{mapping}: mosaïque, alignement, QC spatial.
+\item \textbf{id}: poids des scores, ML, OOD.
+\item \textbf{quant}: modèle, LOD/LOQ, bootstrap/bayes.
+\item \textbf{validation}: DOE, seuils d'acceptation, charts.
+\end{itemize}
+
+\subsection{Orchestration (\texttt{make} \& CLI)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+# Makefile (extraits)
+.PHONY: all pdf ingest qa calib preprocess peaks maps id quant validate
+all: ingest qa calib preprocess peaks maps id quant validate pdf
+
+ingest:      # Section 1-2
+\tpython -m raman.cli ingest --cfg config/config.yaml
+qa:          # Section 3
+\tpython -m raman.cli qa --cfg config/config.yaml
+calib:       # Section 4
+\tpython -m raman.cli calibrate --cfg config/config.yaml
+preprocess:  # Section 5
+\tpython -m raman.cli preprocess --cfg config/config.yaml
+peaks:       # Section 6
+\tpython -m raman.cli peaks --cfg config/config.yaml
+maps:        # Section 7
+\tpython -m raman.cli maps --cfg config/config.yaml
+id:          # Section 8
+\tpython -m raman.cli identify --cfg config/config.yaml
+quant:       # Section 9
+\tpython -m raman.cli quantify --cfg config/config.yaml
+validate:    # Section 10
+\tpython -m raman.cli validate --cfg config/config.yaml
+pdf:
+\tlatexmk -pdf main.tex
+\end{lstlisting}
+
+\subsection{Versionnage, seeds \& logs}
+\begin{itemize}[nosep]
+\item \textbf{Version} du code et des modèles écrite dans tous les artefacts JSON (\texttt{code\_version}, \texttt{model\_version}).
+\item \textbf{Seeds} (\texttt{np.random}, \texttt{torch}) fixés par \texttt{run\_uuid}; enregistrer dans \texttt{manifest.json}.
+\item \textbf{Logs} structurés (JSONL) par étape, avec temps, mémoire, CPU/GPU, entrée/sortie, warnings.
+\end{itemize}
+
+\subsection{CI/CD (GitHub/GitLab)}
+\begin{itemize}[nosep]
+\item \textbf{CI} : job \texttt{lint+tests} (unitaires + non-régression sur mini-dataset), \texttt{build-docker}, \texttt{publish-doc} (PDF).
+\item \textbf{CD} : tag \texttt{vX.Y.Z} $\rightarrow$ image Docker publiée; artefacts exemples (\texttt{manifest.json}, \texttt{qa\_metrics.csv}, \ldots) attachés à la release.
+\item \textbf{Gate} : pas de release si \texttt{validate} échoue (Sec.~10).
+\end{itemize}
+
+\subsection{Hooks QA \& validation automatiques}
+À chaque \texttt{make all}:
+\begin{enumerate}[nosep]
+\item QA Sec.~3: seuils calibrés; \%acceptation reportée.
+\item Calibration Sec.~4: vérifier dérive; alerter si hors tolérance.
+\item Fitting Sec.~6: taux de convergence, \texttt{bounds\_hit}.
+\item ID Sec.~8: macro-F1 estimée sur set de contrôle; ECE $\le$ seuil.
+\item Quant Sec.~9: RMSE, $R^2$, LOD/LOQ.
+\item Validation Sec.~10: verdict global \texttt{pass}/\texttt{fail}; génération \texttt{report\_validation.json}.
+\end{enumerate}
+
+\subsection{Sécurité \& gouvernance}
+\begin{itemize}[nosep]
+\item \textbf{Accès} lecture/écriture aux dossiers \texttt{artifacts/} par rôle; pas de PII dans les artefacts.
+\item \textbf{Intégrité} : hashs SHA-256; \texttt{manifest.json} signé (optionnel).
+\item \textbf{Rétention} : politique de conservation par \texttt{run}, purge des temporaires.
+\end{itemize}
+
+\subsection{Déploiement Docker (exemple)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+docker run --rm -u $(id -u):$(id -g) -v $PWD:/work -w /work \
+  optech-raman-ai7:1.0.0 make all CFG=config/config.yaml
+\end{lstlisting}
+
+\subsection{Sorties \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{DoD} déploiement: Makefile fonctionnel, \texttt{config/config.yaml} par profil, image Docker, CI verte, \texttt{report\_validation.json} produit.
+\item \textbf{Exports} : ZIP PDF doc + artefacts exemple en \texttt{artifacts/}.
+\end{itemize}

@@ -1,0 +1,10 @@
+{
+  "SPICE_run_example.log": {
+    "PHASE_50kHZ": -35.7,
+    "VIN_MAX": 1.09,
+    "VIN_MIN": 0.98,
+    "E_REC": 2.3e-06,
+    "GAIN_50kHZ": 1.234,
+    "GAIN_FCLK": 0.012
+  }
+}

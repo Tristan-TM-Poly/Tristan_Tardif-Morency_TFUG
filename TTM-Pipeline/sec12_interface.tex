@@ -1,0 +1,44 @@
+
+\section{Interface \& Exploitation (rapports PDF, notebooks, tableaux de bord) (Section 12)}
+
+\subsection{Objectif}
+Fournir des \textbf{interfaces exploitables} par les opérateurs et coéquipiers: 
+(1) \textbf{rapports PDF} synthétiques et traçables, 
+(2) \textbf{notebooks} d'analyse reproductibles, 
+(3) \textbf{tableaux de bord} QC pour un survol immédiat. 
+Les sorties sont construites uniquement à partir des artefacts standardisés (Sec.~3--11).
+
+\subsection{Rapports PDF (auto)}
+\begin{itemize}[nosep]
+\item \textbf{Contenu} minimal par run: contexte (instrument, dates), QA (Sec.~3), calibration (Sec.~4), prétraitements (Sec.~5), pics (Sec.~6), cartes (Sec.~7), identification (Sec.~8), quantification (Sec.~9), validation (Sec.~10), verdict.
+\item \textbf{Sources} : artefacts JSON/CSV (\texttt{qa\_metrics.csv}, \texttt{calibration.json}, \texttt{peaks.csv}, \texttt{predictions.csv}, \texttt{quant.csv}, \texttt{report\_validation.json}).
+\item \textbf{Compilation} : \texttt{latexmk -pdf} avec figures importées depuis \texttt{artifacts/}.
+\end{itemize}
+\textbf{Bonnes pratiques} : chaque figure indique l'ID du run et le hash de données; les tableaux incluent les unités (\cm, \um).
+
+\subsection{Notebooks d'analyse}
+\begin{itemize}[nosep]
+\item \textbf{QA\_Review.ipynb} : charge \texttt{qa\_metrics.csv}, affiche histogrammes SNR, taux de saturation, et cas rejetés.
+\item \textbf{ID\_Inspection.ipynb} : charge \texttt{predictions.csv}, montre top-3, courbes fiabilité, exemples OOD, explications pics.
+\item \textbf{Quant\_Audit.ipynb} : charge \texttt{quant.csv}, courbes Bland--Altman, IC 95\%, LOD/LOQ.
+\end{itemize}
+\textbf{Règles} : toutes les cellules lisent \texttt{config/config.yaml}; pas d'écriture en dehors de \texttt{artifacts/}.
+
+\subsection{Tableaux de bord QC}
+\begin{itemize}[nosep]
+\item \textbf{QC at-a-glance} (HTML statique) : taux d'acceptation QA, dérive de $\mu_{520.7}$ (Si), carte de convergence des fits, distribution $p_{\max}$ (Sec.~8), métriques quant (RMSE/$R^2$).
+\item \textbf{Entrées} : fichiers \texttt{artifacts/} ; génération par script externe ou CI, livrés en \texttt{artifacts/qc\_dashboard/}.
+\end{itemize}
+
+\subsection{Traçabilité UI}
+Chaque page/figure porte \texttt{run\_uuid}, \texttt{code\_version}, \texttt{model\_version}, date UTC et le chemin relatif des artefacts utilisés.
+
+\subsection{Intégration au Makefile/CI}
+Cibles \texttt{reports}, \texttt{notebooks}, \texttt{dashboards} ajoutées au Makefile. En CI: le job \texttt{publish-doc} attache PDF+HTML aux releases; échec si \texttt{validate} est \texttt{fail}.
+
+\subsection{DoD}
+\begin{itemize}[nosep]
+\item \textbf{Rapport} PDF compilable localement à partir d'artefacts d'exemple.
+\item \textbf{Notebooks} stubs présents et exécutables (lecture seule).
+\item \textbf{Dashboard} HTML statique généré avec placeholders et liens valides.
+\end{itemize}

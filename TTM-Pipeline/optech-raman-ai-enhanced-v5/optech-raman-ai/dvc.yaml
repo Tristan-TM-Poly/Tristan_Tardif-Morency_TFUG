@@ -1,0 +1,94 @@
+
+stages:
+  to_parquet:
+    cmd: raman prep --in data/raw --out data/parquet
+    deps:
+      - data/raw
+    outs:
+      - data/parquet
+  preprocess:
+    cmd: raman prep --in data/parquet --out data/parquet --do all
+    deps:
+      - data/parquet
+    outs:
+      - data/parquet
+  features:
+    cmd: raman feats --in data/parquet --out data/features --fwt --df
+    deps:
+      - data/parquet
+    outs:
+      - data/features
+  train:
+    cmd: raman train --feats data/features --model conv1d_bayes --cv 5 --seed 42
+    deps:
+      - data/features
+    outs:
+      - models
+  eval:
+    cmd: raman eval --feats data/features --model models/last.pkl --out reports/metrics.json --uncertainty
+    deps:
+      - data/features
+      - models
+    outs:
+      - reports/metrics.json
+  report:
+    cmd: raman report --metrics reports/metrics.json --latex templates/ieee/main.tex --out reports/paper.pdf
+    deps:
+      - reports/metrics.json
+      - src/raman_ai/report/templates/ieee/main.tex
+    outs:
+      - reports/paper.pdf
+
+
+# Auto-added metrics definition
+metrics:
+  - metrics/summary.json:
+      cache: false
+plots:
+  - plots/calibration.json:
+      x: expected
+      y: observed
+      cache: false
+
+
+stages:
+  features:
+    cmd: python -m raman_ai.cli features
+    deps:
+      - src/raman_ai/features/pipeline.py
+    outs:
+      - data/features.parquet
+  train_bayes:
+    cmd: python -m raman_ai.cli train_bayes
+    deps:
+      - src/raman_ai/models/train.py
+      - data/features.parquet
+    outs:
+      - models/bayes_multi
+  evaluate:
+    cmd: python -m raman_ai.cli evaluate
+    deps:
+      - src/raman_ai/eval/evaluate.py
+      - models/bayes_multi
+    outs:
+      - metrics/summary.json
+      - plots
+
+
+ablation:
+  cmd: python -m raman_ai.cli run_isotonic_calibration_demo
+  deps:
+    - src/raman_ai/eval/calibration.py
+    - models/bayes_multi/val_pred.json
+  outs:
+    - metrics/summary.json
+
+
+calibrate:
+  cmd: python -m raman_ai.cli calibrate --method isotonic --quantiles 15
+  deps:
+    - src/raman_ai/eval/calibration.py
+    - models/bayes_multi/val_pred.json
+    - src/raman_ai/cli.py
+  outs:
+    - metrics/summary.json

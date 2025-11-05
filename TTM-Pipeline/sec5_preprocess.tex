@@ -1,0 +1,78 @@
+
+\section{Prétraitements (baseline, lissage, normalisation, déspike) (Section 5)}
+
+\subsection{Objectif}
+Obtenir un signal propre, à résolution préservée, prêt pour la détection/fit de pics et l'apprentissage. Prétraiter sans \emph{biais de pic} ni perte de résolution utile.
+
+\subsection{Ordre recommandé}
+\begin{enumerate}[nosep]
+\item \textbf{Déspike (anti-cosmic)}: filtre médian court ($w=3$--$5$) ou détecteur local d'impulsions; modifier seulement les points suspects.
+\item \textbf{Correction de baseline} (fluorescence): AsLS/airPLS ou morphologique (\emph{rolling ball}).
+\item \textbf{Lissage doux} (préservation des pics): Savitzky--Golay (SG) d'ordre faible (2--3) avec fenêtre $\le$ 0.5--0.8 FWHM.
+\item \textbf{Normalisation} (option): aire, norme $L_2$, SNV, ou par pic de référence (ex.: Si 520.7~cm$^{-1}$) selon le cas d'usage.
+\item \textbf{Harmonisation} (option): corriger par \texttt{tint\_ms} et puissance laser si disponibles.
+\end{enumerate}
+
+\subsection{Baseline: formulation AsLS (Whittaker asym.)}
+On cherche $\hat{f}$ qui minimise
+\begin{equation}
+\min_{f}\ \sum_{i} w_i (y_i - f_i)^2 + \lambda \sum_{i} (\Delta^2 f_i)^2,\qquad
+w_i = \begin{cases}
+\gamma & \text{si } y_i > f_i\\
+1 & \text{sinon}
+\end{cases}
+\end{equation}
+où $\lambda$ contrôle la rigidité (courbure) et $\gamma \ll 1$ pénalise moins les points au-dessus (picks). Mise à jour itérative des $w_i$ jusqu'à convergence (airPLS: $w_i$ adaptatifs).
+
+\subsection{Baseline: alternative morphologique}
+\emph{Rolling ball}/\emph{top-hat} : approximer la ligne de base par érosion-dilatation avec un élément structurant de rayon $R$ (en cm$^{-1}$). Robuste aux grandes tendances mais sensible au choix de $R$.
+
+\subsection{Lissage (dénoyautage) Savitzky--Golay}
+\begin{itemize}[nosep]
+\item Choisir fenêtre $M$ impaire et ordre $d$ (2 ou 3). Contrainte: $M \le 0.8 \times$ FWHM typique pour éviter de réduire l'amplitude.
+\item SG préserve mieux les moments (aire) qu'un filtre moyenneur si $M$ est modéré.
+\end{itemize}
+
+\subsection{Normalisation}
+\begin{itemize}[nosep]
+\item \textbf{Aire}: $y \leftarrow y/\sum_i y_i$ (robuste pour comparaison globale).
+\item \textbf{$L_2$}: $y \leftarrow y/\|y\|_2$ (utile pour méthodes linéaires).
+\item \textbf{SNV}: $y \leftarrow (y-\mu)/\sigma$ (corrige gain/biais multiplicatif).
+\item \textbf{Pic de référence}: $y \leftarrow y/A_{\text{ref}}$ si un pic interne stable existe.
+\end{itemize}
+
+\subsection{Sélection automatique des hyperparamètres}
+\begin{itemize}[nosep]
+\item \textbf{AsLS}: $\lambda$ par \emph{GCV} (generalized cross-validation) sur résidu; $\gamma$ par grid coarse $\{0.001,0.01,0.05,0.1\}$.
+\item \textbf{SG}: fenêtre $M$ proportionnelle à la \textbf{résolution} issue de la Section 4 ($M \approx \mathrm{round}(0.5\times \mathrm{FWHM\_pts})$).
+\item \textbf{Déspike}: seuil $z$ robuste ($z>8$) sur résidu médian local; remplacer les points outliers par le median local.
+\end{itemize}
+
+\subsection{Métriques de contrôle}
+\begin{itemize}[nosep]
+\item \textbf{Biais de base} $\mathrm{bias}_{\mathrm{base}} = \mathrm{median}(f)$ sur zones sans pics (fenêtres de fond).
+\item \textbf{Préservation de pics}: écart relatif d'aire $\Delta A/A$ sur pics connus (Si, diamant) avant/après prétraitement.
+\item \textbf{SNR pic} : $\mathrm{SNR}_{\mathrm{pic}} = A_{\mathrm{pic}}/\sigma_{\text{bruit local}}$ (doit \emph{augmenter}).
+\end{itemize}
+
+\subsection{Pseudo-code}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def preprocess(x, y, params):
+    y1 = despike(y, z_thr=params.z)                  # cosmic removal (local)
+    base = asls_baseline(y1, lam=params.lam, gamma=params.gamma, maxit=20)
+    y2 = y1 - base
+    y3 = savgol(y2, M=params.sg_M, order=params.sg_order)  # gentle smoothing
+    y4 = normalize(y3, method=params.norm)           # area/L2/SNV/peak
+    return {"x": x, "y": y4, "baseline": base, "metrics": qc_metrics(x,y,y4)}
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{AsLS}: réduit la variance de fond sans diminuer l'aire d'un pic étroit (tolérance $<5\%$).
+\item \textbf{SG}: augmente $\mathrm{SNR}_{\mathrm{pic}}$ et ne diminue pas la résolution (FWHM) de plus de $10\%$.
+\item \textbf{Déspike}: supprime $\ge 95\%$ des impulsions simulées sans artefacts.
+\item \textbf{Normalisation}: stabilité inter-échantillons (variance réduite) au sein d'une même classe.
+\end{itemize}
+
+\subsection{Risques \& parades}
+Sur-lissage $\rightarrow$ plafonner $M$ et valider sur pics de référence; sous-correction de fluorescence $\rightarrow$ augmenter $\lambda$ ou passer au morphologique; déspike agressif $\rightarrow$ n'altérer que les points détectés (inpainting local).

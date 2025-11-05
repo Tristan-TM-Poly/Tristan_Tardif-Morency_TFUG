@@ -1,0 +1,122 @@
+
+\section{Détection et Paramétrisation des Pics (Voigt, contraintes physiques, incertitudes) (Section 6)}
+
+\subsection{Objectif}
+Fournir une chaîne robuste \emph{détection $\rightarrow$ initialisation $\rightarrow$ ajustement multipics $\rightarrow$ incertitudes $\rightarrow$ contrôle qualité} qui respecte la résolution instrumentale (Sec.~4) et les prétraitements (Sec.~5), tout en étant traçable et déterministe.
+
+\subsection{Modèles de pics}
+\paragraph{Gaussien} $G(\nu;\mu,\sigma)=\dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\big[-\tfrac{(\nu-\mu)^2}{2\sigma^2}\big]$, FWHM $=2\sqrt{2\ln2}\,\sigma$.
+\paragraph{Lorentzien} $L(\nu;\mu,\gamma)=\dfrac{\gamma/\pi}{(\nu-\mu)^2+\gamma^2}$, FWHM $=2\gamma$.
+\paragraph{Voigt} $V(\nu;\mu,\sigma,\gamma)=\Re\!\Big[\dfrac{w\!\big(z\big)}{\sigma\sqrt{2\pi}}\Big]$, $z=\dfrac{\nu-\mu+i\gamma}{\sigma\sqrt{2}}$, $w$ fonction de Faddeeva. Approximations pour la FWHM Voigt (\emph{Olivero--Longbothum}):
+\begin{equation}
+\mathrm{FWHM}_V \approx 0.5346\,\Gamma + \sqrt{0.2166\,\Gamma^2 + \Delta^2},\quad \Gamma=2\gamma,\ \Delta=2\sqrt{2\ln2}\,\sigma.
+\end{equation}
+\paragraph{Pseudo-Voigt} $p\,L + (1-p)\,G$ (coefficient de mélange $p\in[0,1]$) utile pour initialiser/accélérer.
+
+\subsection{Contraintes instrumentales (Sec.~4)}
+\begin{itemize}[nosep]
+\item \textbf{Largeur minimale}: $\mathrm{FWHM}_{\text{mes}} \ge \mathrm{FWHM}_{\text{inst}}$.
+\item \textbf{Déconvolution gaussienne} (approx.): $\mathrm{FWHM}_{\text{mes}}^2 \approx \mathrm{FWHM}_{\text{vraie}}^2 + \mathrm{FWHM}_{\text{inst}}^2$ (si domination gaussienne).
+\item \textbf{Bornes}: $\sigma \in [\sigma_{\min}, \sigma_{\max}]$, $\gamma \in [\gamma_{\min}, \gamma_{\max}]$ avec $\sigma_{\min}\approx \mathrm{FWHM}_{\text{inst}}/(2\sqrt{2\ln2})$.
+\end{itemize}
+
+\subsection{Détection de pics (picking)}
+\begin{enumerate}[nosep]
+\item \textbf{Préparation}: spectre prétraité (Sec.~5), optionnellement \emph{z-score} local du résidu de baseline.
+\item \textbf{Critères}: \emph{prominence} minimale $P_{\min}$, distance minimale $d_{\min}$ (en points), hauteur minimale relative $\alpha$ (ex.~$\alpha\in[0.01,0.05]$ de la dynamique locale).
+\item \textbf{Méthodes}: (i) zéros de la dérivée première avec courbure $<0$; (ii) \emph{CWT} (ondelettes continues, largeur $1\!-\!8$); (iii) corrélation avec noyaux Gauss/Lorentz.
+\item \textbf{Régions d'intérêt} (ROI): fusionner les crêtes à $<d_{\min}$ en une ROI pour un fit conjoint.
+\end{enumerate}
+
+\subsection{Initialisation des paramètres}
+\begin{itemize}[nosep]
+\item \textbf{Centre} $\mu$: argmax local ou centroïde pondéré dans la ROI.
+\item \textbf{Amplitude} $A$: pic minus baseline locale; aire initiale $A_0 \approx \text{amplitude}\times\mathrm{FWHM}$.
+\item \textbf{Largeur} $(\sigma,\gamma)$: partir de $\mathrm{FWHM}_{\text{inst}}$ et d'une largeur empirique (prominence/curvature); mélange $p=0.5$ si pseudo-Voigt.
+\item \textbf{Bornes}: $\mu \in [\mu_0\pm \delta_\mu]$ (p.ex. $\delta_\mu=5$~cm$^{-1}$), $\sigma,\gamma$ bornées par la résolution.
+\end{itemize}
+
+\subsection{Ajustement multipics (joint fit)}
+\paragraph{Modèle} $y(\nu)=b(\nu)+\sum_{k=1}^{K} A_k\,V(\nu;\mu_k,\sigma_k,\gamma_k)$ où $b(\nu)$ est \emph{fixé} (Sec.~5) ou \emph{co-ajusté} (polynôme faible degré). 
+\paragraph{Moindres carrés pondérés}: minimiser $\chi^2=\sum_i \big(\frac{y_i-\hat{y}_i}{s_i}\big)^2$ avec poids $s_i$ (bruit local). \emph{Loss} robuste (Huber/Tukey) pour limiter l'influence d'impulsions résiduelles.
+\paragraph{Contrainte de séparation}: empêcher $\mu_{k}$ de coïncider ($|\mu_{k+1}-\mu_k|\ge \delta$) ; \emph{merge} si séparation $<\delta_{\min}$.
+\paragraph{Paramètres liés}: doublets/combinaisons connues $\Rightarrow$ écarts fixes ou ratio d'aires imposé (optionnel).
+
+\subsection{Sélection de modèle ($K$ pics)}
+\begin{itemize}[nosep]
+\item \textbf{AIC/BIC}: comparer $K$ vs $K\!-\!1$ par critères d'information.
+\item \textbf{Test de rapport de vraisemblance}: $\Delta\chi^2 \sim \chi^2_{df}$ (approx.) pour décider l'ajout d'un pic.
+\item \textbf{Règle SNR}: exiger $A_k/\sigma_{\text{bruit}} \ge \tau_{\text{SNR,peak}}$ (p.ex. 5).
+\end{itemize}
+
+\subsection{Incertitudes \& aire}
+\paragraph{Covariance linéarisée} $(J^\top W J)^{-1}$ à l'optimum $\Rightarrow$ erreurs asymptotiques sur $\mu,\sigma,\gamma,A$.
+\paragraph{Bootstrap} $B=200$ ré-échantillonnages du résidu (ou bruit synthétique) pour IC 95\% robustes.
+\paragraph{Aire Voigt} $S = A \int V(\nu)\,d\nu = A$ si $A$ paramétrise l'aire; sinon convertir amplitude $\rightarrow$ aire avec Jacobien du modèle choisi (Gauss/Lorentz/pseudo-Voigt).
+
+\subsection{Déblending (deconvolution pratique)}
+\begin{itemize}[nosep]
+\item \textbf{Ordre des centres}: imposer $\mu_1<\mu_2<\cdots<\mu_K$ pour stabilité.
+\item \textbf{Régularisation}: pénalité ($\ell_2$ douce) sur variations extrêmes de largeur/position entre ROI voisines (cartes).
+\item \textbf{Pruning}: annuler les pics dont $A$ n'est pas significatif (p-valeur $>0.05$) ou qui frappent une borne (flag \texttt{bounds\_hit}).
+\end{itemize}
+
+\subsection{Sorties \& artefacts}
+\begin{itemize}[nosep]
+\item \textbf{Table pics} (\texttt{peaks.csv}): \texttt{sample\_id}, \texttt{roi\_id}, \texttt{peak\_id}, $\mu\pm\sigma_\mu$ (cm$^{-1}$), FWHM$\pm$err, $A\pm\sigma_A$, $p$ ou $(\sigma,\gamma)$, SNR\_peak, p-valeur, \texttt{bounds\_hit}, qualité (reduced-$\chi^2$), ROI\_range.
+\item \textbf{Figures} (\texttt{figures/fit\_*.png}): signal, baseline, fit, résidu; encadrés sur ROIs.
+\item \textbf{Log} (\texttt{fit\_summary.json}): métriques globales, temps, itérations, taux d'échec.
+\end{itemize}
+
+\subsection{Pseudo-code (multi-ROI, multi-pics)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def fit_peaks(x, y, calib, cfg):
+    # 0) Preprocess already applied (Sec.5); calib carries FWHM_inst
+    rois = build_rois(x, y, prominence=cfg.prom, distance=cfg.min_dist)
+    results = []
+    for roi in rois:
+        y_roi, x_roi = slice_roi(x, y, roi)
+        seeds = init_params(x_roi, y_roi, calib.fwhm_inst, cfg)
+        # bounds from instrument resolution + physical priors
+        bounds = make_bounds(seeds, calib.fwhm_inst, cfg)
+        # robust weighted least squares on Voigt mixture
+        theta_hat, cov = wls_voigt_multi(x_roi, y_roi, seeds, bounds, loss="huber")
+        # model selection (AIC/BIC, LRT) possibly prune extra peaks
+        theta_hat = model_prune(x_roi, y_roi, theta_hat, cov, cfg)
+        # summarize + export
+        rows = summarize_roi(x_roi, y_roi, theta_hat, cov, roi)
+        results.extend(rows)
+        save_figure_fit(x_roi, y_roi, theta_hat, roi)
+    write_csv("artifacts/peaks.csv", results)
+    return results
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{Synthétiques} (Voigt connus): erreur médiane $|\hat{\mu}-\mu|<0.3$~cm$^{-1}$, $|\widehat{\mathrm{FWHM}}-\mathrm{FWHM}|<10\%$, aire $<5\%$ d'écart.
+\item \textbf{Référence Si (520.7 cm$^{-1}$)}: biais $<0.3$~cm$^{-1}$; FWHM cohérente avec $\mathrm{FWHM}_{\text{inst}}$.
+\item \textbf{Robustesse}: résidus sans structure (test visuel + métrique), flags raisonnables.
+\item \textbf{Déterminisme}: mêmes seeds $\Rightarrow$ mêmes résultats ($\pm$ rondeur flottante).
+\end{itemize}
+
+\subsection{Performance \& complexité}
+Pour $N\sim 10^3$--$10^4$ points et $K\sim 1$--$6$ pics/ROI: chaque itération LM est $O(NK)$. ROI parallélisables. Pré-calcul de noyaux/deriv. accélère le Jacobien. Arrêt: $\Delta\chi^2/\chi^2<10^{-6}$ ou $\Delta\theta<10^{-6}$.
+
+\subsection{Risques \& parades}
+\begin{itemize}[nosep]
+\item \textbf{Convergence locale}: multi-seeds et contraintes douces; reprise à partir de $K-1$.\
+\item \textbf{Baseline fuyante}: privilégier baseline fixée (Sec.~5) ou co-ajuster degré $\le 2$ avec régularisation.\
+\item \textbf{Pics trop proches}: imposer séparation minimale ou ré-échantillonnage local (subpixel) + régularisation.\
+\item \textbf{Bornes frappées}: signaler \texttt{bounds\_hit} et re-lancer avec seeds ajustés.\
+\end{itemize}
+
+\subsection{Quick wins}
+\begin{itemize}[nosep]
+\item Utiliser \emph{pseudo-Voigt} pour l'initialisation puis Voigt exact à la fin.
+\item Lier $d_{\min}$ à la résolution: $d_{\min}\approx 0.8\times \mathrm{FWHM}_{\text{inst}}$ (en points).
+\item Exporter automatiquement les ROIs non-convergentes pour revue (\texttt{figures/failed\_*.png}).
+\end{itemize}
+
+
+% Table des colonnes normalisées pour peaks.csv
+\input{tables/columns_peaks}

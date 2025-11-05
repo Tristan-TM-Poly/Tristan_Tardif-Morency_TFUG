@@ -1,0 +1,6 @@
+{
+  "missing": [],
+  "cli_import_ok": false,
+  "cli_err": "cannot import name 'load_reference_spectra_mode' from 'raman_ai.io.standards' (/mnt/data/optech-raman-ai-clean/optech-raman-ai/src/raman_ai/io/standards.py)",
+  "count_files": 112
+}

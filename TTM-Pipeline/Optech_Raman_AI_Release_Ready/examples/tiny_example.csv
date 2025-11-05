@@ -1,0 +1,5 @@
+sample_id,wavenumber_cm1,intensity
+demo,100.0,0.01
+demo,101.0,0.02
+demo,102.0,0.015
+demo,103.0,0.018

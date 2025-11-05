@@ -1,0 +1,21 @@
+
+\begin{table}[h]
+\centering
+\caption{Colonnes normalisées du fichier \texttt{quant.csv}.}
+\begin{tabular}{ll}
+\toprule
+\textbf{Colonne} & \textbf{Description} \\
+\midrule
+sample\_id & Identifiant d'échantillon \\
+analyte & Nom de l'analyte ou de la phase \\
+C\_hat & Estimation de la quantité (unités SI ou fraction) \\
+CI95\_L & Borne basse de l'intervalle de confiance 95\% \\
+CI95\_U & Borne haute de l'intervalle de confiance 95\% \\
+method & Méthode employée (PLS, ENet, NNLS\_mix, Bayes, \ldots) \\
+LOD & Limite de détection (mêmes unités que C) \\
+LOQ & Limite de quantification \\
+flags & Indicateurs (OOD, hors domaine, saturation, \ldots) \\
+meta & Champs utiles (standard interne, ratio utilisé, version modèle) \\
+\bottomrule
+\end{tabular}
+\end{table}

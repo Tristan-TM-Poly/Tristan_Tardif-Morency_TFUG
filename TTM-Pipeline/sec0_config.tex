@@ -1,0 +1,78 @@
+
+\section{Configuration \& Provenance (Section 0)}
+
+\subsection{Objectif et portée}
+Mettre en place un schéma de configuration unique, versionné et validé, garantissant la reproductibilité (mêmes entrées $\rightarrow$ mêmes sorties), la traçabilité (qui/quoi/quand/comment), et l'auditabilité (conformité métrologique). Résultat: \texttt{config.json} validée, journal \texttt{provenance.jsonl}, environnement verrouillé (\texttt{requirements.txt}/Docker) et \textit{seed} RNG centralisée.
+
+\subsection{Modèle de données (config)}
+Champs obligatoires (valeurs par défaut entre crochets) : \texttt{input\_path} (dossier d'entrée), \texttt{output\_dir} [\texttt{artifacts}], \texttt{report\_dir} [\texttt{report}], \texttt{instrument}, \texttt{smoothing\_window} [7], \texttt{baseline\_order} [3], \texttt{peak\_prominence} [0.03], \texttt{peak\_min\_distance} [5], \texttt{normalize} [true], \texttt{active\_learning\_points} [5], \texttt{n\_synth} [32], \texttt{seed} [1234].
+
+\subsection{Validation et contrats (déterminisme)}
+Validation stricte des types et bornes (\texttt{smoothing\_window} impair $\geq 3$). Contrat d'E/S minimal: colonnes \texttt{wavenumber(cm$^{-1}$)} \& \texttt{intensity(a.u.)} triées; sorties \texttt{predictions.csv}, \texttt{peaks\_top10.csv}, \texttt{report.tex}. Déterminisme par seed unique et verrouillage des sources d'aléa.
+
+\subsection{Provenance: journalisation}
+Chaque exécution écrit une ligne JSON dans \texttt{provenance.jsonl} avec: \texttt{run\_id}, \texttt{timestamp\_iso}, versions (code, Python, \texttt{requirements\_hash}, \texttt{git\_commit}), \texttt{config} immuable hashée, liste des entrées (avec SHA256), artefacts (chemins \& hash), statistiques (temps total, CPU/RAM pic), et statut (\texttt{ok}/\texttt{error}).
+
+\subsection{Reproductibilité \& environnement}
+\begin{itemize}[nosep]
+\item \textbf{Verrouillage} des dépendances (\texttt{requirements.txt}) et Docker minimal.
+\item Empreinte \texttt{requirements\_hash} enregistrée dans la provenance.
+\item Seeding unique appliqué à tous les générateurs (NumPy, synthèse, AL).
+\end{itemize}
+
+\subsection{Interfaces: CLI \& API}
+CLI actuelle: \texttt{python -m optech\_raman\_ai7.run --config config/config.json}. Extensions prévues: \texttt{raman calibrate|fit|map|report}. API: \texttt{RamanConfig.load(path)} $\rightarrow$ objet validé; \texttt{run(cfg)} $\rightarrow$ chemins et métriques.
+
+\subsection{Arborescence standard}
+\begin{verbatim}
+project/
+├── config/            # configs versionnées
+├── data/              # bruts / synthétiques
+│   └── synth/…        # générés automatiquement
+├── artifacts/         # figures, CSV, JSON, logs
+├── report/            # .tex (+ PDF si latex installé)
+├── optech_raman_ai7/  # code
+├── tests/             # tests unitaires/intégration
+├── requirements.txt
+├── Dockerfile
+└── provenance.jsonl   # append-only
+\end{verbatim}
+
+\subsection{Journalisation}
+Niveaux \texttt{INFO/DEBUG/WARNING/ERROR} et métriques (\texttt{METRIC}). Messages structurés (clé/valeur) pour agrégation. Rotation journalière optionnelle.
+
+\subsection{Sécurité \& conformité}
+Pas de données sensibles en clair; anonymisation des identités possible. Intégrité par hash des entrées/sorties; option de signature interne. Horodatage fiable; bruts en lecture seule.
+
+\subsection{Tests \& critères d'acceptation}
+\textbf{Unitaires}: validation des bornes; erreurs explicites si invalide. \textbf{Intégration}: chargement config $\rightarrow$ exécution E2E synthétique $\rightarrow$ artefacts présents $\&$ provenance mise à jour. \textbf{Déterminisme}: deux runs (même seed) donnent des métriques identiques $\pm$ tolérance numérique.
+
+\subsection{Risques \& parades}
+Dérive d'environnement (par Docker+\texttt{requirements\_hash}); config incomplète (validation forte); non-déterminisme BLAS (épinglage threads); chemins non reproductibles (hashs plutôt que absolus).
+
+\subsection{KPI à suivre}
+Temps total et par étape, RSS pic, taille artefacts, couverture tests, taux d'échec d'ingestion, variance inter-run (\~0 à seed constant).
+
+\subsection{Implémentation (pseudocode)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+cfg = RamanConfig.load(args.config)
+prov = start_provenance(cfg)
+try:
+    outputs = run_pipeline(cfg)
+    prov.update(summarize_outputs(outputs))
+    prov["status"] = "ok"; prov["message"] = "run completed"
+except Exception as e:
+    prov["status"] = "error"; prov["message"] = str(e)
+finally:
+    append_jsonl("provenance.jsonl", prov)
+    exit(0 if prov["status"]=="ok" else 1)
+\end{lstlisting}
+
+\subsection{Quick wins}
+\begin{itemize}[nosep]
+\item Écrire \texttt{provenance.jsonl} à chaque run (append-only).
+\item Calculer/archiver les SHA256 des entrées/sorties.
+\item Verrouiller les threads en mode audit pour le déterminisme.
+\item Valider la config avant toute étape coûteuse.
+\item Exporter un \texttt{summary.json} enrichi (temps/CPU/RAM).
+\end{itemize}

@@ -1,0 +1,112 @@
+
+\section{Identification \& Attribution (bibliothèques, ML hybride, incertitudes) (Section 8)}
+
+\subsection{Objectif}
+Attribuer chaque spectre (ou pixel de carte) à une ou plusieurs classes (molécule, phase, état cristallin, dopage) avec un \textbf{score calibré} et une \textbf{explication} (pics clés, ratios, décalages). Combiner \textbf{empreintes de pics} et \textbf{similitudes spectrales globales} avec des modèles ML, tout en gérant l'\textbf{incertitude} et la \textbf{nouveauté (OOD)}.
+
+\subsection{Sources de vérité}
+\begin{itemize}[nosep]
+\item \textbf{Bibliothèques} internes/externes: spectres de référence (prétraités comme Sec.~5) + \emph{fingerprints} de pics (positions $\mu$, FWHM, aires, ratios).
+\item \textbf{Jeux annotés} (train/val/test) couvrant l'instrumentation et les conditions (laser, objectif, filtre).
+\item \textbf{Règles physiques} (contraintes) : tolérances sur $\Delta\mu$, \textbf{rapports d'aire} attendus, largueurs compatibles avec la résolution (Sec.~4).
+\end{itemize}
+
+\subsection{Scores de similarité (spectre global)}
+Soit $y$ un spectre prétraité et $\hat{y}_c$ un gabarit classe $c$ (normalisé).
+\begin{itemize}[nosep]
+\item \textbf{Cosine} $s_c^{\cos}=\dfrac{\langle y,\hat{y}_c\rangle}{\|y\|\,\|\hat{y}_c\|}$.
+\item \textbf{Corrélation croisée} $s_c^{\mathrm{xcorr}}=\max_{\Delta\in[-\Delta_{\max},\Delta_{\max}]}\mathrm{corr}(y,\mathrm{shift}(\hat{y}_c,\Delta)) - \alpha|\Delta|$, pénalité de décalage $\alpha$.
+\item \textbf{DTW bornée} $s_c^{\mathrm{dtw}}=-\mathrm{DTW}_\mathrm{SakoeChiba}(y,\hat{y}_c;w)$ (fenêtre $w$ petite pour éviter les distorsions non physiques).
+\end{itemize}
+
+\subsection{Fingerprint de pics (local)}
+Depuis la Section~6, on dispose d'une table de pics $\{\mu_k, \mathrm{FWHM}_k, S_k\}$. Pour la classe $c$ avec empreinte $\{\mu_{c,j}, R_{c,j}\}$ (positions et \emph{ratios d'aire} attendus):
+\begin{align}
+\delta\mu_{j} &= \min_{k} |\mu_k - \mu_{c,j}|, \quad \delta\mu_{j}\le \tau_\mu,\\
+r_{j} &= \frac{S_{k^\star}}{\sum_{j'} S_{k'^\star}}, \quad \text{puis } \epsilon_{r,j}=|r_{j}-R_{c,j}|.
+\end{align}
+Score de fingerprint (plus haut est mieux): $s_c^{\mathrm{fp}} = -\sum_j \left( \beta_\mu\,\delta\mu_j + \beta_r\,\epsilon_{r,j}\right)$, avec pondération par l'incertitude de pic.
+
+\subsection{Agrégation des évidences}
+Score brut composite :
+\begin{equation}
+s_c = w_{\cos}\,s_c^{\cos} + w_{\mathrm{xcorr}}\,s_c^{\mathrm{xcorr}} + w_{\mathrm{dtw}}\,s_c^{\mathrm{dtw}} + w_{\mathrm{fp}}\,s_c^{\mathrm{fp}} - \lambda\,\Phi_c,
+\end{equation}
+où $\Phi_c$ pénalise les incohérences physiques (\emph{e.g.} FWHM trop fines vs instrument, pics manquants, ratios irréalistes). Les poids $w$ sont validés par CV stratifiée.
+
+\subsection{Modèles ML hybrides}
+\paragraph{Supervisé (global)} SVM/RF/XGBoost sur des \emph{features} spectrales (PCA/PLS, scattering transform, autoencodeur). \emph{Output}: logits $z_c$.
+\paragraph{Contrainte physique} Pertes additionnelles: pénalité si pics requis absents; régularisation vers des ratios connus.
+\paragraph{Fusion} $s_c^{\mathrm{ML}}=\eta\cdot \sigma(z_c) + (1-\eta)\cdot \sigma(s_c)$ (logistique $\sigma$), $\eta$ appris sur validation.
+
+\subsection{Calibration des probabilités}
+Platt scaling ou isotonic regression sur (val) pour obtenir $p_c\in[0,1]$. Calibration \emph{par classe} si jeu déséquilibré. Mesure: ECE (Expected Calibration Error) et courbes fiabilité.
+
+\subsection{Détection de nouveauté (OOD)}
+\begin{itemize}[nosep]
+\item \textbf{Seuil de confiance} : $\max_c p_c < \tau_{ood}$.
+\item \textbf{Distance embedding} : $d=\min_c \|\phi(y)-\mu_c\|_{\Sigma_c^{-1}}$ (Mahalanobis sur espace latent $\phi$).
+\item \textbf{One-class} : SVM/Isolation Forest sur le latent connu.
+\end{itemize}
+\textbf{Sortie OOD}: \texttt{label=unknown}, top-3 classes proches (pour inspection), suggestions d'enrichir la bibliothèque.
+
+\subsection{Boucle AL (active learning)}
+Sélectionner pour annotation les échantillons à \textbf{forte incertitude} (entropie haute, marge faible) et/ou \textbf{impact élevé} (représentativité dans l'espace latent). Mettre à jour bibliothèque et classifieur.
+
+\subsection{Domaine \& normalisation instrument}
+\begin{itemize}[nosep]
+\item \textbf{Harmonisation} : alignement de gain/offset; \emph{feature-wise standardization} post-Sec.~5.
+\item \textbf{Adaptation de domaine} : CORAL/DA en latent; fine-tuning léger de l'encodeur sur quelques cibles instrument.
+\end{itemize}
+
+\subsection{Sorties \& explications}
+\begin{itemize}[nosep]
+\item \textbf{predictions.csv}: \texttt{sample\_id}, \texttt{top1\_label}, \texttt{top1\_p}, \texttt{top3} (labels+probas), \texttt{ood\_flag}, \texttt{explain} (pics/ratios/décalage), pénalités physiques.
+\item \textbf{report.json}: matrice de confusion, ECE, fiabilité; seuils $\tau_{ood}$, poids $w$, hyperparamètres.
+\item \textbf{figures/}: explication par \emph{waterfall} de score (composants $s_c^{\cos}, s_c^{\mathrm{fp}}, \ldots$), mise en évidence des pics clés.
+\end{itemize}
+
+\subsection{Pseudo-code (fusion scores + ML)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def identify(sample, libs, clf, cfg):
+    y = sample["spectrum"]; peaks = sample["peaks"]
+    # 1) scores de similarité
+    s = {}
+    for c, lib in libs.items():
+        s_cos = cosine(y, lib.y)
+        s_xc  = xcorr_shift_penalized(y, lib.y, alpha=cfg.alpha, max_shift=cfg.dmax)
+        s_dtw = -bounded_dtw(y, lib.y, w=cfg.warp_win)
+        s_fp  = fingerprint_score(peaks, lib.fp, betas=cfg.betas)
+        s[c]  = wcos*s_cos + wxc*s_xc + wdtw*s_dtw + wfp*s_fp - lam*phys_penalty(peaks, lib)
+    # 2) ML global
+    z = clf.decision_function(embed(y))
+    p_ml = calibrate_sigmoid(z)
+    # 3) Fusion + calibration finale
+    s_vec = to_logits(s)
+    p_lib = calibrate_isotonic(s_vec)
+    p = eta*p_ml + (1-eta)*p_lib
+    # 4) OOD decision
+    if p.max() < cfg.tau_ood or is_ood_mahalanobis(embed(y), cfg):
+        return {"label":"unknown","p":p.max(),"ood":True,"top3":topk(p,3)}
+    return {"label":argmax(p),"p":p.max(),"ood":False,"top3":topk(p,3),"explain":explain(peaks, libs[argmax(p)])}
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{Validation croisée}: macro-F1 $\ge$ cible (définie par cas d'usage), ECE $< 5\%$.
+\item \textbf{Stress tests} : décalage $\pm 1$~\cm, gain/offset, bruit; robustesse maintenue ($\Delta$F1$<3$~pts).
+\item \textbf{OOD}: TPR@FPR=5\% $\ge 90\%$ sur nouveautés simulées; \% d'étiquettes \texttt{unknown} raisonnable in situ.
+\item \textbf{Explicabilité}: pics/ratios cités cohérents (vérif. règles) dans $\ge 95\%$ des cas positifs.
+\item \textbf{DoD}: \texttt{predictions.csv}, \texttt{report.json}, figures explicatives, hyperparamètres versionnés.
+\end{itemize}
+
+\subsection{Risques \& parades}
+\begin{itemize}[nosep]
+\item \textbf{Classes très proches} : privilégier fingerprint (positions/ratios) + pénalités physiques; ajouter pics discriminants.
+\item \textbf{Dérive instrumentale} : re-calibration régulière (Sec.~4), harmonisation (\emph{flat-field}), recalibrage isotonic.
+\item \textbf{Déséquilibre} : poids de classe, \emph{focal loss} côté ML, calibration par classe.
+\item \textbf{Surapprentissage} : early stopping, CV stricte, \emph{data augmentation} physique (bruit, shifts réalistes).
+\end{itemize}
+
+\subsection{Intégration pipeline}
+Appel après Sec.~6/7; consommer \texttt{peaks.csv} et spectres prétraités; produire \texttt{predictions.csv} et \texttt{report.json}. Les cartes Sec.~7 peuvent afficher $p_{\max}$, label et OOD par pixel/ROI.

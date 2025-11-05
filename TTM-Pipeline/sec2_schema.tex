@@ -1,0 +1,90 @@
+
+\section{Métadonnées \& Schéma (Section 2)}
+
+\subsection{Objectif \& portée}
+Modèle de métadonnées unifié, versionné et validé (JSON Schema v2020-12) couvrant : run, instrument, échantillon, acquisition, géométrie/axe et QA. Interopérable (Parquet/JSON/CSV), compatible ascendance.
+
+\subsection{Niveaux de métadonnées}
+\begin{enumerate}[nosep]
+\item \textbf{Run}: date/heure, utilisateur, version code, \texttt{run\_uuid}.
+\item \textbf{Instrument}: identifiant, objectif, NA, grille, filtres, résolution, \texttt{laser\_nm}.
+\item \textbf{Échantillon}: \texttt{sample\_id}, \texttt{material\_tag}, \texttt{phase}, \texttt{dopant}, \texttt{dopant\_ppm}.
+\item \textbf{Acquisition/Scan}: \texttt{tint\_ms}, \texttt{accumulations}, \texttt{binning}, \texttt{pol}, \texttt{temp\_C}, \texttt{humidity\_pct}, \texttt{site}, \texttt{lot}.
+\item \textbf{Géométrie/Axe}: \texttt{wavenumber\_min\_cm1}, \texttt{wavenumber\_max\_cm1}, \texttt{wavenumber\_step\_cm1}, \texttt{spectral\_resolution\_cm1}.
+\item \textbf{Calibrations/QA}: \texttt{calibration\_source}, \texttt{cosmic\_ray\_flag}, \texttt{qa\_flags}.
+\end{enumerate}
+
+\subsection{Schéma minimal (obligatoire)}
+Champs obligatoires par spectre : axe exploitable (\texttt{wavenumber} en cm$^{-1}$ \emph{ou} \texttt{wavelength\_nm} avec \texttt{laser\_nm}), \texttt{intensity}, \texttt{laser\_nm}, \texttt{pol} $\in$ \{\texttt{parallel, perp, unknown}\}, \texttt{tint\_ms} \emph{ou} \texttt{accumulations}, \texttt{site}, \texttt{lot}. Absence $\rightarrow$ erreur bloquante.
+
+\subsection{Schéma étendu (recommandé)}
+\begin{itemize}[nosep]
+\item Instrument: \texttt{instrument\_id}, \texttt{objective\_magnification}, \texttt{objective\_na}, \texttt{grating\_lpmm}, \texttt{filter\_notch}, \texttt{aperture\_um}.
+\item Environnement: \texttt{temp\_C}, \texttt{humidity\_pct}, \texttt{pressure\_mbar}.
+\item Échantillon: \texttt{sample\_uuid}, \texttt{thickness\_um}, \texttt{substrate}, \texttt{surface\_state}, \texttt{material\_tag}, \texttt{phase}.
+\item Chimie: \texttt{dopant}, \texttt{dopant\_ppm}, \texttt{stoichiometry}, \texttt{treatment}.
+\item Axe: \texttt{wavenumber\_step\_cm1}, \texttt{spectral\_coverage\_cm1}.
+\item QA: \texttt{qa\_flags} (JSON array), \texttt{snr0}, \texttt{saturation\_pct}.
+\end{itemize}
+
+\subsection{Extrait JSON Schema (simplifié)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RamanScan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["laser_nm","pol","site","lot"],
+  "properties": {
+    "laser_nm": {"type":"number","minimum":200,"maximum":11000},
+    "pol": {"type":"string","enum":["parallel","perp","unknown"]},
+    "tint_ms": {"type":"number","exclusiveMinimum":0},
+    "accumulations": {"type":"integer","minimum":1},
+    "site": {"type":"string","minLength":1},
+    "lot": {"type":"string","minLength":1},
+    "objective_na": {"type":"number","minimum":0.0,"maximum":1.4},
+    "grating_lpmm": {"type":"integer","minimum":100,"maximum":5000},
+    "wavenumber_min_cm1": {"type":"number"},
+    "wavenumber_max_cm1": {"type":"number"},
+    "wavenumber_step_cm1": {"type":"number","exclusiveMinimum":0},
+    "spectral_resolution_cm1": {"type":"number","exclusiveMinimum":0},
+    "qa_flags": {"type":"array","items":{"type":"string"}}
+  },
+  "allOf": [
+    {"if":{"required":["wavelength_nm"]},
+     "then":{"required":["laser_nm"]}},
+    {"if":{"required":["tint_ms"]},
+     "then":{"not":{"required":["accumulations"]}}}
+  ]
+}
+\end{lstlisting}
+
+\subsection{Vocabulaires contrôlés}
+CSV versionnés (\texttt{config/vocab/*.csv}) avec colonnes \texttt{value,label,status}. Ex.: \texttt{pol.csv}, \texttt{material\_tag.csv}, \texttt{phase.csv}, \texttt{site.csv}, \texttt{dopant.csv}. Ajouts via PR; retrait $\rightarrow$ \texttt{deprecated}.
+
+\subsection{Synonymes fournisseurs (mapping)}
+\texttt{config/vendor\_map.csv} (colonnes: \texttt{vendor,from,to,scope}) pour homogénéiser: \texttt{ExposureTime(ms)} $\rightarrow$ \texttt{tint\_ms}, \texttt{Accum} $\rightarrow$ \texttt{accumulations}, \texttt{ObjectiveNA} $\rightarrow$ \texttt{objective\_na}, etc.
+
+\subsection{Règles de cohérence}
+Si \texttt{wavelength\_nm} présent $\Rightarrow$ \texttt{laser\_nm} requis. Si \texttt{objective\_na} $>$ 0.95 et \texttt{laser\_nm} $<$ 400 $\Rightarrow$ \textit{warning} optique. Si \texttt{pol}$\ne$ \texttt{unknown} $\Rightarrow$ l'instrument doit la supporter (flag sinon). Si \texttt{spectral\_resolution\_cm1} $<$ \texttt{wavenumber\_step\_cm1} $\Rightarrow$ incohérence.
+
+\subsection{Complétude \& acceptation}
+Score de complétude = ratio des champs recommandés non vides. Seuils: $\ge 0.9$ (OK), 0.7--0.9 (warning), $<0.7$ (quarantaine). Le manifest exporte \%complétude, champs manquants et suggestions.
+
+\subsection{Champs dérivés}
+\texttt{wavenumber\_step\_cm1} (médiane des pas), \texttt{spectral\_coverage\_cm1} (delta), \texttt{snr0}, \texttt{saturation\_pct}.
+
+\subsection{Sérialisation \& Parquet}
+Types forcés (axe \texttt{float64}, intensité \texttt{float32}, codes petits entiers). Format long par point ou compact. Partitions par \texttt{site/lot/laser\_nm} pour gros volumes.
+
+\subsection{Manifest \& audit}
+\texttt{artifacts/ingest/manifest.json}: \texttt{n\_files}, \texttt{n\_points\_total}, \texttt{schema\_version}, \texttt{vocab\_versions} (hashs), et par fichier: \texttt{sha256}, \texttt{n\_points}, \%complétude, \texttt{qa\_flags}, \texttt{errors}.
+
+\subsection{Tests \& DoD}
+Unitaires: plages, enums, règles croisées. Intégration: dossier hétérogène $\rightarrow$ Parquet+manifest; mapping appliqué; complétude calculée. Non-régression: manifest identique à entrée identique. DoD: \texttt{schema.json} versionné, vocabulaires présents, manifest avec \%complétude, aucun obligatoire manquant.
+
+\subsection{Migration \& versionnage}
+\texttt{schema\_version} (SemVer). Patch: doc seulement. Minor: nouveaux champs optionnels. Major: changement de sens/obligatoires $\rightarrow$ scripts de migration (\texttt{migrations/}).
+
+\subsection{Quick wins}
+Générer \texttt{schema.json}+\texttt{data\_dictionary.md}, brancher \texttt{vendor\_map.csv}, calculer \%complétude, partitions Parquet.

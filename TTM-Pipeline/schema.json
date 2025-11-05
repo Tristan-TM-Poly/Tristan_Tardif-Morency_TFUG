@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Optech Raman AI7 Metadata (placeholder)",
+  "type": "object",
+  "properties": {
+    "laser_nm": {
+      "type": "number"
+    },
+    "pol": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "version": "0.1.0"
+}

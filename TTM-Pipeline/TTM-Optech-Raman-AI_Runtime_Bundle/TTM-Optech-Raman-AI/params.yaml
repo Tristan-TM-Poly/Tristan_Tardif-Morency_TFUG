@@ -1,0 +1,21 @@
+
+preprocess:
+  baseline: "asls"    # asls | airpls
+  norm: "snv"         # snv | area
+  smooth: "sg"        # sg | none
+  sg_window: 9
+  sg_poly: 3
+  align: true
+  ref_peak_cm1: 520.7
+  max_shift_cm1: 1.0
+features:
+  use_peaks: true
+  use_ratios: true
+  use_fwt: true
+  use_df: true
+model:
+  backbone: "conv1d_bayes"
+  seed: 42
+  cv: 5
+report:
+  template: "templates/ieee/main.tex"

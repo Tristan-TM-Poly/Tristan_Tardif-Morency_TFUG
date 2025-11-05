@@ -1,0 +1,112 @@
+
+\section{Quantification \& Régression (concentrations, fractions de phases, dopage) (Section 9)}
+
+\subsection{Objectif}
+Estimer des quantités physico-chimiques (\emph{e.g.} concentration, fraction de phase, teneur en dopant) à partir des spectres/pics, avec \textbf{incertitudes} et \textbf{limites de détection (LOD/LOQ)} robustes. Intégrer à la fois des \textbf{modèles analytiques à base de pics} et des \textbf{régressions multivariées} sous \emph{contraintes physiques}.
+
+\subsection{Notations}
+$y(\nu)$ : spectre prétraité (Sec.~5). $S_k$ : aire du pic $k$ (Sec.~6). $C$ : quantité cible (concentration, fraction). $\hat{C}$ : estimateur. $X$ : matrice de \emph{features} (pics, ratios, PCA, \ldots).
+
+\subsection{Quantification univariée (courbe d'étalonnage)}
+Pour un pic \emph{marqueur} $k$ d'un analyte $A$ :
+\begin{equation}
+\mathbb{E}[S_k] \approx \alpha + \beta C_A,\qquad \hat{C}_A = \frac{S_k - \alpha}{\beta}.
+\end{equation}
+\textbf{Régression pondérée} (WLS) conseillée (hétéroscédasticité). Si saturation: modèle Birks/Hill (logistique) ou spline monotone.
+\paragraph{Standard interne} Un pic de référence $r$ stabilise les gains: $R = S_k / S_r \Rightarrow \mathbb{E}[R] \approx \beta' C_A$.
+\paragraph{Ratios robustes} Pour plusieurs pics d'un même analyte, utiliser $R_{k} = S_k / \sum_{j\in\mathcal{K}} S_j$ et ajuster $R_k(C)$.
+
+\subsection{LOD/LOQ (ICH Q2)}
+Avec le bruit de blanc $\sigma_{\mathrm{blank}}$ et la pente $\beta$ de la courbe d'étalonnage:
+\begin{equation}
+\mathrm{LOD} = 3.3\, \frac{\sigma_{\mathrm{blank}}}{\beta},\qquad
+\mathrm{LOQ} = 10\, \frac{\sigma_{\mathrm{blank}}}{\beta}.
+\end{equation}
+Alternative : $\sigma$ résiduelle de la régression WLS. Rapporter une IC sur LOD/LOQ par bootstrap.
+
+\subsection{Quantification multipics contrainte}
+Soit $\mathbf{S}\in\mathbb{R}^m$ les aires de $m$ pics pour un analyte; on ajuste
+\begin{equation}
+\mathbf{S} \approx C_A\,\mathbf{h}_A + \boldsymbol{\epsilon},\qquad C_A\ge 0,
+\end{equation}
+par NNLS (moindres carrés non-négatifs). Avec \textbf{ratios attendus} $R_{A,j}$, ajouter une pénalité $\lambda\sum_j (S_j/\sum S - R_{A,j})^2$.
+
+\subsection{Quantification de phases (mélanges)}
+Modèle linéaire de mélange sur \textbf{features} (aires de pics ou spectre réduit):
+\begin{align}
+\mathbf{y} &\approx \sum_{p=1}^{P} w_p\, \mathbf{y}^{(p)},\quad w_p \ge 0,\ \sum_p w_p = 1,\\
+\hat{\mathbf{w}} &= \arg\min_{\mathbf{w}\in\Delta_P}\ \|\mathbf{y} - Y\,\mathbf{w}\|_2^2 + \lambda\|\mathbf{w}\|_2^2,
+\end{align}
+où $Y=[\mathbf{y}^{(1)},\ldots,\mathbf{y}^{(P)}]$ est la bibliothèque (adaptée à l'instrument, Sec.~8). \textbf{Simplex contraint} via \textsc{Projected Gradient} ou \textsc{CVX}.
+
+\subsection{Régressions multivariées}
+\begin{itemize}[nosep]
+\item \textbf{PLS} (Partial Least Squares): bon biais-variance, exploite la covariance $X$--$C$.
+\item \textbf{ElasticNet}: sélection de variables (pics/PC) sous corrélation; robuste.
+\item \textbf{XGBoost/GBRT}: non-linéarités douces; gérer l'interaction entre pics et baseline résiduelle.
+\end{itemize}
+\textbf{Pondération} des points d'entraînement par l'inverse de la variance de mesure. \textbf{GroupKFold} par lot/site/instrument pour éviter la fuite.
+
+\subsection{Modèles bayésiens hiérarchiques}
+\paragraph{Univarié} $S_k \sim \mathcal{N}(\alpha + \beta C, \sigma^2(C))$, priors $\alpha,\beta\sim \mathcal{N}$, $C\ge 0$. Posterior $p(C\mid S_k)$ via MCMC/VI $\Rightarrow$ IC 95\% crédibles.
+\paragraph{Mélanges} $\mathbf{y}\sim \mathcal{N}\!\big(\sum_p w_p \mathbf{y}^{(p)},\ \Sigma\big)$, $\mathbf{w}\in\Delta_P$ avec priors Dirichlet. Permet \textbf{incertitudes par phase}.
+
+\subsection{Propagation d'incertitudes}
+De l'aire de pic vers $C$ :
+\begin{equation}
+\mathrm{Var}[\hat{C}] \approx \left(\frac{\partial \hat{C}}{\partial S_k}\right)^2 \mathrm{Var}[S_k] + \left(\frac{\partial \hat{C}}{\partial \beta}\right)^2 \mathrm{Var}[\beta] + \cdots,
+\end{equation}
+ou par \textbf{bootstrap} (B=500) sur les résidus/échantillons; rapporter IC 95\% et \textbf{couverture} mesurée.
+
+\subsection{Validation croisée \& DOE}
+Matrice d'expériences (laser, objectif, temps d'intégration, dopage vrai, \ldots). Split \textbf{par lot/site/instrument}. Métriques: RMSE, MAE, $R^2$, \% within-LOA (Bland--Altman), \textbf{calibration} (pentes proches de 1, intercept proche 0).
+
+\subsection{Sorties normalisées}
+\begin{itemize}[nosep]
+\item \textbf{quant.csv}: \texttt{sample\_id}, \texttt{analyte} (ou \texttt{phase}), $\hat{C}$, IC95\% $[L,U]$, méthode, LOD/LOQ, flags (OOD, hors domaine).
+\item \textbf{calib\_curves.csv}: pentes/intercepts (IC), plage valide, $R^2$, $\sigma$ résiduelle.
+\item \textbf{report\_quant.json}: agrégats (RMSE, $R^2$, biais, ECE de probas si bayésien), diagnostics (résidus, leverage).
+\end{itemize}
+
+\subsection{Pseudo-code (pipeline quantif)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def quantify(samples, libs, cfg):
+    # 1) Features: pics clés + ratios + éventuelles PC
+    X, y_true = build_features(samples, libs, cfg.targets)
+    # 2) Choix modèle
+    if cfg.model == "PLS":
+        mdl = fit_pls(X, y_true, groups=cfg.groups, k=cfg.k)
+    elif cfg.model == "ElasticNet":
+        mdl = fit_enet(X, y_true, alpha=cfg.alpha, l1=cfg.l1_ratio)
+    elif cfg.model == "NNLS_mix":
+        mdl = fit_nnls_mix(X, y_true, simplex=cfg.simplex)
+    # 3) LOD/LOQ par analyte (courbes)
+    lod_loq = compute_lod_loq(mdl, blanks=cfg.blanks)
+    # 4) Incertitudes (bootstrap/bayes)
+    quant, ci = predict_with_uncertainty(mdl, X, method=cfg.uncertainty)
+    # 5) Exports
+    write_csv("artifacts/quant.csv", quant)
+    write_csv("artifacts/calib_curves.csv", summarize_calib(mdl))
+    write_json("artifacts/report_quant.json", make_report(quant, ci, lod_loq))
+    return quant
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{Exactitude}: RMSE $\downarrow$, $R^2\uparrow$; \textbf{Biais} $|\hat{C}-C|$ médian proche 0.
+\item \textbf{Robustesse}: invariance au gain/offset (avec standard interne), tolérance au bruit $\pm$10--20\%.
+\item \textbf{LOD/LOQ}: cohérents avec la variance de blanc; IC bootstrap étroites et stables.
+\item \textbf{Couverture}: IC 95\% couvrent $\ge 93$--$97$\% des vérités sur val. indépendante.
+\item \textbf{DoD}: fichiers \texttt{quant.csv}, \texttt{calib\_curves.csv}, \texttt{report\_quant.json} produits et versionnés.
+\end{itemize}
+
+\subsection{Risques \& parades}
+\begin{itemize}[nosep]
+\item \textbf{Effets de matrice}: privilégier ratios/standard interne; inclure covariables (tint, laser) dans $X$.
+\item \textbf{Non-linéarité}: modèles splines/GBRT; limiter la plage de validité et l'annoncer.
+\item \textbf{Déséquilibre}: stratifier les splits, pondérer les pertes; data augmentation physiquement plausible.
+\item \textbf{Dérive instrumentale}: recalibration régulière et harmonisation (Sec.~4); AL pour ré-étalonner.
+\end{itemize}
+
+% Table des colonnes normalisées pour quant.csv
+\input{tables/columns_quant}

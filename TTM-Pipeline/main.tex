@@ -1,0 +1,52 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{cleveref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+
+% Custom preamble additions
+\input{preamble}
+
+\title{Optech Raman AI--7\\\large Pipeline Technique -- Documentation LaTeX}
+\author{TTM \& Collaborateurs}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+
+% --------- Sections (une à la fois) ---------
+\input{sections/sec0_config}
+
+% Prochaines sections (seront ajoutées à la suite)
+\input{sections/sec1_ingestion}
+\input{sections/sec2_schema}
+\input{sections/sec3_qa}
+% \input{sections/sec4_calibration}
+\input{sections/sec5_preprocess}
+\input{sections/sec6_peaks}
+\input{sections/sec7_mapping}
+\input{sections/sec8_identification}
+\input{sections/sec9_quantification}
+% \input{sections/sec5_response}
+% ...
+
+\clearpage
+\input{sections/annex_pipeline}
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+\end{document}

@@ -1,0 +1,4 @@
+analyte,PO4_3-
+units,mM
+note,Enter concentration_mM for each sample; wavenumber_cm-1,intensity columns below
+concentration_mM,wavenumber_cm-1,intensity

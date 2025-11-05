@@ -1,0 +1,62 @@
+
+\section{QA rapide (pré-filtrage) (Section 3)}
+
+\subsection{Objectif}
+Bloquer tôt les acquisitions corrompues: mesurer, étiqueter (flags) et décider (rejeter/quarantaine/warning/accepter).
+
+\subsection{Défauts ciblés}
+Saturation/clipping, cosmic rays, plateaux (\emph{dead stripes}), axe non fiable, bruit excessif, quantification grossière, signal nul.
+
+\subsection{Métriques robustes}
+Pour un spectre $(x,y)$ :
+\begin{itemize}[nosep]
+\item \textbf{Bruit} $\sigma_n$: MAD des différences premières $d=\Delta y$, $\sigma_n \approx 1.4826\,\mathrm{MAD}(d)$.
+\item \textbf{Signal} $S$: $Q_{95}(y)-\mathrm{median}(y)$.
+\item \textbf{SNR brut}: $SNR_0 = S / \max(\sigma_n, \epsilon)$.
+\item \textbf{Saturation}: \% de points $\ge y_{\max}-\delta$ (si bit-depth connu) ou quantile $Q_{99.9}$ + détection de runs.
+\item \textbf{Cosmic rays}: résidu par filtre médian (w=5), score $z=r/(1.4826\cdot \mathrm{MAD}(r))$, comptage de pics \emph{isolés}.
+\item \textbf{Flatline}: variance locale $\mathrm{var}_w(y) < \tau$ sur un run $> w_{\min}$.
+\item \textbf{Banding}: nombre de niveaux distincts $\ll$ attendu sur un sous-segment.
+\end{itemize}
+
+\subsection{Politique de décision (par défaut)}
+\textbf{Rejet}: $SNR_0 < \tau_{\mathrm{snr}}$, ou \texttt{sat\_pct} $> \tau_{\mathrm{sat}}$, ou \texttt{cosmic\_count} $> \tau_{\mathrm{cosmic}}$, ou \texttt{flat\_run} vrai, ou $|x|<\tau_{\mathrm{len}}$.
+\textbf{Quarantaine}: banding, $\sigma_n$ très haut, $S$ anormalement faible localisé.
+\textbf{Warning}: méta incomplètes, \texttt{tint\_ms} incohérent avec SNR.
+Sinon \textbf{accepté}. Seuils $\tau$ calibrés par ROC synthétique.
+
+\subsection{Calibration des seuils (ROC)}
+Générer des spectres réalistes (Voigt+fluorescence+bruit Poisson-Gauss) avec défauts injectés; balayer chaque seuil $\rightarrow$ ROC/PR; choisir $\tau$ par critère de Youden $J=\mathrm{TPR}-\mathrm{FPR}$ ou $F_\beta$; bootstrap (B=200) pour IC 95\%. Export: \texttt{qa\_thresholds.json}, \texttt{qa\_roc.csv}.
+
+\subsection{Export \& traçabilité}
+\texttt{artifacts/qa/qa\_metrics.csv}: \texttt{snr0, sat\_pct, cosmic\_count, flat\_run, banding, decision}. \texttt{qa\_summary.json}: taux d'acceptation, distributions, seuils. Flags propagés au manifest et aux rapports.
+
+\subsection{Pseudo-code}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def snr_brut(y):
+    d = np.diff(y)
+    sigma = 1.4826 * mad(d)
+    S = np.quantile(y,0.95) - np.median(y)
+    return S / max(sigma, 1e-12)
+
+def detect_cosmic(y, w=5, z_thr=8.0):
+    y_med = medfilt(y, kernel_size=w)
+    r = y - y_med
+    sigma = 1.4826 * mad(r)
+    z = r / max(sigma, 1e-12)
+    idx = np.where(z > z_thr)[0]
+    return sum(y[i] > 1.5*max(y[i-1], y[i+1]) for i in idx)
+
+def qa_decision(y, cfg):
+    s = snr_brut(y)
+    sat = detect_saturation(y, y_max=getattr(cfg,'y_max',None))
+    cos = detect_cosmic(y, w=5, z_thr=cfg.qaz)
+    flat = detect_flatline(y)
+    decision = 'accept'
+    if s < cfg.tau_snr or sat > cfg.tau_sat or cos > cfg.tau_cosmic or flat:
+        decision = 'reject'
+    return {'snr0':s,'sat_pct':sat,'cosmic_count':cos,'flat_run':flat,'decision':decision}
+\end{lstlisting}
+
+\subsection{Tests, perfs \& risques}
+AUC ROC $\ge 0.95$ pour \texttt{cosmic} et \texttt{saturation} sur synthétiques. Complexité $O(N)$ vectorisée. Risques: faux rejets (pics étroits) $\rightarrow$ vérif. d'isolation/symétrie; SNR dépendant matériau $\rightarrow$ seuils par famille.

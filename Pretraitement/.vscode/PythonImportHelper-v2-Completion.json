@@ -1,0 +1,877 @@
+[
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.sparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.sparse",
+        "description": "scipy.sparse",
+        "detail": "scipy.sparse",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.sparse.linalg",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.sparse.linalg",
+        "description": "scipy.sparse.linalg",
+        "detail": "scipy.sparse.linalg",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "h5py",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "h5py",
+        "description": "h5py",
+        "detail": "h5py",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "RamanPreprocessPipeline",
+        "importPath": "raman_preprocess_pipeline",
+        "description": "raman_preprocess_pipeline",
+        "isExtraImport": true,
+        "detail": "raman_preprocess_pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "RamanPreprocessPipeline",
+        "importPath": "raman_preprocess_pipeline",
+        "description": "raman_preprocess_pipeline",
+        "isExtraImport": true,
+        "detail": "raman_preprocess_pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "RamanPreprocessPipeline",
+        "importPath": "raman_preprocess_pipeline",
+        "description": "raman_preprocess_pipeline",
+        "isExtraImport": true,
+        "detail": "raman_preprocess_pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "SpectrumCompressor",
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "isExtraImport": true,
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "find_peaks",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "find_peaks",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "savgol_filter",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "savgol_filter",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "find_peaks",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "find_peaks",
+        "importPath": "scipy.signal",
+        "description": "scipy.signal",
+        "isExtraImport": true,
+        "detail": "scipy.signal",
+        "documentation": {}
+    },
+    {
+        "label": "interp1d",
+        "importPath": "scipy.interpolate",
+        "description": "scipy.interpolate",
+        "isExtraImport": true,
+        "detail": "scipy.interpolate",
+        "documentation": {}
+    },
+    {
+        "label": "interp1d",
+        "importPath": "scipy.interpolate",
+        "description": "scipy.interpolate",
+        "isExtraImport": true,
+        "detail": "scipy.interpolate",
+        "documentation": {}
+    },
+    {
+        "label": "generate_full_spectrum",
+        "importPath": "raman_materials_full",
+        "description": "raman_materials_full",
+        "isExtraImport": true,
+        "detail": "raman_materials_full",
+        "documentation": {}
+    },
+    {
+        "label": "generate_full_spectrum",
+        "importPath": "raman_materials_full",
+        "description": "raman_materials_full",
+        "isExtraImport": true,
+        "detail": "raman_materials_full",
+        "documentation": {}
+    },
+    {
+        "label": "r2_score",
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "isExtraImport": true,
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "rms_error",
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "isExtraImport": true,
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "validate_experiment",
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "isExtraImport": true,
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "curve_fit",
+        "importPath": "scipy.optimize",
+        "description": "scipy.optimize",
+        "isExtraImport": true,
+        "detail": "scipy.optimize",
+        "documentation": {}
+    },
+    {
+        "label": "curve_fit",
+        "importPath": "scipy.optimize",
+        "description": "scipy.optimize",
+        "isExtraImport": true,
+        "detail": "scipy.optimize",
+        "documentation": {}
+    },
+    {
+        "label": "pywt",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pywt",
+        "description": "pywt",
+        "detail": "pywt",
+        "documentation": {}
+    },
+    {
+        "label": "PyWavelets",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "PyWavelets",
+        "description": "PyWavelets",
+        "detail": "PyWavelets",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "h",
+        "importPath": "scipy.constants",
+        "description": "scipy.constants",
+        "isExtraImport": true,
+        "detail": "scipy.constants",
+        "documentation": {}
+    },
+    {
+        "label": "c",
+        "importPath": "scipy.constants",
+        "description": "scipy.constants",
+        "isExtraImport": true,
+        "detail": "scipy.constants",
+        "documentation": {}
+    },
+    {
+        "label": "k",
+        "importPath": "scipy.constants",
+        "description": "scipy.constants",
+        "isExtraImport": true,
+        "detail": "scipy.constants",
+        "documentation": {}
+    },
+    {
+        "label": "Df_TFU",
+        "importPath": "raman_tfu_thermo",
+        "description": "raman_tfu_thermo",
+        "isExtraImport": true,
+        "detail": "raman_tfu_thermo",
+        "documentation": {}
+    },
+    {
+        "label": "raman_analytic",
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "isExtraImport": true,
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "raman_analytic",
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "isExtraImport": true,
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "raman_analytic",
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "isExtraImport": true,
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "NoiseFilter",
+        "importPath": "noise_filter",
+        "description": "noise_filter",
+        "isExtraImport": true,
+        "detail": "noise_filter",
+        "documentation": {}
+    },
+    {
+        "label": "BaselineCorrector",
+        "importPath": "baseline_correction",
+        "description": "baseline_correction",
+        "isExtraImport": true,
+        "detail": "baseline_correction",
+        "documentation": {}
+    },
+    {
+        "label": "Calibrator",
+        "importPath": "calibration",
+        "description": "calibration",
+        "isExtraImport": true,
+        "detail": "calibration",
+        "documentation": {}
+    },
+    {
+        "label": "Normalizer",
+        "importPath": "normalize",
+        "description": "normalize",
+        "isExtraImport": true,
+        "detail": "normalize",
+        "documentation": {}
+    },
+    {
+        "label": "Resampler",
+        "importPath": "resample",
+        "description": "resample",
+        "isExtraImport": true,
+        "detail": "resample",
+        "documentation": {}
+    },
+    {
+        "label": "Derivator",
+        "importPath": "derivative",
+        "description": "derivative",
+        "isExtraImport": true,
+        "detail": "derivative",
+        "documentation": {}
+    },
+    {
+        "label": "QCReporter",
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "isExtraImport": true,
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "linregress",
+        "importPath": "scipy.stats",
+        "description": "scipy.stats",
+        "isExtraImport": true,
+        "detail": "scipy.stats",
+        "documentation": {}
+    },
+    {
+        "label": "FPDF",
+        "importPath": "fpdf",
+        "description": "fpdf",
+        "isExtraImport": true,
+        "detail": "fpdf",
+        "documentation": {}
+    },
+    {
+        "label": "extract_invariants",
+        "importPath": "raman_invariants",
+        "description": "raman_invariants",
+        "isExtraImport": true,
+        "detail": "raman_invariants",
+        "documentation": {}
+    },
+    {
+        "label": "BaselineCorrector",
+        "kind": 6,
+        "importPath": "baseline_correction",
+        "description": "baseline_correction",
+        "peekOfCode": "class BaselineCorrector:\n    \"\"\"\n    Unified baseline correction module for Raman AI preprocessing.\n    \"\"\"\n    def __init__(self, method=\"als\", lam=1e6, p=0.001, niter=10):\n        \"\"\"\n        Parameters\n        ----------\n        method : str\n            'als', 'airpls', or 'snip'.",
+        "detail": "baseline_correction",
+        "documentation": {}
+    },
+    {
+        "label": "baseline_als",
+        "kind": 2,
+        "importPath": "baseline_correction",
+        "description": "baseline_correction",
+        "peekOfCode": "def baseline_als(y, lam=1e6, p=0.001, niter=10):\n    \"\"\"\n    Asymmetric Least Squares baseline correction.\n    Parameters\n    ----------\n    y : np.ndarray\n        Intensity vector.\n    lam : float\n        Smoothness parameter (higher = smoother baseline).\n    p : float",
+        "detail": "baseline_correction",
+        "documentation": {}
+    },
+    {
+        "label": "baseline_airpls",
+        "kind": 2,
+        "importPath": "baseline_correction",
+        "description": "baseline_correction",
+        "peekOfCode": "def baseline_airpls(y, lam=1e6, niter=15):\n    \"\"\"\n    Adaptive baseline correction using AirPLS algorithm.\n    Reference: Zhang et al., Analytica Chimica Acta 2005.\n    Returns\n    -------\n    baseline : np.ndarray\n    \"\"\"\n    L = len(y)\n    D = sp.diags([1, -2, 1], [0, -1, -2], shape=(L, L - 2))",
+        "detail": "baseline_correction",
+        "documentation": {}
+    },
+    {
+        "label": "baseline_snip",
+        "kind": 2,
+        "importPath": "baseline_correction",
+        "description": "baseline_correction",
+        "peekOfCode": "def baseline_snip(y, niter=24):\n    \"\"\"\n    SNIP algorithm: iteratively smooths the logarithm of intensity.\n    Returns\n    -------\n    baseline : np.ndarray\n    \"\"\"\n    y_log = np.log1p(np.maximum(y, 0))\n    b = y_log.copy()\n    for i in range(niter):",
+        "detail": "baseline_correction",
+        "documentation": {}
+    },
+    {
+        "label": "load_spectrum",
+        "kind": 2,
+        "importPath": "batch_preprocess",
+        "description": "batch_preprocess",
+        "peekOfCode": "def load_spectrum(file_path):\n    \"\"\"\n    Load a Raman spectrum from .csv, .txt, or .npy.\n    Must contain two columns: Raman shift (cm⁻¹) and Intensity.\n    \"\"\"\n    ext = Path(file_path).suffix.lower()\n    if ext == \".npy\":\n        data = np.load(file_path)\n        x, y = data[:, 0], data[:, 1]\n    else:",
+        "detail": "batch_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "process_batch",
+        "kind": 2,
+        "importPath": "batch_preprocess",
+        "description": "batch_preprocess",
+        "peekOfCode": "def process_batch(\n    input_dir=\"spectra_raw\",\n    output_file=\"FractalDB.h5\",\n    qc_dir=\"qc_reports\",\n    config=None,\n    compression=True\n):\n    \"\"\"\n    Process all Raman spectra in folder and build fractal database.\n    Parameters",
+        "detail": "batch_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "Calibrator",
+        "kind": 6,
+        "importPath": "calibration",
+        "description": "calibration",
+        "peekOfCode": "class Calibrator:\n    \"\"\"\n    Raman wavenumber and intensity calibration module.\n    \"\"\"\n    def __init__(self, ref_peaks=[520.7], response_file=None, order=1):\n        self.ref_peaks = ref_peaks\n        self.response_file = response_file\n        self.order = order\n    def detect_peaks(self, x, y, height_ratio=0.1):\n        \"\"\"",
+        "detail": "calibration",
+        "documentation": {}
+    },
+    {
+        "label": "calibrate_wavenumber",
+        "kind": 2,
+        "importPath": "calibration",
+        "description": "calibration",
+        "peekOfCode": "def calibrate_wavenumber(x_raw, y_raw, ref_peaks, measured_peaks, order=1):\n    \"\"\"\n    Align the measured Raman axis to reference standards.\n    Parameters\n    ----------\n    x_raw : np.ndarray\n        Raw Raman shift axis (cm⁻¹, uncalibrated)\n    y_raw : np.ndarray\n        Measured intensity\n    ref_peaks : list[float]",
+        "detail": "calibration",
+        "documentation": {}
+    },
+    {
+        "label": "correct_instrument_response",
+        "kind": 2,
+        "importPath": "calibration",
+        "description": "calibration",
+        "peekOfCode": "def correct_instrument_response(x, y, response_file=\"instrument_response.json\"):\n    \"\"\"\n    Apply intensity correction using measured instrument response.\n    Parameters\n    ----------\n    x : np.ndarray\n        Raman shift axis (cm⁻¹)\n    y : np.ndarray\n        Measured intensity\n    response_file : str",
+        "detail": "calibration",
+        "documentation": {}
+    },
+    {
+        "label": "compare_tfu_multitemp",
+        "kind": 2,
+        "importPath": "compare_tfu_multitemp",
+        "description": "compare_tfu_multitemp",
+        "peekOfCode": "def compare_tfu_multitemp(\n    material: str,\n    spectra_dir: str = \"spectres_mesures\",\n    temps: list = None,\n    Df_guess: float = 1.0,\n    lam: float = 0.8,\n    out_dir: str = \"validation_reports\"\n):\n    out_dir = Path(out_dir); out_dir.mkdir(exist_ok=True)\n    temps = temps or [300, 600, 900, 1200, 1500]",
+        "detail": "compare_tfu_multitemp",
+        "documentation": {}
+    },
+    {
+        "label": "SpectrumCompressor",
+        "kind": 6,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "class SpectrumCompressor:\n    \"\"\"\n    Compress Raman spectra using both peak fitting and wavelet transform.\n    \"\"\"\n    def __init__(self, wavelet=\"db4\", level=4, threshold_ratio=0.05, method=\"gaussian\"):\n        self.wavelet = wavelet\n        self.level = level\n        self.threshold_ratio = threshold_ratio\n        self.method = method\n    def compress(self, x, y):",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "gaussian",
+        "kind": 2,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "def gaussian(x, A, mu, sigma):\n    return A * np.exp(-((x - mu)**2) / (2 * sigma**2))\ndef lorentzian(x, A, mu, gamma):\n    return A * (gamma**2 / ((x - mu)**2 + gamma**2))\n# -------------------------------------------------------------------------\n# 🔹 2. Compression par ajustement de pics\n# -------------------------------------------------------------------------\ndef fit_peaks(x, y, method=\"gaussian\", prominence=0.05):\n    \"\"\"\n    Fit main peaks with parametric models (Gaussian or Lorentzian).",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "lorentzian",
+        "kind": 2,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "def lorentzian(x, A, mu, gamma):\n    return A * (gamma**2 / ((x - mu)**2 + gamma**2))\n# -------------------------------------------------------------------------\n# 🔹 2. Compression par ajustement de pics\n# -------------------------------------------------------------------------\ndef fit_peaks(x, y, method=\"gaussian\", prominence=0.05):\n    \"\"\"\n    Fit main peaks with parametric models (Gaussian or Lorentzian).\n    Returns\n    -------",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "fit_peaks",
+        "kind": 2,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "def fit_peaks(x, y, method=\"gaussian\", prominence=0.05):\n    \"\"\"\n    Fit main peaks with parametric models (Gaussian or Lorentzian).\n    Returns\n    -------\n    params : list of dict\n        Each dict contains (A, mu, sigma/gamma)\n    \"\"\"\n    peaks, props = find_peaks(y, prominence=np.max(y) * prominence)\n    model = gaussian if method == \"gaussian\" else lorentzian",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "fractal_wavelet_compress",
+        "kind": 2,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "def fractal_wavelet_compress(y, wavelet=\"db4\", level=4, threshold_ratio=0.05):\n    \"\"\"\n    Apply discrete wavelet transform and truncate small coefficients.\n    \"\"\"\n    coeffs = pywt.wavedec(y, wavelet, level=level)\n    coeffs_flat = np.hstack(coeffs)\n    thresh = threshold_ratio * np.max(np.abs(coeffs_flat))\n    coeffs_thresh = [pywt.threshold(c, value=thresh, mode='soft') for c in coeffs]\n    return coeffs_thresh\n# -------------------------------------------------------------------------",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "reconstruct_wavelet",
+        "kind": 2,
+        "importPath": "compress_spectrum",
+        "description": "compress_spectrum",
+        "peekOfCode": "def reconstruct_wavelet(coeffs, wavelet=\"db4\"):\n    \"\"\"\n    Reconstruct compressed spectrum from truncated coefficients.\n    \"\"\"\n    return pywt.waverec(coeffs, wavelet)\n# -------------------------------------------------------------------------\n# 🔹 5. Classe principale\n# -------------------------------------------------------------------------\nclass SpectrumCompressor:\n    \"\"\"",
+        "detail": "compress_spectrum",
+        "documentation": {}
+    },
+    {
+        "label": "Derivator",
+        "kind": 6,
+        "importPath": "derivative",
+        "description": "derivative",
+        "peekOfCode": "class Derivator:\n    \"\"\"\n    Raman derivative and smoothing handler.\n    \"\"\"\n    def __init__(self, window=15, polyorder=3, deriv=1):\n        \"\"\"\n        Parameters\n        ----------\n        window : int\n            Window length (odd number).",
+        "detail": "derivative",
+        "documentation": {}
+    },
+    {
+        "label": "derivative_spectrum",
+        "kind": 2,
+        "importPath": "derivative",
+        "description": "derivative",
+        "peekOfCode": "def derivative_spectrum(y, window=15, polyorder=3, deriv=1):\n    \"\"\"\n    Compute Savitzky–Golay derivative of a Raman spectrum.\n    Parameters\n    ----------\n    y : np.ndarray\n        Raman intensity values.\n    window : int\n        Window length (odd, e.g., 11, 15, 21).\n    polyorder : int",
+        "detail": "derivative",
+        "documentation": {}
+    },
+    {
+        "label": "NoiseFilter",
+        "kind": 6,
+        "importPath": "noise_filter",
+        "description": "noise_filter",
+        "peekOfCode": "class NoiseFilter:\n    \"\"\"\n    Clean Raman spectrum using spike removal and denoising filters.\n    \"\"\"\n    def __init__(self,\n                 spike_sigma=5.0,\n                 spike_window=3,\n                 sg_window=15,\n                 sg_polyorder=3,\n                 wavelet=None,",
+        "detail": "noise_filter",
+        "documentation": {}
+    },
+    {
+        "label": "Normalizer",
+        "kind": 6,
+        "importPath": "normalize",
+        "description": "normalize",
+        "peekOfCode": "class Normalizer:\n    \"\"\"\n    Unified interface for Raman normalization.\n    \"\"\"\n    def __init__(self, method=\"snv\"):\n        self.method = method.lower()\n    def apply(self, x, y):\n        \"\"\"\n        Apply the chosen normalization.\n        Parameters",
+        "detail": "normalize",
+        "documentation": {}
+    },
+    {
+        "label": "snv",
+        "kind": 2,
+        "importPath": "normalize",
+        "description": "normalize",
+        "peekOfCode": "def snv(y):\n    \"\"\"\n    Apply Standard Normal Variate normalization.\n    y' = (y − mean(y)) / std(y)\n    \"\"\"\n    y = np.asarray(y)\n    return (y - np.mean(y)) / (np.std(y) + 1e-12)\n# -------------------------------------------------------------------------\n# 🔹 2. Min–Max Scaling\n# -------------------------------------------------------------------------",
+        "detail": "normalize",
+        "documentation": {}
+    },
+    {
+        "label": "minmax",
+        "kind": 2,
+        "importPath": "normalize",
+        "description": "normalize",
+        "peekOfCode": "def minmax(y, new_min=0.0, new_max=1.0):\n    \"\"\"\n    Scale data to [new_min, new_max].\n    \"\"\"\n    y = np.asarray(y)\n    ymin, ymax = np.min(y), np.max(y)\n    if ymax - ymin < 1e-12:\n        return np.zeros_like(y)\n    return new_min + (y - ymin) * (new_max - new_min) / (ymax - ymin)\n# -------------------------------------------------------------------------",
+        "detail": "normalize",
+        "documentation": {}
+    },
+    {
+        "label": "area",
+        "kind": 2,
+        "importPath": "normalize",
+        "description": "normalize",
+        "peekOfCode": "def area(y):\n    \"\"\"\n    Divide by the area under the curve (∑ y).\n    \"\"\"\n    y = np.asarray(y)\n    A = np.trapz(y)\n    return y / (A + 1e-12)\n# -------------------------------------------------------------------------\n# 🔹 4. Normalizer Class\n# -------------------------------------------------------------------------",
+        "detail": "normalize",
+        "documentation": {}
+    },
+    {
+        "label": "QCReporter",
+        "kind": 6,
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "peekOfCode": "class QCReporter:\n    \"\"\"\n    Automated QC evaluator for Raman preprocessing pipeline.\n    \"\"\"\n    def __init__(self, ref_peaks=[520.7], out_dir=\"qc_reports\"):\n        self.ref_peaks = ref_peaks\n        self.out_dir = Path(out_dir)\n        self.out_dir.mkdir(exist_ok=True)\n    def evaluate(self, x, y_raw, y_corr):\n        \"\"\"",
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "compute_snr",
+        "kind": 2,
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "peekOfCode": "def compute_snr(y):\n    \"\"\"\n    Compute Signal-to-Noise Ratio (SNR).\n    \"\"\"\n    signal = np.max(y) - np.min(y)\n    noise = np.std(y[:50])  # bruit sur zone stable (ex. : 1ʳᵉ région)\n    return 20 * np.log10(signal / (noise + 1e-12))\ndef baseline_rms(y_corr, y_ref=None):\n    \"\"\"\n    Compute RMS deviation of baseline or corrected signal.",
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "baseline_rms",
+        "kind": 2,
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "peekOfCode": "def baseline_rms(y_corr, y_ref=None):\n    \"\"\"\n    Compute RMS deviation of baseline or corrected signal.\n    \"\"\"\n    if y_ref is None:\n        y_ref = np.zeros_like(y_corr)\n    return np.sqrt(np.mean((y_corr - y_ref)**2))\ndef match_reference_peaks(x, y, ref_peaks, tol=2.0):\n    \"\"\"\n    Compare measured peaks to known reference positions.",
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "match_reference_peaks",
+        "kind": 2,
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "peekOfCode": "def match_reference_peaks(x, y, ref_peaks, tol=2.0):\n    \"\"\"\n    Compare measured peaks to known reference positions.\n    Returns matching ratio (% of matched peaks).\n    \"\"\"\n    peaks, _ = find_peaks(y, height=np.max(y)*0.1, distance=10)\n    found = x[peaks]\n    matches = sum(any(abs(f - r) <= tol for f in found) for r in ref_peaks)\n    return (matches / len(ref_peaks)) * 100 if ref_peaks else np.nan\ndef zscore_outlier(y):",
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "zscore_outlier",
+        "kind": 2,
+        "importPath": "qc_report",
+        "description": "qc_report",
+        "peekOfCode": "def zscore_outlier(y):\n    \"\"\"\n    Detect global intensity outliers via z-score.\n    \"\"\"\n    z = (y - np.mean(y)) / (np.std(y) + 1e-12)\n    outlier_ratio = np.sum(np.abs(z) > 3) / len(z)\n    return 100 * outlier_ratio\n# -------------------------------------------------------------------------\n# 🔹 2. Classe QCReporter\n# -------------------------------------------------------------------------",
+        "detail": "qc_report",
+        "documentation": {}
+    },
+    {
+        "label": "phi_fractal",
+        "kind": 2,
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "peekOfCode": "def phi_fractal(Df, lam=1.0, mode=\"exp\"):\n    if mode == \"exp\":\n        return np.exp(lam * (Df - 1))\n    elif mode == \"poly\":\n        return 1 + (Df - 1)**2\n    else:\n        return 1.0\ndef raman_mode(nu, nu_k, A, sigma, gamma, beta, T):\n    \"\"\"One Raman mode (Gauss–Lorentz mix).\"\"\"\n    gauss = np.exp(-((nu - nu_k)**2) / (2 * sigma**2))",
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "raman_mode",
+        "kind": 2,
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "peekOfCode": "def raman_mode(nu, nu_k, A, sigma, gamma, beta, T):\n    \"\"\"One Raman mode (Gauss–Lorentz mix).\"\"\"\n    gauss = np.exp(-((nu - nu_k)**2) / (2 * sigma**2))\n    lorentz = gamma**2 / ((nu - nu_k)**2 + gamma**2)\n    bose = 1 / (1 - np.exp(-hc * nu_k / (k * T)))\n    return A * ((1 - beta) * gauss + beta * lorentz) * bose\ndef raman_analytic(nu, modes, Df=1.0, lam=1.0, T=300):\n    \"\"\"\n    Generate analytic fractal Raman spectrum.\n    Parameters",
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "raman_analytic",
+        "kind": 2,
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "peekOfCode": "def raman_analytic(nu, modes, Df=1.0, lam=1.0, T=300):\n    \"\"\"\n    Generate analytic fractal Raman spectrum.\n    Parameters\n    ----------\n    nu : np.ndarray\n        Raman shift axis (cm⁻¹)\n    modes : list of dict\n        [{\"A\":..., \"nu\":..., \"sigma\":..., \"gamma\":..., \"beta\":...}, ...]\n    Df : float",
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "hc",
+        "kind": 5,
+        "importPath": "raman_analytic",
+        "description": "raman_analytic",
+        "peekOfCode": "hc = h * c * 100  # J·cm (conversion)\ndef phi_fractal(Df, lam=1.0, mode=\"exp\"):\n    if mode == \"exp\":\n        return np.exp(lam * (Df - 1))\n    elif mode == \"poly\":\n        return 1 + (Df - 1)**2\n    else:\n        return 1.0\ndef raman_mode(nu, nu_k, A, sigma, gamma, beta, T):\n    \"\"\"One Raman mode (Gauss–Lorentz mix).\"\"\"",
+        "detail": "raman_analytic",
+        "documentation": {}
+    },
+    {
+        "label": "gauss_lorentz_mix",
+        "kind": 2,
+        "importPath": "raman_invariants",
+        "description": "raman_invariants",
+        "peekOfCode": "def gauss_lorentz_mix(nu, A, nu0, sigma, gamma, beta):\n    gauss = np.exp(-((nu - nu0)**2) / (2*sigma**2))\n    lorentz = gamma**2 / ((nu - nu0)**2 + gamma**2)\n    return A * ((1 - beta)*gauss + beta*lorentz)\ndef extract_invariants(nu, I, T=300, T0=300, Tc=1500, eta=0.08, prominence=0.05):\n    \"\"\"\n    Detect peaks, fit them, and extract Raman–TFU invariants.\n    \"\"\"\n    peaks, props = find_peaks(I, prominence=np.max(I)*prominence)\n    invariants = []",
+        "detail": "raman_invariants",
+        "documentation": {}
+    },
+    {
+        "label": "extract_invariants",
+        "kind": 2,
+        "importPath": "raman_invariants",
+        "description": "raman_invariants",
+        "peekOfCode": "def extract_invariants(nu, I, T=300, T0=300, Tc=1500, eta=0.08, prominence=0.05):\n    \"\"\"\n    Detect peaks, fit them, and extract Raman–TFU invariants.\n    \"\"\"\n    peaks, props = find_peaks(I, prominence=np.max(I)*prominence)\n    invariants = []\n    for p in peaks:\n        try:\n            # Fenêtre locale autour du pic\n            win = 40",
+        "detail": "raman_invariants",
+        "documentation": {}
+    },
+    {
+        "label": "generate_material_spectrum",
+        "kind": 2,
+        "importPath": "raman_materials",
+        "description": "raman_materials",
+        "peekOfCode": "def generate_material_spectrum(material, nu_axis, Df=1.0, lam=1.0, T=300):\n    if material not in MATERIAL_MODES:\n        raise ValueError(f\"Material '{material}' not defined.\")\n    modes = MATERIAL_MODES[material]\n    return raman_analytic(nu_axis, modes, Df=Df, lam=lam, T=T)\ndef demo_all_materials():\n    nu = np.linspace(100, 3600, 4000)\n    plt.figure(figsize=(10,6))\n    for m in MATERIAL_MODES:\n        I = generate_material_spectrum(m, nu)",
+        "detail": "raman_materials",
+        "documentation": {}
+    },
+    {
+        "label": "demo_all_materials",
+        "kind": 2,
+        "importPath": "raman_materials",
+        "description": "raman_materials",
+        "peekOfCode": "def demo_all_materials():\n    nu = np.linspace(100, 3600, 4000)\n    plt.figure(figsize=(10,6))\n    for m in MATERIAL_MODES:\n        I = generate_material_spectrum(m, nu)\n        plt.plot(nu, I/np.max(I), label=m)\n    plt.xlabel(\"Raman shift (cm⁻¹)\")\n    plt.ylabel(\"Normalized intensity\")\n    plt.title(\"Analytical Raman spectra — typical room-temperature examples\")\n    plt.legend()",
+        "detail": "raman_materials",
+        "documentation": {}
+    },
+    {
+        "label": "MATERIAL_MODES",
+        "kind": 5,
+        "importPath": "raman_materials",
+        "description": "raman_materials",
+        "peekOfCode": "MATERIAL_MODES = {\n    \"Si\": [\n        {\"A\": 1.0, \"nu\": 520.7, \"sigma\": 4.5, \"gamma\": 2.0, \"beta\": 0.3},\n    ],\n    \"Ge\": [\n        {\"A\": 1.0, \"nu\": 300.3, \"sigma\": 5.0, \"gamma\": 2.5, \"beta\": 0.25},\n    ],\n    \"Diamond\": [\n        {\"A\": 1.0, \"nu\": 1332.0, \"sigma\": 3.0, \"gamma\": 1.2, \"beta\": 0.2},\n    ],",
+        "detail": "raman_materials",
+        "documentation": {}
+    },
+    {
+        "label": "generate_full_spectrum",
+        "kind": 2,
+        "importPath": "raman_materials_full",
+        "description": "raman_materials_full",
+        "peekOfCode": "def generate_full_spectrum(material, nu_axis, Df=1.0, lam=1.0, T=300):\n    if material not in MATERIAL_MODES_FULL:\n        raise ValueError(f\"Material '{material}' not defined.\")\n    modes = MATERIAL_MODES_FULL[material]\n    return raman_analytic(nu_axis, modes, Df=Df, lam=lam, T=T)",
+        "detail": "raman_materials_full",
+        "documentation": {}
+    },
+    {
+        "label": "MATERIAL_MODES_FULL",
+        "kind": 5,
+        "importPath": "raman_materials_full",
+        "description": "raman_materials_full",
+        "peekOfCode": "MATERIAL_MODES_FULL = {\n    \"Si\": [\n        {\"A\":1.00,\"nu\":520.7,\"sigma\":4.5,\"gamma\":2.0,\"beta\":0.25},\n        {\"A\":0.25,\"nu\":302,\"sigma\":6,\"gamma\":3,\"beta\":0.2},\n        {\"A\":0.20,\"nu\":435,\"sigma\":5,\"gamma\":2,\"beta\":0.2},\n        {\"A\":0.15,\"nu\":970,\"sigma\":10,\"gamma\":4,\"beta\":0.3},\n        {\"A\":0.10,\"nu\":1450,\"sigma\":15,\"gamma\":5,\"beta\":0.35},\n        {\"A\":0.05,\"nu\":1550,\"sigma\":18,\"gamma\":6,\"beta\":0.4},\n    ],\n    \"Ge\": [",
+        "detail": "raman_materials_full",
+        "documentation": {}
+    },
+    {
+        "label": "RamanPreprocessPipeline",
+        "kind": 6,
+        "importPath": "raman_preprocess_pipeline",
+        "description": "raman_preprocess_pipeline",
+        "peekOfCode": "class RamanPreprocessPipeline:\n    \"\"\"\n    Complete Raman preprocessing pipeline for Optech Raman AI system.\n    \"\"\"\n    def __init__(self, config=None):\n        \"\"\"\n        Parameters\n        ----------\n        config : dict or None\n            Optional configuration dictionary controlling parameters for all blocks.",
+        "detail": "raman_preprocess_pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "Df_TFU",
+        "kind": 2,
+        "importPath": "raman_tfu_thermo",
+        "description": "raman_tfu_thermo",
+        "peekOfCode": "def Df_TFU(T, T0=300, Tc=1500, eta=0.08):\n    \"\"\"Fractal dimension as a function of temperature.\"\"\"\n    return 1.0 + eta * np.log(1.0 + (T - T0) / Tc)\ndef update_modes_T(T, modes, T0=300):\n    \"\"\"Return temperature-adjusted Raman mode parameters.\"\"\"\n    updated = []\n    for m in modes:\n        A0, nu0, sigma0 = m[\"A\"], m[\"nu\"], m[\"sigma\"]\n        alpha = m.get(\"alpha\", 1e-5)\n        beta = m.get(\"beta\", 5e-4)",
+        "detail": "raman_tfu_thermo",
+        "documentation": {}
+    },
+    {
+        "label": "update_modes_T",
+        "kind": 2,
+        "importPath": "raman_tfu_thermo",
+        "description": "raman_tfu_thermo",
+        "peekOfCode": "def update_modes_T(T, modes, T0=300):\n    \"\"\"Return temperature-adjusted Raman mode parameters.\"\"\"\n    updated = []\n    for m in modes:\n        A0, nu0, sigma0 = m[\"A\"], m[\"nu\"], m[\"sigma\"]\n        alpha = m.get(\"alpha\", 1e-5)\n        beta = m.get(\"beta\", 5e-4)\n        gamma = m.get(\"gammaT\", 2e-3)\n        nu_T = nu0 * (1 - alpha * (T - T0))\n        sigma_T = sigma0 * (1 + beta * (T - T0))",
+        "detail": "raman_tfu_thermo",
+        "documentation": {}
+    },
+    {
+        "label": "raman_tfu_thermo",
+        "kind": 2,
+        "importPath": "raman_tfu_thermo",
+        "description": "raman_tfu_thermo",
+        "peekOfCode": "def raman_tfu_thermo(nu, modes, T, T0=300, Tc=1500, eta=0.08, lam=1.0):\n    \"\"\"Compute TFU–thermodynamic Raman spectrum.\"\"\"\n    Df = Df_TFU(T, T0, Tc, eta)\n    modes_T = update_modes_T(T, modes, T0)\n    return raman_analytic(nu, modes_T, Df=Df, lam=lam, T=T), Df",
+        "detail": "raman_tfu_thermo",
+        "documentation": {}
+    },
+    {
+        "label": "Resampler",
+        "kind": 6,
+        "importPath": "resample",
+        "description": "resample",
+        "peekOfCode": "class Resampler:\n    \"\"\"\n    Raman resampling/interpolation handler.\n    \"\"\"\n    def __init__(self, step=1.0, kind=\"linear\"):\n        self.step = step\n        self.kind = kind\n    def apply(self, x, y):\n        \"\"\"\n        Apply interpolation to obtain a uniform wavenumber grid.",
+        "detail": "resample",
+        "documentation": {}
+    },
+    {
+        "label": "interp_spectrum",
+        "kind": 2,
+        "importPath": "resample",
+        "description": "resample",
+        "peekOfCode": "def interp_spectrum(x, y, step=1.0, kind=\"linear\"):\n    \"\"\"\n    Interpolate a Raman spectrum onto a uniform axis.\n    Parameters\n    ----------\n    x : np.ndarray\n        Raman shift axis (cm⁻¹)\n    y : np.ndarray\n        Intensities\n    step : float",
+        "detail": "resample",
+        "documentation": {}
+    },
+    {
+        "label": "r2_score",
+        "kind": 2,
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "peekOfCode": "def r2_score(y_exp, y_mod):\n    ss_res = np.sum((y_exp - y_mod) ** 2)\n    ss_tot = np.sum((y_exp - np.mean(y_exp)) ** 2)\n    return 1 - ss_res / ss_tot\ndef rms_error(y_exp, y_mod):\n    return np.sqrt(np.mean((y_exp - y_mod) ** 2))\n# -------------------------------------------------------------------------\n# 🔹 2. Fonction principale de validation\n# -------------------------------------------------------------------------\ndef validate_experiment(",
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "rms_error",
+        "kind": 2,
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "peekOfCode": "def rms_error(y_exp, y_mod):\n    return np.sqrt(np.mean((y_exp - y_mod) ** 2))\n# -------------------------------------------------------------------------\n# 🔹 2. Fonction principale de validation\n# -------------------------------------------------------------------------\ndef validate_experiment(\n    material: str,\n    measured_file: str,\n    T: float = 300,\n    Df_guess: float = 1.0,",
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "validate_experiment",
+        "kind": 2,
+        "importPath": "validate_tfu_experiment",
+        "description": "validate_tfu_experiment",
+        "peekOfCode": "def validate_experiment(\n    material: str,\n    measured_file: str,\n    T: float = 300,\n    Df_guess: float = 1.0,\n    lam: float = 1.0,\n    out_dir: str = \"validation_reports\",\n):\n    \"\"\"\n    Compare un spectre mesuré au modèle TFU-Raman.",
+        "detail": "validate_tfu_experiment",
+        "documentation": {}
+    },
+    {
+        "label": "validate_multitemp",
+        "kind": 2,
+        "importPath": "validate_tfu_multitemp",
+        "description": "validate_tfu_multitemp",
+        "peekOfCode": "def validate_multitemp(\n    material: str,\n    spectra_dir: str = \"spectres_mesures\",\n    temps: list = None,\n    Df_guess: float = 1.0,\n    lam: float = 0.8,\n    out_dir: str = \"validation_reports\"\n):\n    \"\"\"\n    Run validation for all available temperature files.",
+        "detail": "validate_tfu_multitemp",
+        "documentation": {}
+    }
+]

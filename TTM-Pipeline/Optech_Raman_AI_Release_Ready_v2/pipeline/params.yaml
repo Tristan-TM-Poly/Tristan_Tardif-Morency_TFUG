@@ -1,0 +1,11 @@
+# Hyperparamètres pipeline
+preprocess:
+  savgol_window: 21
+  savgol_poly: 3
+  als_lambda: 1.0e5
+  als_p: 0.01
+
+features:
+  prominence: 0.01
+  distance: 5
+  topk: 5

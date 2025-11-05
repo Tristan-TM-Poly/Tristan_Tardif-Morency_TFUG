@@ -1,0 +1,117 @@
+* LC_cavity_HP_v4_SPICE_v3.cir
+* Purpose: HP-v4 analog front-end with LC branches + notch EMI at f_clk
+* Compatible with LTspice/Micro-Cap generic SPICE
+
+*************** PARAMETERS ***************
+.param VCLK=1.0
+.param FCLK=2e6         ; clock frequency [Hz] (adjust to your board)
+.param Df=1.00          ; fractal dimension proxy (0.8..1.4)
+.param Q1=100           ; branch 1 nominal Q
+.param Q2=80            ; branch 2 nominal Q
+.param g0=1.00 g1=0.95 g2=0.90  ; branch gains (0..1)
+.param slope=0.42       ; HP-v4 slope
+.param kappa_df=-1.2    ; HP-v4 kappa
+.param deltaDf=0.06     ; max Df step for calibration sweeps
+
+* Normalization target: |Vin_norm| in [0.9,1.1]
+.param VIN_NORM=1.0
+
+*************** SOURCES ***************
+* Differential input (select one)
+Vsig IN 0 AC {VCLK} SIN(0 {VCLK} 50e3)     ; 50 kHz tone for TRAN
+* For AC sweep, Vsig AC magnitude is used
+
+*************** LC BRANCH SYNTHESIS ***************
+* Helper: map Df and slope to effective component multipliers
+* Empirical mapping (placeholder, to be calibrated with measurements)
+.param Lsc=1/(1+{slope}*({Df}-1))
+.param Csc=1+{slope}*({Df}-1)
+.param Rsc=1+0.5*({Df}-1)
+
+* Branch 1 (BP around f0_1)
+.param f0_1=80e3
+.param L1={Lsc}*100u
+.param C1={Csc}*1n
+.param R1={Rsc}*{2*pi*f0_1*L1/Q1}
+
+L1a IN N1 {L1}
+C1a N1 0 {C1}
+R1a N1 0 {R1}
+E1 OUT1 0 VALUE = { {g0}*(V(N1,0)) }
+
+* Branch 2 (BP around f0_2)
+.param f0_2=180e3
+.param L2={Lsc}*60u
+.param C2={Csc}*1.5n
+.param R2={Rsc}*{2*pi*f0_2*L2/Q2}
+
+L2a IN N2 {L2}
+C2a N2 0 {C2}
+R2a N2 0 {R2}
+E2 OUT2 0 VALUE = { {g1}*(V(N2,0)) }
+
+* High-frequency shaper (simple RC + VCVS gain g2)
+.param Rhf=1k
+.param Chf={Csc}*220p
+RHF IN N3 {Rhf}
+CHF N3 0 {Chf}
+E3 OUT3 0 VALUE = { {g2}*(V(N3,0)) }
+
+* Summing node → pre-TIA
+Esum PRE 0 VALUE = { V(OUT1)+V(OUT2)+V(OUT3) }
+
+*************** NOTCH EMI tuned at FCLK ***************
+* Parallel RLC notch to suppress f=FCLK ±2%
+.param Cn = 100p
+.param Ln = 1/((2*pi*FCLK)**2*Cn)
+.param Rn = 50         ; notch depth (adjust with measurements)
+Ln1 PRE Nn {Ln}
+Cn1 Nn 0 {Cn}
+Rn1 Nn 0 {Rn}
+
+*************** TIA/ADC MODEL (simplified) ***************
+.param Rtia=10k
+.param Ctia=5p
+RTIA PRE TIA {Rtia}
+CTIA TIA 0 {Ctia}
+* ADC as sample/hold with finite input R,C (very simplified)
+.param Radc=200k Cadc=2p
+RADC TIA ADC {Radc}
+CADC ADC 0 {Cadc}
+
+* Normalized output
+E_NORM VOUT 0 VALUE = { V(ADC)*({VIN_NORM}/(V(ADC)+1e-9)) }
+
+*************** ANALYSIS ***************
+* 1) AC: Bode from 1kHz..10MHz
+.ac dec 50 1e3 10e6
+
+* 2) TRAN: 0.0..5 ms for energy recovery, 50 kHz tone
+.tran 0 5m 0 100n
+
+*************** MEASUREMENTS ***************
+* Bode gain/phase at key bands
+.meas ac GAIN_50kHZ mag V(VOUT) AT=50e3
+.meas ac GAIN_FCLK mag V(VOUT) AT={FCLK}
+.meas ac PHASE_50kHZ phase V(VOUT) AT=50e3
+
+* VIN normalization window (TRAN)
+.meas tran VIN_MAX  MAX V(ADC) FROM=1m TO=5m
+.meas tran VIN_MIN  MIN V(ADC) FROM=1m TO=5m
+
+* Recovered energy proxy in RC around TIA
+.meas tran E_REC param='0.5*CTIA*V(TIA)**2 + 0.5*CADC*V(ADC)**2' FROM=1m TO=5m
+
+*************** STEPS (sweeps) ***************
+.step param Df list 0.8 0.95 1.00 1.05 1.20 1.40
+.step param Q1 list 80 100 120
+.step param Q2 list 64 80 96
+.step param g0 list 1.00 0.90
+.step param g1 list 0.95 0.85
+.step param g2 list 0.90 0.80
+
+*************** OUTPUT CONTROL ***************
+.options plotwinsize=0
+.probe V(IN) V(PRE) V(TIA) V(ADC) V(VOUT)
+.backanno
+.end

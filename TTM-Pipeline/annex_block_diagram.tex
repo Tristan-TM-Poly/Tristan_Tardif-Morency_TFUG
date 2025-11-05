@@ -1,0 +1,25 @@
+
+\section*{Annexe B — Schéma bloc du pipeline}
+\addcontentsline{toc}{section}{Annexe B — Schéma bloc du pipeline}
+\begin{center}
+\begin{tikzpicture}[node distance=9mm, >=stealth, rounded corners, thick]
+\tikzstyle{blk}=[draw, rectangle, align=center, minimum height=8mm, minimum width=30mm]
+\node[blk] (ing) {Ingestion\\(Sec.~1--2)};
+\node[blk, right=of ing] (qa) {QA rapide\\(Sec.~3)};
+\node[blk, right=of qa] (cal) {Calibration\\(Sec.~4)};
+\node[blk, right=of cal] (pre) {Prétraitements\\(Sec.~5)};
+\node[blk, right=of pre] (fit) {Pics/Voigt\\(Sec.~6)};
+\node[blk, below=of pre, xshift=18mm] (map) {Cartographie\\(Sec.~7)};
+\node[blk, right=of fit] (id) {Identification\\(Sec.~8)};
+\node[blk, right=of id] (qt) {Quantification\\(Sec.~9)};
+\node[blk, below=of id] (val) {Validation\\(Sec.~10)};
+\draw[->] (ing) -- (qa);
+\draw[->] (qa) -- (cal);
+\draw[->] (cal) -- (pre);
+\draw[->] (pre) -- (fit);
+\draw[->] (fit) -- (id);
+\draw[->] (id) -- (qt);
+\draw[->] (fit) -- (map);
+\draw[->] (qt) -- (val);
+\end{tikzpicture}
+\end{center}

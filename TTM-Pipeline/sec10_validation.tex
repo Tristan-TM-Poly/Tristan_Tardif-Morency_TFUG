@@ -1,0 +1,86 @@
+
+\section{Validation, Métrologie \& Traçabilité (Section 10)}
+
+\subsection{Objectifs}
+Fournir des garanties quantitatives sur la \textbf{validité} du pipeline (exactitude, fidélité, robustesse) et une \textbf{traçabilité complète} (provenance $\rightarrow$ décisions algorithmiques $\rightarrow$ exports), conforme aux pratiques labo/industrie (ICH Q2/USP/ISO).
+
+\subsection{Plan d'expériences (DOE)}
+\begin{itemize}[nosep]
+\item \textbf{Répétabilité} (même jour, même instrument, même opérateur): $n\ge 10$ réplicats/échantillon.
+\item \textbf{Reproductibilité intermédiaire} (jours différents/opérateurs différents).
+\item \textbf{Inter-instruments} (sites/instruments différents, $\lambda_L$, objectifs, filtres).
+\item \textbf{Stabilité} vs temps (contrôle dérive, recalibration périodique).
+\end{itemize}
+
+\subsection{Métriques de performance}
+\begin{itemize}[nosep]
+\item \textbf{Exactitude} (biais): moyenne $\hat{C}-C$ (Sec.~9) et test de Bland--Altman (LOA).
+\item \textbf{Fidélité} (précision): écart-type intra-condition; \textbf{r\%} (\%RSD) cible $\le 5$--$10\%$ selon cas.
+\item \textbf{Robustesse}: variation sous perturbations contrôlées (gain/offset, \emph{baseline} $\lambda$, SG-$M$, bruit).
+\item \textbf{LOD/LOQ vérifiées}: expérience de dilutions en blanc (Sec.~9) avec taux de détection/quantification observés.
+\item \textbf{Taux d'acceptation QA}: \% spectres \texttt{acceptés} (Sec.~3) et causes de rejet.
+\item \textbf{Concordance identification}: macro-F1 (Sec.~8), ECE (calibration), TPR@FPR pour OOD.
+\end{itemize}
+
+\subsection{Gage R\&R (ANOVA)}
+Pour une mesure $Y_{ijk}$ (pièce $i$, opérateur $j$, réplication $k$), ANOVA à effets aléatoires $\Rightarrow$ composantes de variance: \textit{repeatability} $\sigma^2_e$, \textit{reproducibility} opérateur $\sigma^2_o$, interaction pièce$\times$opérateur $\sigma^2_{po}$. Pourcentage de variation: $\mathrm{PV} = 100 \times \sigma_\text{gage}/\sigma_\text{total}$. Cible: PV $\le 10\%$ (bon), 10--30\% (marginal), $>30\%$ (à améliorer).
+
+\subsection{Stabilité \& contrôle dérive}
+\begin{itemize}[nosep]
+\item \textbf{Shewhart/EWMA} sur $\mu_{520.7}$ (Si) et FWHM instrumentale: alarmes 1--2--3$\sigma$.
+\item \textbf{Recalibration} (Sec.~4) si dérive $|\Delta \nu| > \tau_{\mathrm{drift}}$ persiste (ex. $>0.5$~\cm).
+\item \textbf{Harmonisation} inter-instruments: correction de gain/offset et adaptation de domaine (Sec.~8).
+\end{itemize}
+
+\subsection{Robustesse (sensibilité aux hyperparamètres)}
+\begin{itemize}[nosep]
+\item Balayer $\lambda$ (AsLS), fenêtre SG, seuils QA, paramètres de fit Voigt; mesurer l'impact sur $A,\mu,\mathrm{FWHM}$ et sur les sorties Sec.~8/9.
+\item \textbf{Critère} : variations $\Delta$ dans des \textit{bornes acceptables} (p.ex. $|\Delta \mu|<0.3$~\cm; $\Delta$F1$<2$~pts; $\Delta$RMSE$<5\%$).
+\end{itemize}
+
+\subsection{Traçabilité \& intégrité des données}
+\begin{itemize}[nosep]
+\item \textbf{Provenance} : \texttt{manifest.json} (hash SHA-256, versions, métas) et logs structurés (stade, config, seeds).
+\item \textbf{Chaîne d'horodatage} : UTC, identifiants \texttt{run\_uuid}, \texttt{sample\_id}, \texttt{instrument\_id}.
+\item \textbf{Reproductibilité} : \texttt{config.yaml} versionnée; Docker/Conda; \texttt{calibration.json}.
+\item \textbf{Audit} : \texttt{report\_validation.json} contenant données agrégées, critères, verdicts; PDF auto-généré.
+\end{itemize}
+
+\subsection{Critères d'acceptation (exemple)}
+\begin{itemize}[nosep]
+\item Identification: macro-F1 $\ge 0.92$; ECE $\le 5\%$; TPR@FPR=5\% $\ge 90\%$ pour OOD.
+\item Quantification: $R^2 \ge 0.95$ sur val. indépendante; RMSE $\le$ cible métier; biais $\approx 0$; LOD/LOQ respectées.
+\item Métrologie: PV (Gage R\&R) $\le 10\%$; stabilité (EWMA) dans les bornes.
+\end{itemize}
+
+\subsection{Sorties \& formats}
+\begin{itemize}[nosep]
+\item \textbf{report\_validation.json} : DOE, métriques (avec IC), verdict pass/fail par critère.
+\item \textbf{tables/} : tableaux normalisés (Gage R\&R, stabilité, robustesse).
+\item \textbf{figures/} : cartes de stabilité, courbes Bland--Altman, distributions de métriques.
+\end{itemize}
+
+\subsection{Pseudo-code (génération rapport)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def build_validation_report(datasets, cfg):
+    rr = compute_repeatability(datasets.rep)   # RSD, ANOVA components
+    ri = compute_reproducibility(datasets.inter)
+    stab = control_charts(datasets.stability)  # Shewhart/EWMA
+    idm = id_metrics(datasets.id)              # F1/ECE/OOD
+    qtm = quant_metrics(datasets.quant)        # RMSE/R2/bias/LOD/LOQ
+    robust = hp_sensitivity_scan(datasets.hp_grid)
+    verdict = apply_acceptance(rr, ri, stab, idm, qtm, robust, cfg.thresholds)
+    write_json("artifacts/validation/report_validation.json",
+               {"rr": rr, "ri": ri, "stability": stab,
+                "id": idm, "quant": qtm, "robust": robust,
+                "verdict": verdict, "criteria": cfg.thresholds})
+    return verdict
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{Reproductibilité} : mêmes entrées $\Rightarrow$ mêmes rapports (hashs), $\pm$ float.
+\item \textbf{Couverture} : IC cohérentes par bootstrap/ANOVA.
+\item \textbf{Signalements} : alarmes cohérentes si dérive simulée; verdicts pass/fail corrects lorsque seuils franchis.
+\item \textbf{DoD} : \texttt{report\_validation.json} \& figures/export générés; annexes tables présentes.
+\end{itemize}

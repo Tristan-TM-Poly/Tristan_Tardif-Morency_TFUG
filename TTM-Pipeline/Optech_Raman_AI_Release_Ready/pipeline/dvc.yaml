@@ -1,0 +1,21 @@
+stages:
+  convert:
+    cmd: optech-raman-ai convert-csv --input data/raw --output data/processed
+    deps:
+      - data/raw
+    outs:
+      - data/processed
+  preprocess:
+    cmd: python -m optech_raman_ai.pipelines.preprocess --input data/processed --output data/clean
+    deps:
+      - data/processed
+      - pipeline/params.yaml
+    outs:
+      - data/clean
+  features:
+    cmd: python -m optech_raman_ai.pipelines.features --input data/clean --output data/features
+    deps:
+      - data/clean
+      - pipeline/params.yaml
+    outs:
+      - data/features

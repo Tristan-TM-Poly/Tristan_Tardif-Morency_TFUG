@@ -1,0 +1,66 @@
+{
+  "csv_detected": 9,
+  "csv_copied_to_raw": 9,
+  "parquet_enabled": false,
+  "converted_parquet": [],
+  "converted_csv_gz": [
+    {
+      "input": "Al2O3_sapphire.csv",
+      "output": "Al2O3_sapphire.csv.gz",
+      "rows": 3,
+      "cols": 2
+    },
+    {
+      "input": "PS_polystyrene.csv",
+      "output": "PS_polystyrene.csv.gz",
+      "rows": 3,
+      "cols": 2
+    },
+    {
+      "input": "PTFE.csv",
+      "output": "PTFE.csv.gz",
+      "rows": 2,
+      "cols": 2
+    },
+    {
+      "input": "Si_520cm-1.csv",
+      "output": "Si_520cm-1.csv.gz",
+      "rows": 5,
+      "cols": 2
+    },
+    {
+      "input": "Al2O3_sapphire_real.csv",
+      "output": "Al2O3_sapphire_real.csv.gz",
+      "rows": 0,
+      "cols": 2
+    },
+    {
+      "input": "PS_polystyrene_real.csv",
+      "output": "PS_polystyrene_real.csv.gz",
+      "rows": 0,
+      "cols": 2
+    },
+    {
+      "input": "PTFE_real.csv",
+      "output": "PTFE_real.csv.gz",
+      "rows": 0,
+      "cols": 2
+    },
+    {
+      "input": "Si_520cm-1_real.csv",
+      "output": "Si_520cm-1_real.csv.gz",
+      "rows": 0,
+      "cols": 2
+    },
+    {
+      "input": "ablation.csv",
+      "output": "ablation.csv.gz",
+      "rows": 4,
+      "cols": 3
+    }
+  ],
+  "conversion_errors": [],
+  "dedup_removed": [],
+  "smoke_ok": true,
+  "smoke_msg": "Import + deduplicate OK"
+}

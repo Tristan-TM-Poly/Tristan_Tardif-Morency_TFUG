@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "optech-raman-ai"
+version = "0.1.0"
+authors = [{name="TTM", email="tristan-tm@hotmail.com"}]
+description = "Optech Raman AI pipeline (education + production skeleton)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+optech-raman-ai = "optech_raman_ai.cli:main"

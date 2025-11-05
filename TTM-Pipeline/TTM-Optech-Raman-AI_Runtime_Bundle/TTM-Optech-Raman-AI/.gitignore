@@ -1,0 +1,28 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual envs
+.venv/
+.env/
+
+# Data & artifacts
+data/
+artifacts/
+reports/*.pdf
+reports/*.aux
+reports/*.log
+reports/*.out
+reports/*.bbl
+reports/*.blg
+
+# DVC
+.dvc/
+*.lock
+.cache/
+
+# Parquet/arrow caches
+*.parquet
+*.feather
+*.arrow

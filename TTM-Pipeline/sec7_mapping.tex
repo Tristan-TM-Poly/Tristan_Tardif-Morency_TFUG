@@ -1,0 +1,99 @@
+
+\section{Cartographie Raman (hyperspectral) \& agrégation spatiale (Section 7)}
+
+\subsection{Objectif}
+Produire des cartes quantitatives fiables (position de pics, aires, FWHM, rapports d'intensité, SNR, résidu) à partir d'acquisitions spatiales (raster/tiles), avec correction de dérive, mosaïquage, agrégation par régions (ROI) et contrôles qualité spatiaux.
+
+\subsection{Modèle de données spatial}
+\begin{itemize}[nosep]
+\item \textbf{Pixel} $(i,j)$ : spectre prétraité (Sec.~5), pics \& paramètres ajustés (Sec.~6).
+\item \textbf{Tile} $T$ : bloc de taille $H\times W$ avec métadonnées (\texttt{stage\_x\_um}, \texttt{stage\_y\_um}, pas en \um, orientation).
+\item \textbf{Carte} : champ scalaire $M(i,j)$ (p.ex. aire du pic $k$, FWHM, $\mu_k$, SNR\_peak, nombre de pics).
+\item \textbf{ROI} : polygone ou masque binaire utilisé pour l'agrégation (médiane, IQR, quantiles).
+\end{itemize}
+
+\subsection{Chaîne de traitement spatiale}
+\begin{enumerate}[nosep]
+\item \textbf{Prétraiter \& fitter} chaque spectre (Sec.~5--6) pour obtenir les paramètres $\{\mu, \mathrm{FWHM}, A, \mathrm{SNR}\}$ des pics d'intérêt.
+\item \textbf{Générer} des cartes par paramètre/pic: $M_A$, $M_{\mathrm{FWHM}}$, $M_{\mu}$, $M_{\mathrm{SNR}}$, etc.
+\item \textbf{Correction de dérive} (si tiles) : aligner les tuiles par corrélation de phase (Fourier) sur une image \emph{proxy} (p.ex. somme d'intensité ou aire d'un pic fort). Transformation rigide/affine selon l'erreur résiduelle.
+\item \textbf{Mosaïquage} : reprojeter les tuiles alignées sur une grille commune; \emph{feathering} linéaire dans les recouvrements; interpolation bilinéaire ou IDW si pas irrégulier.
+\item \textbf{QC spatial} : détecter pixels défaillants (SNR\_peak$<\tau$), lignes mortes, discontinuités aux coutures, outliers locaux ($z$-score spatial).
+\item \textbf{Agrégation ROI} : statistiques par ROI (médiane, MAD, quantiles 10/90, aire pondérée) et export tabulaire.
+\end{enumerate}
+
+\subsection{Alignement \& dérive}
+\paragraph{Corrélation de phase} Maximiser la cohérence entre tuiles via la matrice de décalage $(\Delta x,\Delta y)$ estimée en Fourier; robuste aux gains multiplicatifs. \emph{Option} : utiliser des pics spécifiques (p.ex. Si) pour une carte proxy plus informative.
+\paragraph{Modèle géométrique} Rigid ($R,\ t$) par défaut; passer en affine (avec cisaillement) si l'erreur RMS $> \tau_{\mathrm{rms}}$.
+\paragraph{Validation} Reporter l'erreur RMS d'alignement par tile, et alerter si > 1--2~pixels.
+
+\subsection{Mosaïquage \& interpolation}
+Grille régulière $(X,Y)$ avec pas en \um. Ré-échantillonnage bilinéaire par défaut; IDW ($p\in[1,3]$) pour comblement d'irrégularités; \emph{feathering} linéaire dans les zones de recouvrement pour éviter les sauts de gain. Exporter une \texttt{mask\_valid} pour suivre les zones extrapolées.
+
+\subsection{Indicateurs \& cartes produites}
+\begin{itemize}[nosep]
+\item \textbf{Aire} $S_k$, \textbf{FWHM}$_k$, \textbf{position} $\mu_k$, \textbf{rapport} $S_{k_1}/S_{k_2}$.
+\item \textbf{SNR\_peak} local, \textbf{résidu RMS} du fit, \textbf{nb\_pics} significatifs.
+\item \textbf{QC} : carte de \% de fits convergents, carte des \texttt{bounds\_hit}.
+\end{itemize}
+
+\subsection{Agrégation par ROI}
+\paragraph{Entrées} masque binaire ou polygones (GeoJSON). \paragraph{Sorties} tableau par ROI: médiane, MAD, quantiles, aire effective, \%pixels valides, corrélations inter-cartes. \paragraph{Statistique robuste} utiliser médiane/MAD plutôt que moyenne/écart-type pour limiter l'influence des outliers.
+
+\subsection{Parallélisation \& perfs}
+\begin{itemize}[nosep]
+\item Traitement \textbf{tile-wise} en pipeline: lecture $\rightarrow$ prétraitements $\rightarrow$ fit ROI $\rightarrow$ cartes partielles $\rightarrow$ écriture.
+\item Batching (8--32 tuiles) et gestion mémoire (\texttt{float32}), sauvegarde intermédiaire par tuiles (HDF5/Parquet).
+\item \textbf{Cache} des noyaux Voigt et Jacobien sur grilles; parallélisation multi-processus par tile/ROI; GPU optionnel pour le fit.
+\end{itemize}
+
+\subsection{Export \& formats}
+\begin{itemize}[nosep]
+\item \textbf{Images}: GeoTIFF/PNG 16~bits avec barre d'échelle et légende (unités: \cm, \um).
+\item \textbf{Tables}: \texttt{maps\_summary.csv} (métriques globales), \texttt{roi\_summary.csv} (par ROI).
+\item \textbf{JSON}: \texttt{align\_report.json} (dérive, erreurs RMS), \texttt{mosaic\_meta.json} (pas, grille, bounds).
+\end{itemize}
+
+\subsection{Pseudo-code (tiles $\rightarrow$ mosaïque)}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+def build_maps(tiles, cfg, calib):
+    proxies, transforms = [], []
+    partial_maps = []
+    for T in tiles:
+        # 1) per-pixel pipeline
+        params = [fit_peaks(x, y, calib, cfg.fit) for (x,y) in T.spectra]
+        # 2) map proxies (e.g., sum intensity or area of strong peak)
+        P = proxy_from_params(params, kind=cfg.proxy)
+        proxies.append(P)
+    # alignment (phase correlation) -> transforms
+    transforms = estimate_transforms(proxies, model="rigid", tol=cfg.rms_tol)
+    for T, tr in zip(tiles, transforms):
+        M_partial = rasterize_params(T, tr, params_select=cfg.targets, grid=cfg.grid)
+        partial_maps.append(M_partial)
+    M_full = mosaic(partial_maps, method="feather")
+    qc = spatial_qc(M_full, thresholds=cfg.qc)
+    export_maps(M_full, qc, cfg.out_dir)
+    return M_full, qc
+\end{lstlisting}
+
+\subsection{Tests \& DoD}
+\begin{itemize}[nosep]
+\item \textbf{Alignement} : RMS post-alignement $< 1$--$2$~px; stabilité aux gains multiplicatifs.
+\item \textbf{Seams} : discontinuités aux coutures $< \tau$ (différence locale relative).
+\item \textbf{Invariance} : l'ordre des tuiles ne modifie pas la mosaïque finale (test de permutation).
+\item \textbf{Qualité} : \% de fits convergents $\ge 95\%$ sur données propres; carte SNR conforme aux zones sombres.
+\end{itemize}
+
+\subsection{Risques \& parades}
+\begin{itemize}[nosep]
+\item \textbf{Gradients d'illumination} : normalisation locale (flat-field) ou régression 2D basse fréquence.
+\item \textbf{Pas irrégulier} : interpolation IDW + export du masque \texttt{valid}.
+\item \textbf{Outliers locaux} : filtre bilatéral léger ou \emph{median-of-means} spatial.
+\item \textbf{Temps de calcul} : limiter le nombre de pics cibles, activer le mode \emph{ROI-only} pour pics clés.
+\end{itemize}
+
+\subsection{Sorties attendues}
+\begin{itemize}[nosep]
+\item \textbf{maps/} : \texttt{area\_k.png}, \texttt{fwhm\_k.png}, \texttt{mu\_k.png}, \texttt{snr\_k.png}, \texttt{conv\_rate.png}.
+\item \textbf{reports/} : \texttt{align\_report.json}, \texttt{mosaic\_meta.json}, \texttt{roi\_summary.csv}, \texttt{maps\_summary.csv}.
+\end{itemize}
