@@ -1,0 +1,32 @@
+{
+  "name": "ai7_tristan2_private_lib",
+  "visibility": "private",
+  "scope": [
+    "Tristan",
+    "AI-7",
+    "TRISTAN2",
+    "ChatGPT-facing orchestration",
+    "Drive-governed document layer"
+  ],
+  "version": "0.1.0",
+  "status": "bootstrap",
+  "source_of_truth": "GitHub private repository",
+  "default_branch_policy": "main as private sovereign branch",
+  "artifact_states": ["stable", "crystallizable", "exploratory", "quarantine"],
+  "control_organs": [
+    "self_scorecard",
+    "execution_reality_map",
+    "risk_register",
+    "review_cadence",
+    "pilot_closure_board",
+    "coupling_matrix",
+    "theory_to_runtime_conservation"
+  ],
+  "modules": [
+    "actors",
+    "registry",
+    "drive_bridge",
+    "synergy",
+    "governance"
+  ]
+}
