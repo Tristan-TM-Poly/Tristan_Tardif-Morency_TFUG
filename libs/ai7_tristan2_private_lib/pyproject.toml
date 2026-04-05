@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai7-tristan2-private-lib"
+version = "0.1.0"
+description = "Private sovereign library for Tristan, AI-7, TRISTAN2, and Drive-governed orchestration"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  { name = "Tristan Tardif-Morency" },
+]
+license = { text = "Private - all rights reserved" }
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Operating System :: OS Independent",
+  "Private :: Do Not Upload"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
