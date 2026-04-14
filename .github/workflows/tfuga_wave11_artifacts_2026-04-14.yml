@@ -1,0 +1,19 @@
+name: TFUGA Wave11 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave11-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 11 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/emit_raman_stub_artifact_2026-04-14.py
+          test -f applied/2026-04-14/runtime/build_generated_ledger_index_2026-04-14.py
+          test -f applied/2026-04-14/runtime/build_coupled_frontier_state_2026-04-14.py
+          test -f applied/2026-04-14/governance/FRONTIER_GOVERNANCE_DIGEST_2026-04-14.md
