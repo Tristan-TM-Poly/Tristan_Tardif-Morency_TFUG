@@ -1,0 +1,27 @@
+name: TFUGA Auto Generative Web Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tfuga-auto-generative-web-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run TFUGA auto-generative web bundle
+        run: python applied/2026-04-14/runtime/run_tfuga_auto_generative_web_bundle_generated_2026-04-14.py
+
+      - name: Upload TFUGA auto-generative web artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-auto-generative-web-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
