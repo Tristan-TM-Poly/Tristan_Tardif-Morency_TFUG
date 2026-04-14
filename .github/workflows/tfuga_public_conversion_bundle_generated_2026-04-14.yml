@@ -1,0 +1,27 @@
+name: TFUGA Public Conversion Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  public-conversion-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run public conversion bundle
+        run: python applied/2026-04-14/runtime/run_public_conversion_bundle_generated_2026-04-14.py
+
+      - name: Upload public conversion artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-public-conversion-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
