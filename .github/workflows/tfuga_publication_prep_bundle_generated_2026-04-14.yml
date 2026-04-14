@@ -1,0 +1,27 @@
+name: TFUGA Publication Prep Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  publication-prep-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run publication prep bundle
+        run: python applied/2026-04-14/runtime/run_publication_prep_bundle_generated_2026-04-14.py
+
+      - name: Upload publication prep artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-publication-prep-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
