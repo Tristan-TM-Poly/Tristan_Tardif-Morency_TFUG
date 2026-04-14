@@ -1,0 +1,20 @@
+name: TFUGA Wave8 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave8-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 8 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/emit_ldk_bounded_artifact_2026-04-14.py
+          test -f applied/2026-04-14/benchmarks/RAMAN_REVIEW_BENCHMARK_BRIDGE_2026-04-14.md
+          test -f applied/2026-04-14/governance/PILOT_FRONTIER_SCOREBOARD_STATE_2026-04-14.md
+          test -f applied/2026-04-14/runtime/build_fractal_loop_reviewable_summary_2026-04-14.py
+          test -f applied/2026-04-14/runtime/FRACTAL_LOOP_REVIEWABLE_CHAIN_2026-04-14.md
