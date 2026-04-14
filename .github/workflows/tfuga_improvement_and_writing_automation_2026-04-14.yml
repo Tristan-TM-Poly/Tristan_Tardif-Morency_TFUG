@@ -1,0 +1,27 @@
+name: TFUGA Improvement and Writing Automation 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  improvement-and-writing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run improvement and writing bundle
+        run: python applied/2026-04-14/runtime/run_improvement_and_writing_bundle_2026-04-14.py
+
+      - name: Upload generated improvement and writing artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-improvement-and-writing-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
