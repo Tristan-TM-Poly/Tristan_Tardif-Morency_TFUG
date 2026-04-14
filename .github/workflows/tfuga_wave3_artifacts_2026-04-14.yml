@@ -1,0 +1,21 @@
+name: TFUGA Wave3 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave3-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 3 applied artifacts
+        run: |
+          test -f applied/2026-04-14/packets/FRACTAL_LOOP_REDUCED_MODEL_PACKET_2026-04-14.md
+          test -f applied/2026-04-14/packets/FRACTAL_LOOP_PROJECTOR_PACKET_2026-04-14.md
+          test -f applied/2026-04-14/packets/FRACTAL_LOOP_LDK_PACKET_2026-04-14.md
+          test -f applied/2026-04-14/packets/FRACTAL_LOOP_PROPAGATION_PACKET_2026-04-14.md
+          test -f applied/2026-04-14/governance/REALITY_MAP_2026-04-14.md
+          test -f applied/2026-04-14/governance/PILOT_EXECUTION_MATRIX_2026-04-14.md
