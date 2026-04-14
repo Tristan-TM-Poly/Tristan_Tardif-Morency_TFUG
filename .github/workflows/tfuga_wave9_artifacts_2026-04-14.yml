@@ -1,0 +1,21 @@
+name: TFUGA Wave9 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave9-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 9 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/build_ldk_reviewable_summary_2026-04-14.py
+          test -f applied/2026-04-14/pilots/RAMAN_DATASET_POINTER_ARTIFACT_2026-04-14.md
+          test -f applied/2026-04-14/packets/RAMAN_OBSERVABLE_PACKET_2026-04-14.md
+          test -f applied/2026-04-14/governance/FRACTAL_LOOP_LDK_COUPLING_STATE_2026-04-14.md
+          test -f applied/2026-04-14/runtime/GENERATED_ARTIFACT_INDEX_2026-04-14.md
+          test -f applied/2026-04-14/runtime/update_pilot_frontier_scoreboard_state_2026-04-14.py
