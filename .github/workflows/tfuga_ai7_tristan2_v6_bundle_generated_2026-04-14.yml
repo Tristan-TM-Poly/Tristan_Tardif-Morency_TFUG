@@ -1,0 +1,27 @@
+name: TFUGA AI7 TRISTAN2 V6 Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  ai7-tristan2-v6-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run AI-7 TRISTAN2 V6 bundle
+        run: python applied/2026-04-14/runtime/run_ai7_tristan2_v6_bundle_generated_2026-04-14.py
+
+      - name: Upload AI-7 TRISTAN2 V6 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-ai7-tristan2-v6-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
