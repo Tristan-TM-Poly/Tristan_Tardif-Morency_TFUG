@@ -1,0 +1,27 @@
+name: TFUGA Automation Bundle 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  automation-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run automation bundle
+        run: python applied/2026-04-14/runtime/run_automation_bundle_2026-04-14.py
+
+      - name: Upload generated automation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-automation-bundle-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
