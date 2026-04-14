@@ -1,0 +1,33 @@
+name: TFUGA Automation Bundle Resilient 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  automation-bundle-resilient:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run resilient automation bundle
+        run: python applied/2026-04-14/runtime/run_automation_bundle_resilient_2026-04-14.py
+
+      - name: Build automation digest
+        run: python applied/2026-04-14/runtime/build_automation_digest_generated_2026-04-14.py
+
+      - name: Build generated artifact catalog
+        run: python applied/2026-04-14/runtime/build_generated_artifact_catalog_2026-04-14.py
+
+      - name: Upload generated automation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-automation-bundle-resilient-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
