@@ -1,0 +1,19 @@
+name: TFUGA Wave10 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave10-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 10 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/build_raman_reviewable_summary_2026-04-14.py
+          test -f applied/2026-04-14/runtime/emit_event_log_row_2026-04-14.py
+          test -f applied/2026-04-14/governance/FRONTIER_CONSOLIDATION_DECISION_2026-04-14.md
+          test -f applied/2026-04-14/runtime/build_consolidated_frontier_scoreboard_2026-04-14.py
