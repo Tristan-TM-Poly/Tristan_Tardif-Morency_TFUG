@@ -1,0 +1,27 @@
+name: TFUGA Public Interactive Trinity Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tfuga-public-interactive-trinity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run TFUGA public interactive trinity bundle
+        run: python applied/2026-04-14/runtime/run_tfuga_public_interactive_trinity_bundle_generated_2026-04-14.py
+
+      - name: Upload TFUGA public interactive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-public-interactive-trinity-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
