@@ -1,0 +1,21 @@
+name: TFUGA Wave5 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave5-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 5 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/FRACTAL_LOOP_EXECUTABLE_TRACE_PLACEHOLDER_2026-04-14.py
+          test -f applied/2026-04-14/runtime/EXECUTABLE_TRACE_WIRING_PLAN_2026-04-14.md
+          test -f applied/2026-04-14/runtime/EVENT_GOVERNANCE_WIRING_2026-04-14.md
+          test -f applied/2026-04-14/governance/COUPLED_PILOT_EXECUTION_MATRIX_2026-04-14.md
+          test -f applied/2026-04-14/pilots/RAMAN_PILOT_STAGE_2026-04-14.md
+          test -f applied/2026-04-14/pilots/LDK_BOUNDED_PILOT_STAGE_2026-04-14.md
