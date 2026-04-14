@@ -1,0 +1,22 @@
+name: TFUGA Wave7 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave7-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 7 applied artifacts
+        run: |
+          test -f applied/2026-04-14/benchmarks/RAMAN_BENCHMARK_ROW_2026-04-14.md
+          test -f applied/2026-04-14/review/RAMAN_REVIEW_ROW_2026-04-14.md
+          test -f applied/2026-04-14/runtime/LDK_BOUNDED_EXECUTABLE_PLACEHOLDER_2026-04-14.py
+          test -f applied/2026-04-14/benchmarks/FRACTAL_LOOP_LDK_SHARED_BENCHMARK_ROW_2026-04-14.md
+          test -f applied/2026-04-14/runtime/ARTIFACT_INDEX_2026-04-14.md
+          test -f applied/2026-04-14/runtime/LEDGER_READY_EVENT_LOG_SCHEMA_2026-04-14.md
+          test -f applied/2026-04-14/governance/PILOT_FRONTIER_SCOREBOARD_2026-04-14.md
