@@ -1,0 +1,23 @@
+name: TFUGA Wave4 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave4-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 4 applied artifacts
+        run: |
+          test -f applied/2026-04-14/examples/FRACTAL_LOOP_REDUCED_TRACE_2026-04-14.md
+          test -f applied/2026-04-14/examples/FRACTAL_LOOP_BOUNDED_EXAMPLE_2026-04-14.md
+          test -f applied/2026-04-14/examples/PROJECTOR_MAP_EXAMPLE_2026-04-14.md
+          test -f applied/2026-04-14/examples/LDK_BOUNDED_EXAMPLE_2026-04-14.md
+          test -f applied/2026-04-14/benchmarks/BENCHMARK_MATRIX_2026-04-14.md
+          test -f applied/2026-04-14/benchmarks/COUPLED_GAIN_MATRIX_2026-04-14.md
+          test -f applied/2026-04-14/review/REVIEW_SUMMARY_2026-04-14.md
+          test -f applied/2026-04-14/governance/PROMOTION_DECISION_ROW_2026-04-14.md
