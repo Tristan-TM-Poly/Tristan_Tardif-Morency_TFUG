@@ -1,0 +1,27 @@
+name: TFUGA Best Public Release Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  best-public-release-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run best public release bundle
+        run: python applied/2026-04-14/runtime/run_best_public_release_bundle_generated_2026-04-14.py
+
+      - name: Upload best public release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-best-public-release-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
