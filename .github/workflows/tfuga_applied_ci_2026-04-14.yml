@@ -1,0 +1,52 @@
+name: TFUGA Applied CI 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install minimal dependencies when present
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          if [ -f pyproject.toml ]; then pip install pytest; fi
+
+      - name: Compile Python trees when present
+        run: |
+          python - <<'PY'
+          import compileall
+          import os
+          roots = ['runtime', 'modules', 'scripts', 'tfuga-core-runtime']
+          ok = True
+          for root in roots:
+              if os.path.isdir(root):
+                  print(f'Compiling {root}')
+                  ok = compileall.compile_dir(root, quiet=1) and ok
+          raise SystemExit(0 if ok else 1)
+          PY
+
+      - name: Run pytest when tests exist
+        run: |
+          if [ -d tests ]; then pytest -q || exit 1; else echo 'No tests directory yet'; fi
+
+      - name: Check applied sovereign artifacts
+        run: |
+          test -f applied/2026-04-14/canon/ACTIVE_TRUNK_MANIFEST_2026-04-14.md
+          test -f applied/2026-04-14/canon/SOVEREIGN_ENTRYPOINT_DECISION_2026-04-14.md
+          test -f applied/2026-04-14/canon/PILOT_BRANCH_SELECTION_2026-04-14.md
+          test -f applied/2026-04-14/canon/ARCHIVE_DEMOTION_LIST_2026-04-14.md
+          test -f applied/2026-04-14/canon/SLIM_RUNTIME_BUILD_PLAN_2026-04-14.md
