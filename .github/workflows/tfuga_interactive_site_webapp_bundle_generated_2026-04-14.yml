@@ -1,0 +1,27 @@
+name: TFUGA Interactive Site Webapp Bundle Generated 2026-04-14
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  interactive-site-webapp-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run interactive site webapp bundle
+        run: python applied/2026-04-14/runtime/run_interactive_site_webapp_bundle_generated_2026-04-14.py
+
+      - name: Upload interactive site webapp artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-interactive-site-webapp-bundle-generated-2026-04-14
+          path: applied/2026-04-14/runtime/artifacts/
