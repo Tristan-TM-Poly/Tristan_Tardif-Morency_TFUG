@@ -1,0 +1,21 @@
+name: TFUGA Wave6 Artifact Checks 2026-04-14
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-wave6-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check wave 6 applied artifacts
+        run: |
+          test -f applied/2026-04-14/runtime/emit_fractal_loop_trace_artifact_2026-04-14.py
+          test -f applied/2026-04-14/runtime/RUNTIME_TO_LEDGER_EMISSION_SCHEMA_2026-04-14.md
+          test -f applied/2026-04-14/pilots/RAMAN_PACKET_AND_REVIEW_SCAFFOLD_2026-04-14.md
+          test -f applied/2026-04-14/benchmarks/LDK_BOUNDED_BENCHMARK_ROW_2026-04-14.md
+          test -f applied/2026-04-14/governance/MULTI_PILOT_REALITY_MAP_2026-04-14.md
+          test -f applied/2026-04-14/runtime/FRONTIER_EXECUTION_CHAIN_2026-04-14.md
