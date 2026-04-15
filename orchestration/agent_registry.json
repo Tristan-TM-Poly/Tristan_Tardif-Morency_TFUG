@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "agent_id": "planner_tristan2",
+      "role": "planner",
+      "inputs": ["goal", "repo_state", "datasets"],
+      "outputs": ["task_graph"],
+      "permissions": ["read_repo", "read_configs"]
+    },
+    {
+      "agent_id": "builder_ai_bot",
+      "role": "builder",
+      "inputs": ["task_packet"],
+      "outputs": ["artifacts", "patches", "logs"],
+      "permissions": ["write_branch_workspace"]
+    },
+    {
+      "agent_id": "verifier_ai7",
+      "role": "verifier",
+      "inputs": ["artifacts", "tests", "logs"],
+      "outputs": ["verification_report", "score_rows"],
+      "permissions": ["run_checks"]
+    },
+    {
+      "agent_id": "governor_tristan2",
+      "role": "governor",
+      "inputs": ["verification_report", "score_rows"],
+      "outputs": ["decision"],
+      "permissions": ["label_pr", "open_pr"]
+    }
+  ]
+}
