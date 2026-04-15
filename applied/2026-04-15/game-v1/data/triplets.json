@@ -1,0 +1,29 @@
+[
+  {
+    "id": "tri-archives-01",
+    "tfugaRole": "extract symbolic invariants from fragmented texts",
+    "ai7Role": "generate aligned translations and ambiguity ladders",
+    "tristan2Role": "gate speculative readings",
+    "linkedAgentIds": ["npc-concept-01", "bot-translate-01"],
+    "gatePolicy": "no high interpretation without aligned evidence",
+    "reviewLevel": "strict"
+  },
+  {
+    "id": "tri-workshop-01",
+    "tfugaRole": "extract mechanical structure",
+    "ai7Role": "simulate and compare designs",
+    "tristan2Role": "validate plausibility windows",
+    "linkedAgentIds": ["npc-system-01", "npc-experiment-01", "bot-physics-01", "bot-graph-01"],
+    "gatePolicy": "require mechanical coherence",
+    "reviewLevel": "standard"
+  },
+  {
+    "id": "tri-review-01",
+    "tfugaRole": "identify conceptual backbone",
+    "ai7Role": "aggregate evidence packets",
+    "tristan2Role": "score, block, or promote",
+    "linkedAgentIds": ["npc-review-01", "bot-critic-01"],
+    "gatePolicy": "review first, promotion later",
+    "reviewLevel": "strict"
+  }
+]
