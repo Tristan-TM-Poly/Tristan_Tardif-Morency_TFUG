@@ -1,0 +1,32 @@
+[
+  {
+    "id": "frag-text-001",
+    "type": "text-fragment",
+    "label": "Fragment du ciel tournant",
+    "zoneId": "archives-brisees",
+    "description": "Fragment partiel évoquant des cycles, des anneaux et des retours.",
+    "evidenceLevel": 0.74,
+    "linkedNodeIds": ["node-cycles", "node-astronomy"],
+    "linkedMissionIds": ["mission-001"]
+  },
+  {
+    "id": "machine-sky-001",
+    "type": "mechanism",
+    "label": "Machine du ciel brisee",
+    "zoneId": "atelier-perdu",
+    "description": "Assemblage incomplet d engrenages et de repères circulaires.",
+    "evidenceLevel": 0.82,
+    "linkedNodeIds": ["node-gears", "node-calculation"],
+    "linkedMissionIds": ["mission-001"]
+  },
+  {
+    "id": "gear-pattern-01",
+    "type": "design-pattern",
+    "label": "Motif d engrenages",
+    "zoneId": "atelier-perdu",
+    "description": "Motif de transmission mécanique à comparer avec la machine céleste.",
+    "evidenceLevel": 0.69,
+    "linkedNodeIds": ["node-gears"],
+    "linkedMissionIds": ["mission-001"]
+  }
+]
