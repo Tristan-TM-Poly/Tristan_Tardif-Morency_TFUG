@@ -1,0 +1,38 @@
+[
+  {
+    "id": "builder-world-01",
+    "name": "World Builder Bot",
+    "builderType": "world",
+    "domain": "world-assembly",
+    "buildTargets": ["world-graph", "zone-layout", "node-cluster"],
+    "stabilityWeight": 0.9,
+    "integrationBias": 0.88,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-review", "node-promotion"],
+    "linkedTripletIds": ["tri-review-01"]
+  },
+  {
+    "id": "builder-mission-01",
+    "name": "Mission Builder Bot",
+    "builderType": "mission",
+    "domain": "mission-assembly",
+    "buildTargets": ["mission", "gate-binding", "reward-structure"],
+    "stabilityWeight": 0.87,
+    "integrationBias": 0.9,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-calculation", "node-threshold"],
+    "linkedTripletIds": ["tri-workshop-01", "tri-archives-01"]
+  },
+  {
+    "id": "builder-ui-01",
+    "name": "Surface Builder Bot",
+    "builderType": "interface",
+    "domain": "ui-assembly",
+    "buildTargets": ["panel", "dashboard", "explorer-card"],
+    "stabilityWeight": 0.84,
+    "integrationBias": 0.92,
+    "linkedMissionIds": ["mission-001"],
+    "linkedNodeIds": ["node-review", "node-celestial-machine"],
+    "linkedTripletIds": ["tri-review-01", "tri-workshop-01"]
+  }
+]
