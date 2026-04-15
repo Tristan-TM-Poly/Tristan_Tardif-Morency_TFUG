@@ -1,0 +1,16 @@
+{
+  "playerLevel": 1,
+  "unlockedZones": ["archives-brisees"],
+  "discoveredArtifacts": [],
+  "unlockedNodes": [],
+  "activeMissionId": "mission-001",
+  "completedMissionIds": [],
+  "npcTrust": {
+    "npc-concept-01": 0.5,
+    "npc-system-01": 0.4,
+    "npc-review-01": 0.6,
+    "npc-experiment-01": 0.45
+  },
+  "hypothesisScore": 0,
+  "reviewStatus": "open"
+}
