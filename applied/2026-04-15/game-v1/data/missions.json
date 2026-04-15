@@ -1,0 +1,26 @@
+[
+  {
+    "id": "mission-001",
+    "title": "La machine du ciel brisee",
+    "zoneId": "archives-brisees",
+    "objective": "Reconstruire l hypothese de fonction d un mecanisme celeste fragmentaire.",
+    "requiredArtifacts": ["frag-text-001", "machine-sky-001", "gear-pattern-01"],
+    "requiredNPCs": ["npc-concept-01", "npc-system-01", "npc-review-01"],
+    "requiredNodes": ["node-cycles", "node-gears", "node-calculation"],
+    "successCondition": "submit-hypothesis-and-pass-gate",
+    "rewardNodeIds": ["node-celestial-machine"],
+    "reviewGateId": "gate-001"
+  },
+  {
+    "id": "mission-002",
+    "title": "Le seuil recode",
+    "zoneId": "temple-transmission",
+    "objective": "Relier rite, seuil et recodage symbolique sans inflation interpretative.",
+    "requiredArtifacts": ["frag-text-001"],
+    "requiredNPCs": ["npc-concept-01", "npc-review-01"],
+    "requiredNodes": ["node-threshold", "node-recoding", "node-review"],
+    "successCondition": "link-ritual-spatial-symbolic-structure",
+    "rewardNodeIds": ["node-promotion"],
+    "reviewGateId": "gate-002"
+  }
+]
