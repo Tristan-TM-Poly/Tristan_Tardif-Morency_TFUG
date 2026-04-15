@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gate-001",
+    "objectId": "mission-001",
+    "evidence": 0,
+    "coherence": 0,
+    "bridgeDensity": 0,
+    "speculativeCost": 0,
+    "status": "open",
+    "nextAction": "collect and align evidence"
+  },
+  {
+    "id": "gate-002",
+    "objectId": "mission-002",
+    "evidence": 0,
+    "coherence": 0,
+    "bridgeDensity": 0,
+    "speculativeCost": 0,
+    "status": "open",
+    "nextAction": "compare rite, threshold, and symbolic context"
+  }
+]
