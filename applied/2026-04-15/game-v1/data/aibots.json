@@ -1,0 +1,50 @@
+[
+  {
+    "id": "bot-translate-01",
+    "name": "Rosetta Bot",
+    "domain": "translation",
+    "operators": ["align", "compare", "extract-invariants", "ambiguity-map"],
+    "scoreWeight": 0.9,
+    "representationMode": "text-symbol",
+    "policy": "bounded-philology-first",
+    "linkedBotIds": ["bot-critic-01"],
+    "linkedNPCIds": ["npc-concept-01"],
+    "linkedTripletIds": ["tri-archives-01"]
+  },
+  {
+    "id": "bot-physics-01",
+    "name": "Mechanica Bot",
+    "domain": "physics",
+    "operators": ["simulate", "estimate", "constraint-check"],
+    "scoreWeight": 0.88,
+    "representationMode": "mechanical-model",
+    "policy": "plausibility-before-narrative",
+    "linkedBotIds": ["bot-graph-01", "bot-critic-01"],
+    "linkedNPCIds": ["npc-system-01", "npc-experiment-01"],
+    "linkedTripletIds": ["tri-workshop-01"]
+  },
+  {
+    "id": "bot-graph-01",
+    "name": "Yggdrasil Bot",
+    "domain": "graph-navigation",
+    "operators": ["link", "cluster", "path-find"],
+    "scoreWeight": 0.84,
+    "representationMode": "graph",
+    "policy": "show-bounded-branch-paths",
+    "linkedBotIds": ["bot-physics-01", "bot-critic-01"],
+    "linkedNPCIds": ["npc-system-01"],
+    "linkedTripletIds": ["tri-workshop-01", "tri-review-01"]
+  },
+  {
+    "id": "bot-critic-01",
+    "name": "TRI-Critic",
+    "domain": "review",
+    "operators": ["score", "downgrade", "contradiction-check"],
+    "scoreWeight": 1.0,
+    "representationMode": "governance",
+    "policy": "anti-inflation-strict",
+    "linkedBotIds": ["bot-translate-01", "bot-physics-01", "bot-graph-01"],
+    "linkedNPCIds": ["npc-review-01", "npc-experiment-01"],
+    "linkedTripletIds": ["tri-review-01"]
+  }
+]
