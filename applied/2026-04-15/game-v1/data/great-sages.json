@@ -1,0 +1,38 @@
+[
+  {
+    "id": "gs-memory-01",
+    "name": "Sage of Memory Rivers",
+    "vision": "civilization survives through maintained memory and living transmission",
+    "synthesisPower": 0.94,
+    "governanceWeight": 0.9,
+    "limitsLens": "memory-loss-and-collapse",
+    "questionQuality": 0.96,
+    "linkedMissionIds": ["mission-002"],
+    "linkedNodeIds": ["node-recoding", "node-threshold"],
+    "linkedTripletIds": ["tri-archives-01"]
+  },
+  {
+    "id": "gs-measure-01",
+    "name": "Sage of Measured Fire",
+    "vision": "power without review becomes collapse",
+    "synthesisPower": 0.9,
+    "governanceWeight": 0.97,
+    "limitsLens": "anti-inflation-and-cost",
+    "questionQuality": 0.92,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-review", "node-promotion"],
+    "linkedTripletIds": ["tri-review-01"]
+  },
+  {
+    "id": "gs-civilization-01",
+    "name": "Sage of Long Dawn",
+    "vision": "knowledge matters when it reactivates civilization without betraying truth",
+    "synthesisPower": 0.95,
+    "governanceWeight": 0.88,
+    "limitsLens": "time-long-civilizational-direction",
+    "questionQuality": 0.97,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-promotion", "node-celestial-machine"],
+    "linkedTripletIds": ["tri-workshop-01", "tri-review-01"]
+  }
+]
