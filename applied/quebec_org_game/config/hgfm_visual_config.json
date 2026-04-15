@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "layout": "force_directed",
+  "node_groups": {
+    "organization": "sector",
+    "event": "event_type",
+    "profile": "profile_state"
+  },
+  "default_export": "out/tfuga/hgfm_graph.json",
+  "summary_export": "out/tfuga/hgfm_summary.json",
+  "show_weights": true,
+  "max_nodes_preview": 250
+}
