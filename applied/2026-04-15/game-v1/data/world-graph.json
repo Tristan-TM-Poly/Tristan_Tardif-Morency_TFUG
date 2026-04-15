@@ -1,0 +1,45 @@
+{
+  "version": "v1",
+  "title": "TFUGA EduGame World Graph",
+  "zones": [
+    {
+      "id": "archives-brisees",
+      "label": "Archives Brisées",
+      "description": "Fragments de textes, chroniques cassées, traductions incomplètes, cartes perdues.",
+      "unlockLevel": 1
+    },
+    {
+      "id": "atelier-perdu",
+      "label": "Atelier Perdu",
+      "description": "Machines brisées, engrenages, schémas techniques et procédures à reconstruire.",
+      "unlockLevel": 2
+    },
+    {
+      "id": "temple-transmission",
+      "label": "Temple de Transmission",
+      "description": "Rites, seuils, symboles, géométries sacrées et mémoire recodée.",
+      "unlockLevel": 3
+    }
+  ],
+  "nodes": [
+    {"id": "node-cycles", "label": "Cycles", "type": "concept", "zoneId": "archives-brisees"},
+    {"id": "node-astronomy", "label": "Astronomy", "type": "concept", "zoneId": "archives-brisees"},
+    {"id": "node-gears", "label": "Gears", "type": "technology", "zoneId": "atelier-perdu"},
+    {"id": "node-calculation", "label": "Calculation", "type": "concept", "zoneId": "atelier-perdu"},
+    {"id": "node-threshold", "label": "Threshold", "type": "concept", "zoneId": "temple-transmission"},
+    {"id": "node-recoding", "label": "Recoding", "type": "concept", "zoneId": "temple-transmission"},
+    {"id": "node-review", "label": "Review", "type": "concept", "zoneId": "archives-brisees"},
+    {"id": "node-promotion", "label": "Promotion", "type": "concept", "zoneId": "temple-transmission"},
+    {"id": "node-celestial-machine", "label": "Celestial Machine", "type": "technology", "zoneId": "atelier-perdu"}
+  ],
+  "edges": [
+    {"id": "z1-z2", "source": "archives-brisees", "target": "atelier-perdu", "type": "unlocks", "weight": 0.9},
+    {"id": "z2-z3", "source": "atelier-perdu", "target": "temple-transmission", "type": "unlocks", "weight": 0.8},
+    {"id": "n1-n2", "source": "node-cycles", "target": "node-astronomy", "type": "related", "weight": 0.9},
+    {"id": "n2-n3", "source": "node-astronomy", "target": "node-gears", "type": "inspires", "weight": 0.6},
+    {"id": "n3-n4", "source": "node-gears", "target": "node-calculation", "type": "enables", "weight": 0.95},
+    {"id": "n5-n6", "source": "node-threshold", "target": "node-recoding", "type": "related", "weight": 0.7},
+    {"id": "n7-n8", "source": "node-review", "target": "node-promotion", "type": "governs", "weight": 1.0},
+    {"id": "n4-n9", "source": "node-calculation", "target": "node-celestial-machine", "type": "reconstructs", "weight": 0.85}
+  ]
+}
