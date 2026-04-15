@@ -1,0 +1,50 @@
+[
+  {
+    "id": "npc-concept-01",
+    "name": "Seshat Fragmenta",
+    "role": "concept",
+    "memoryIds": ["frag-text-001", "concept-threshold", "concept-recoding"],
+    "trustLevel": 0.72,
+    "bias": "symbolic-overtechnical",
+    "linkedNPCIds": ["npc-review-01", "npc-system-01"],
+    "linkedAIBotIds": ["bot-translate-01"],
+    "linkedTripletIds": ["tri-archives-01"],
+    "unlockedByMissionIds": []
+  },
+  {
+    "id": "npc-system-01",
+    "name": "Maitre d Atelier Naram",
+    "role": "system",
+    "memoryIds": ["machine-sky-001", "gear-pattern-01"],
+    "trustLevel": 0.81,
+    "bias": "mechanical-priority",
+    "linkedNPCIds": ["npc-concept-01", "npc-experiment-01"],
+    "linkedAIBotIds": ["bot-physics-01", "bot-graph-01"],
+    "linkedTripletIds": ["tri-workshop-01"],
+    "unlockedByMissionIds": ["mission-001"]
+  },
+  {
+    "id": "npc-review-01",
+    "name": "Archiviste du Gate",
+    "role": "review",
+    "memoryIds": ["review-law-01", "gate-criteria-01"],
+    "trustLevel": 0.93,
+    "bias": "anti-inflation",
+    "linkedNPCIds": ["npc-concept-01"],
+    "linkedAIBotIds": ["bot-critic-01"],
+    "linkedTripletIds": ["tri-review-01"],
+    "unlockedByMissionIds": []
+  },
+  {
+    "id": "npc-experiment-01",
+    "name": "Lina des Essais",
+    "role": "experiment",
+    "memoryIds": ["test-rig-01", "trial-log-01"],
+    "trustLevel": 0.78,
+    "bias": "experiment-before-story",
+    "linkedNPCIds": ["npc-system-01"],
+    "linkedAIBotIds": ["bot-physics-01", "bot-critic-01"],
+    "linkedTripletIds": ["tri-workshop-01"],
+    "unlockedByMissionIds": ["mission-001"]
+  }
+]
