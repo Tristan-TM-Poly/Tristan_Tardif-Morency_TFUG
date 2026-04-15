@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bsf-math-01",
+    "name": "Axiom Weaver",
+    "domain": "mathematics",
+    "method": "formal-structure-first",
+    "proofStyle": "deductive",
+    "modelingPower": 0.95,
+    "representationMode": "symbolic-graph",
+    "linkedMissionIds": ["mission-001"],
+    "linkedNodeIds": ["node-calculation", "node-review"],
+    "linkedTripletIds": ["tri-review-01"]
+  },
+  {
+    "id": "bsf-physics-01",
+    "name": "Celestial Mechanist",
+    "domain": "physics",
+    "method": "constraint-and-simulation",
+    "proofStyle": "model-plus-test",
+    "modelingPower": 0.93,
+    "representationMode": "mechanical-simulation",
+    "linkedMissionIds": ["mission-001"],
+    "linkedNodeIds": ["node-astronomy", "node-gears", "node-celestial-machine"],
+    "linkedTripletIds": ["tri-workshop-01"]
+  },
+  {
+    "id": "bsf-systems-01",
+    "name": "Systems Cartographer",
+    "domain": "systems",
+    "method": "multi-scale-bridge-building",
+    "proofStyle": "cross-linked",
+    "modelingPower": 0.91,
+    "representationMode": "graph-dynamics",
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-recoding", "node-promotion"],
+    "linkedTripletIds": ["tri-archives-01", "tri-review-01"]
+  }
+]
