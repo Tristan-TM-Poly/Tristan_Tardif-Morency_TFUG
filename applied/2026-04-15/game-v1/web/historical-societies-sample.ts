@@ -1,0 +1,88 @@
+import { ActionCard, Society } from './HistoricalSocietiesExplorerPanel';
+
+export const historicalSocietiesSample: Society[] = [
+  {
+    id: 'soc-egypt-old-kingdom',
+    label: 'Ancient Egypt',
+    time_range: 'Old Kingdom to Late Period',
+    summary: 'Monumental state formation, ritual continuity, engineering skill, stratified hierarchy, and long-duration cultural memory.',
+    visible_layer: 'Established History',
+  },
+  {
+    id: 'soc-athens-classical',
+    label: 'Classical Athens',
+    time_range: '5th-4th century BCE',
+    summary: 'Political experimentation, philosophy, arts, warfare, exclusion, and dependence on unequal social structures.',
+    visible_layer: 'Established History',
+  },
+  {
+    id: 'soc-han-china',
+    label: 'Han China',
+    time_range: '206 BCE-220 CE',
+    summary: 'Administrative continuity, infrastructure, scholarship, frontier expansion, taxation, and labor burden.',
+    visible_layer: 'Established History',
+  },
+];
+
+export const historicalSocietiesActionCards: ActionCard[] = [
+  {
+    id: 'act-egypt-admin-memory',
+    society_id: 'soc-egypt-old-kingdom',
+    domain: 'knowledge',
+    title: 'Long-duration preservation of ritual and state memory',
+    action_type: 'constructive',
+    short_term_effect: 'institutional continuity',
+    long_term_effect: 'high survivance of symbolic and textual traditions',
+    confidence_label: 'established',
+  },
+  {
+    id: 'act-egypt-forced-labor',
+    society_id: 'soc-egypt-old-kingdom',
+    domain: 'labor and domination',
+    title: 'Heavy labor extraction for monumental and state projects',
+    action_type: 'harmful',
+    short_term_effect: 'large-scale construction and central control',
+    long_term_effect: 'social burden and unequal power distribution',
+    confidence_label: 'strong-plausible',
+  },
+  {
+    id: 'act-athens-civic-experiment',
+    society_id: 'soc-athens-classical',
+    domain: 'governance',
+    title: 'Political experimentation and civic participation',
+    action_type: 'constructive',
+    short_term_effect: 'participatory decision structures for a portion of the population',
+    long_term_effect: 'lasting influence on political thought',
+    confidence_label: 'established',
+  },
+  {
+    id: 'act-athens-exclusion-slavery',
+    society_id: 'soc-athens-classical',
+    domain: 'social inclusion',
+    title: 'Exclusion of women, foreigners, and enslaved people from full civic status',
+    action_type: 'harmful',
+    short_term_effect: 'narrow citizenship and concentrated power',
+    long_term_effect: 'deep moral contradiction inside celebrated institutions',
+    confidence_label: 'established',
+  },
+  {
+    id: 'act-han-infrastructure',
+    society_id: 'soc-han-china',
+    domain: 'infrastructure',
+    title: 'Administrative and infrastructural consolidation',
+    action_type: 'constructive',
+    short_term_effect: 'state capacity and durable administration',
+    long_term_effect: 'long-range continuity in governance and exchange',
+    confidence_label: 'strong-plausible',
+  },
+  {
+    id: 'act-han-burden',
+    society_id: 'soc-han-china',
+    domain: 'labor and taxation',
+    title: 'Taxation and labor burdens imposed by large states',
+    action_type: 'harmful',
+    short_term_effect: 'resource extraction for state projects',
+    long_term_effect: 'localized hardship and periodic strain',
+    confidence_label: 'plausible',
+  },
+];
