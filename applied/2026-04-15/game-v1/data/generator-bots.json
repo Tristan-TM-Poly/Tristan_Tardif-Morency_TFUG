@@ -1,0 +1,38 @@
+[
+  {
+    "id": "gen-lore-01",
+    "name": "Lore Forge Bot",
+    "generatorType": "lore",
+    "domain": "historical-branch-generation",
+    "outputKinds": ["lore-fragment", "branch-card", "mission-seed"],
+    "creativityWeight": 0.86,
+    "coherenceBias": 0.82,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-recoding", "node-promotion"],
+    "linkedTripletIds": ["tri-archives-01", "tri-review-01"]
+  },
+  {
+    "id": "gen-tech-01",
+    "name": "Mechanism Seed Bot",
+    "generatorType": "technology",
+    "domain": "lost-technology-generation",
+    "outputKinds": ["artifact-pattern", "mechanical-variant", "simulation-seed"],
+    "creativityWeight": 0.8,
+    "coherenceBias": 0.88,
+    "linkedMissionIds": ["mission-001"],
+    "linkedNodeIds": ["node-gears", "node-celestial-machine"],
+    "linkedTripletIds": ["tri-workshop-01"]
+  },
+  {
+    "id": "gen-campaign-01",
+    "name": "Campaign Seed Bot",
+    "generatorType": "campaign",
+    "domain": "campaign-generation",
+    "outputKinds": ["chapter-seed", "campaign-arc", "event-sequence"],
+    "creativityWeight": 0.84,
+    "coherenceBias": 0.85,
+    "linkedMissionIds": ["mission-001", "mission-002"],
+    "linkedNodeIds": ["node-review", "node-promotion"],
+    "linkedTripletIds": ["tri-review-01"]
+  }
+]
