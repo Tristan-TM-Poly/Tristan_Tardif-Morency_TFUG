@@ -1,0 +1,31 @@
+{
+  "title": "Humanity Knowledge Explorer v1",
+  "subtitle": "Known, Partial, Open, Lost, Invisible",
+  "version": "v1",
+  "core_law": "K_humanity = K_stabilized + K_partial + K_open + K_lost + K_invisible",
+  "operational_law": "T3(K) = TRISTAN2(AI7(TFUGA(K)))",
+  "zones": [
+    {"id": "stabilized", "label": "Stabilized Knowledge", "description": "Formulated, tested, transmissible, reusable knowledge with bounded validity.", "priority": "high", "status": "trunk"},
+    {"id": "partial", "label": "Partial Knowledge", "description": "Partially modeled, partially tested, not yet closed knowledge.", "priority": "high", "status": "proto-trunk"},
+    {"id": "open", "label": "Open Unknowns", "description": "Known unknowns and explicitly recognized open questions.", "priority": "high", "status": "proto-trunk"},
+    {"id": "lost", "label": "Lost Knowledge", "description": "Forgotten, fragmented, recoded, or partially surviving knowledge.", "priority": "high", "status": "proto-trunk"},
+    {"id": "invisible", "label": "Invisible Unknowns", "description": "Unknown unknowns, not yet properly formulated as questions.", "priority": "medium", "status": "exploratory"}
+  ],
+  "scores": {
+    "formula": "0.22E + 0.16C + 0.14R + 0.12T + 0.12B + 0.10P + 0.08U - 0.16K - 0.10N",
+    "fields": ["evidence", "coherence", "retestability", "transmissibility", "bridge_density", "predictive_power", "usefulness", "speculative_cost", "narrative_noise"]
+  },
+  "priority_blocks": [
+    "Fractal-Loop honest closure",
+    "AI7 x TRISTAN2 x Packets deep loop",
+    "TFUGA theory compiler ledger",
+    "Raman bounded closure",
+    "Rosetta-Tristan Stone ledger",
+    "Lost Knowledge branch canonization"
+  ],
+  "public_cards": [
+    {"id": "atlas", "label": "Humanity Knowledge Master Atlas", "type": "document"},
+    {"id": "kh", "label": "Lost Knowledge Branch", "type": "branch"},
+    {"id": "rosetta", "label": "Rosetta-Tristan Stone", "type": "decoder"}
+  ]
+}
