@@ -1,0 +1,34 @@
+{
+  "version": "v1",
+  "label": "TFUGA-AI7-TRISTAN2 Expansion Pack",
+  "nodes": [
+    {"id": "node-stone-logic", "label": "Stone Logic", "type": "technology", "zoneId": "atelier-perdu"},
+    {"id": "node-water-chamber", "label": "Water Chamber", "type": "system", "zoneId": "atelier-perdu"},
+    {"id": "node-light-axis", "label": "Light Axis", "type": "geometry", "zoneId": "temple-transmission"},
+    {"id": "node-rosetta-core", "label": "Rosetta Core", "type": "decoder", "zoneId": "archives-brisees"},
+    {"id": "node-collapse-ledger", "label": "Collapse Ledger", "type": "history", "zoneId": "archives-brisees"},
+    {"id": "node-ai7-central", "label": "AI7 Central", "type": "infrastructure", "zoneId": "atelier-perdu"},
+    {"id": "node-great-review", "label": "Great Review", "type": "governance", "zoneId": "temple-transmission"},
+    {"id": "node-builder-forge", "label": "Builder Forge", "type": "builder", "zoneId": "atelier-perdu"},
+    {"id": "node-generator-oracle", "label": "Generator Oracle", "type": "generator", "zoneId": "archives-brisees"},
+    {"id": "node-memory-river", "label": "Memory River", "type": "concept", "zoneId": "temple-transmission"}
+  ],
+  "artifacts": [
+    {"id": "artifact-water-seal-01", "type": "hydraulic-component", "label": "Water Seal", "zoneId": "atelier-perdu", "description": "Ancient hydraulic seal fragment.", "evidenceLevel": 0.77, "linkedNodeIds": ["node-water-chamber", "node-stone-logic"], "linkedMissionIds": ["mission-003"]},
+    {"id": "artifact-light-prism-01", "type": "optical-component", "label": "Light Prism", "zoneId": "temple-transmission", "description": "Optical prism used for guided light pathways.", "evidenceLevel": 0.72, "linkedNodeIds": ["node-light-axis"], "linkedMissionIds": ["mission-004"]},
+    {"id": "artifact-stone-grid-01", "type": "structure-pattern", "label": "Stone Grid", "zoneId": "atelier-perdu", "description": "Structural modular pattern for pyramid logic.", "evidenceLevel": 0.81, "linkedNodeIds": ["node-stone-logic"], "linkedMissionIds": ["mission-003", "mission-005"]},
+    {"id": "artifact-rosetta-column-01", "type": "text-symbol-column", "label": "Rosetta Column", "zoneId": "archives-brisees", "description": "Column with aligned text, symbol, and procedural inscriptions.", "evidenceLevel": 0.75, "linkedNodeIds": ["node-rosetta-core", "node-memory-river"], "linkedMissionIds": ["mission-006"]}
+  ],
+  "missions": [
+    {"id": "mission-003", "title": "La chambre d eau oubliee", "zoneId": "atelier-perdu", "objective": "Reactiver une chambre hydraulique pyramidale stable.", "requiredArtifacts": ["artifact-water-seal-01", "artifact-stone-grid-01"], "requiredNPCs": ["npc-system-01", "npc-experiment-01", "npc-review-01"], "requiredNodes": ["node-water-chamber", "node-stone-logic"], "successCondition": "stabilize-hydraulic-system-and-pass-gate", "rewardNodeIds": ["node-ai7-central"], "reviewGateId": "gate-003"},
+    {"id": "mission-004", "title": "L axe de lumiere", "zoneId": "temple-transmission", "objective": "Realigner une pyramide pour produire une sequence lumineuse utile.", "requiredArtifacts": ["artifact-light-prism-01"], "requiredNPCs": ["npc-concept-01", "npc-review-01"], "requiredNodes": ["node-light-axis", "node-threshold", "node-promotion"], "successCondition": "align-light-and-pass-gate", "rewardNodeIds": ["node-great-review"], "reviewGateId": "gate-004"},
+    {"id": "mission-005", "title": "Les lois de la pierre", "zoneId": "atelier-perdu", "objective": "Comparer trois theories structurelles et en promouvoir une.", "requiredArtifacts": ["artifact-stone-grid-01"], "requiredNPCs": ["npc-system-01", "npc-review-01"], "requiredNodes": ["node-stone-logic", "node-review"], "successCondition": "submit-structural-hypothesis", "rewardNodeIds": ["node-builder-forge"], "reviewGateId": "gate-005"},
+    {"id": "mission-006", "title": "Le texte qui ment", "zoneId": "archives-brisees", "objective": "Identifier une traduction seduisante mais fausse.", "requiredArtifacts": ["artifact-rosetta-column-01"], "requiredNPCs": ["npc-concept-01", "npc-review-01"], "requiredNodes": ["node-rosetta-core", "node-memory-river", "node-review"], "successCondition": "downgrade-false-reading", "rewardNodeIds": ["node-collapse-ledger"], "reviewGateId": "gate-006"}
+  ],
+  "gates": [
+    {"id": "gate-003", "objectId": "mission-003", "evidence": 0, "coherence": 0, "bridgeDensity": 0, "speculativeCost": 0, "status": "open", "nextAction": "stabilize water, stone, and thermal logic"},
+    {"id": "gate-004", "objectId": "mission-004", "evidence": 0, "coherence": 0, "bridgeDensity": 0, "speculativeCost": 0, "status": "open", "nextAction": "align light, geometry, and symbolic function"},
+    {"id": "gate-005", "objectId": "mission-005", "evidence": 0, "coherence": 0, "bridgeDensity": 0, "speculativeCost": 0, "status": "open", "nextAction": "compare and eliminate weak structural models"},
+    {"id": "gate-006", "objectId": "mission-006", "evidence": 0, "coherence": 0, "bridgeDensity": 0, "speculativeCost": 0, "status": "open", "nextAction": "map ambiguities and reject the seductive false reading"}
+  ]
+}
