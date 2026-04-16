@@ -1,0 +1,25 @@
+name: Google Drive ZIP Sync
+
+on:
+  workflow_dispatch:
+
+jobs:
+  drive-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Simulate Drive Sync
+        run: |
+          python - <<'PY'
+          from zip_governance.google_drive_sync_client import GoogleDriveSyncClient
+
+          client = GoogleDriveSyncClient()
+          result = client.sync_manifest('zip_governance/google_drive_sync_manifest.json')
+          print(result)
+          PY
