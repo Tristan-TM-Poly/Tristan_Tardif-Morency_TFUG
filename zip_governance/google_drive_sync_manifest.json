@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "mode": "supervised_sync",
+  "folders": [
+    {
+      "name": "root",
+      "drive_id": "REPLACE_WITH_FOLDER_ID",
+      "recursive": true
+    }
+  ]
+}
