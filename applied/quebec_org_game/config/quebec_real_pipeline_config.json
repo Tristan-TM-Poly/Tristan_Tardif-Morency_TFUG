@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "name": "quebec_open_data",
+      "type": "csv",
+      "path": "data/tfuga_drive/quebec_open_data"
+    },
+    {
+      "name": "contracts",
+      "type": "csv",
+      "path": "data/tfuga_drive/contracts"
+    }
+  ],
+  "ingestion_mode": "batch",
+  "refresh_interval_hours": 24
+}
