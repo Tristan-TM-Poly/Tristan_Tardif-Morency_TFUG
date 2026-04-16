@@ -1,0 +1,29 @@
+name: Approved Drive Download
+
+on:
+  workflow_dispatch:
+
+jobs:
+  approved-download:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON }}
+      DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run approved sync runner
+        run: |
+          python - <<'PY'
+          import os
+          from zip_governance.google_drive_sync_runner import run_sync
+
+          folder_id = os.environ.get("DRIVE_FOLDER_ID", "")
+          result = run_sync(folder_id, "data/drive_staging")
+          print(result)
+          PY
