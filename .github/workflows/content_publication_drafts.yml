@@ -1,0 +1,33 @@
+name: Content Publication Drafts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate draft content
+        run: |
+          python - <<'PY'
+          from content_pipeline.image_prompt_builder import build_image_prompt
+          from content_pipeline.video_storyboard_builder import build_storyboard
+          from content_pipeline.site_publication_builder import build_post
+
+          topic = "HGFM Intelligence System"
+
+          img = build_image_prompt(topic)
+          vid = build_storyboard(topic)
+          post = build_post("HGFM Update", "System evolution insights", ["AI", "HGFM"])
+
+          print(img)
+          print(vid)
+          print(post)
+          PY
