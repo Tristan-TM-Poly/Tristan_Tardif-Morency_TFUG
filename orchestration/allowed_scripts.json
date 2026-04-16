@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "scripts": [
+    {
+      "script_id": "demo_ai7_full_loop",
+      "path": "applied/quebec_org_game/examples/demo_ai7_full_loop.py",
+      "runner": "python",
+      "mode": "read_write_workspace",
+      "requires_review": false
+    },
+    {
+      "script_id": "demo_bounded_pilot",
+      "path": "applied/quebec_org_game/examples/demo_bounded_pilot.py",
+      "runner": "python",
+      "mode": "read_write_workspace",
+      "requires_review": false
+    },
+    {
+      "script_id": "demo_full_auto_loop",
+      "path": "applied/quebec_org_game/examples/demo_full_auto_loop.py",
+      "runner": "python",
+      "mode": "read_write_workspace",
+      "requires_review": false
+    }
+  ]
+}
