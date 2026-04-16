@@ -1,0 +1,29 @@
+name: Governed ZIP Merge
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-zips:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Scan and plan ZIP merge
+        run: |
+          python - <<'PY'
+          from zip_governance.drive_zip_inventory import scan_for_zips
+          from zip_governance.zip_conflict_analyzer import analyze_conflicts
+          from zip_governance.zip_merge_planner import build_merge_plan
+
+          zips = scan_for_zips("data")
+          conflicts = analyze_conflicts(zips)
+          plan = build_merge_plan(zips, conflicts)
+
+          print(plan)
+          PY
