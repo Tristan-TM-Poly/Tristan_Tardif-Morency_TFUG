@@ -1,0 +1,26 @@
+{
+  "version": "v1",
+  "technologies": [
+    {
+      "id": "lt-water-chambers",
+      "label": "Hydraulic chamber systems",
+      "domain": "hydraulic",
+      "status": "hypothesis",
+      "summary": "Stone structures potentially used for water control, pressure modulation, or ritual hydraulic flow."
+    },
+    {
+      "id": "lt-light-guidance",
+      "label": "Guided light alignment systems",
+      "domain": "optical",
+      "status": "hypothesis",
+      "summary": "Architectural alignments possibly designed to control light pathways at specific times."
+    },
+    {
+      "id": "lt-acoustic-chambers",
+      "label": "Acoustic resonance chambers",
+      "domain": "acoustic",
+      "status": "exploratory",
+      "summary": "Enclosed spaces with measurable acoustic properties potentially influencing sound behavior."
+    }
+  ]
+}
