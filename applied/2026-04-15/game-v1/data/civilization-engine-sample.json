@@ -1,0 +1,31 @@
+{
+  "version": "v1",
+  "civilizations": [
+    {
+      "id": "civ-egypt",
+      "label": "Ancient Egypt",
+      "state": {
+        "G": 0.7,
+        "K": 0.9,
+        "T": 0.7,
+        "M": 0.95,
+        "I": 0.4,
+        "E": 0.6,
+        "P": 0.5
+      }
+    },
+    {
+      "id": "civ-athens",
+      "label": "Classical Athens",
+      "state": {
+        "G": 0.6,
+        "K": 0.8,
+        "T": 0.6,
+        "M": 0.7,
+        "I": 0.3,
+        "E": 0.5,
+        "P": 0.6
+      }
+    }
+  ]
+}
