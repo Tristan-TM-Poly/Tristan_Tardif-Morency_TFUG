@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "script_id": {"type": "string"},
+    "path": {"type": "string"},
+    "status": {"type": "string"},
+    "timestamp_utc": {"type": "string"},
+    "stdout": {"type": ["string", "null"]},
+    "stderr": {"type": ["string", "null"]}
+  },
+  "required": ["script_id", "status", "timestamp_utc"]
+}
