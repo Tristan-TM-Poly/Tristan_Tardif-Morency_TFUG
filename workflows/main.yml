@@ -1,39 +1,50 @@
-name: Axiom-Tristan Auto-Forge
+name: Axiom-Tristan Auto-Forge (HGFM)
 
-# Le workflow se déclenche à chaque "push" sur la branche main
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
+  schedule:
+    # L'Analyse Perpétuelle : S'exécute tous les jours à minuit UTC
+    - cron: '0 0 * * *'
 
 jobs:
-  build_and_report:
+  ingest_and_forge:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Extraction du Code (Checkout)
+    - name: Extraction du Code
       uses: actions/checkout@v3
 
-    - name: Configuration de Python
+    - name: Configuration Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
 
-    - name: Installation des dépendances (AI-7 Engine)
+    - name: Installation du Triumvirat (Dépendances)
       run: |
-        python -m pip install --upgrade pip
-        pip install numpy scipy matplotlib pandas
+        pip install numpy scipy matplotlib pandas google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
-    - name: Exécution de l'Analyse Raman (TRISTAN2)
+    - name: Génération de la Clé Dimensionnelle (Google Credentials)
+      env:
+        # La clé est stockée secrètement dans GitHub Secrets
+        GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
       run: |
-        # On suppose que ton script se nomme 'spectrometre_tfuga.py'
-        # Il doit être configuré pour lire les fichiers dans un dossier /data
-        python src/raman_automation/spectrometre_tfuga.py
+        echo $GCP_CREDENTIALS > credentials.json
 
-    - name: Compilation du Rapport LaTeX (GOLIATH)
+    - name: Connexion Drive et Extraction Raman
+      run: |
+        python src/raman_automation/drive_ingestion_tfuga.py
+
+    - name: Compilation GOLIATH (LaTeX)
       uses: xu-cheng/latex-action@v2
       with:
-        # Le script Python doit générer un fichier nommé 'rapport_final.tex'
-        root_file: rapport_final.tex
+        root_file: rapport_*.tex # Compile tous les rapports générés
+
+    - name: Upload des preuves vers l'Axiome (Artefacts PDF)
+      uses: actions/upload-artifact@v3
+      with:
+        name: Rapports-SYNERGIE-T3
+        path: "*.pdf"
 
     - name: Archivage de la Preuve (Upload PDF)
       uses: actions/upload-artifact@v3
