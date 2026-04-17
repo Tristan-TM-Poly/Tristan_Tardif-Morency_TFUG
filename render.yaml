@@ -2,5 +2,5 @@ services:
   - type: web
     name: tristan-tfug-api
     env: python
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    buildCommand: pip install --upgrade pip && pip install -r requirements-render.txt
     startCommand: uvicorn ignite:app --host 0.0.0.0 --port $PORT
