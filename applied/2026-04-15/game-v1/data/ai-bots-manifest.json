@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "bots": [
+    {"id": "ingest-bot", "role": "ingestion", "commands": ["INGEST", "MANIFEST"]},
+    {"id": "runtime-bot", "role": "execution", "commands": ["RUN_PILOT", "BENCHMARK"]},
+    {"id": "review-bot", "role": "review", "commands": ["REVIEW", "REVIEWPREP"]},
+    {"id": "gate-bot", "role": "governance", "commands": ["PROMOTE", "DOWNGRADE", "QUARANTINE"]},
+    {"id": "sync-bot", "role": "sync", "commands": ["SYNC", "SNAPSHOT"]}
+  ]
+}
