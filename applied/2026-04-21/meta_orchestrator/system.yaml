@@ -1,0 +1,45 @@
+system:
+  name: TRISTAN2 Meta-Orchestrator
+  date: 2026-04-21
+  repo: Tristan-TM-Poly/Tristan_Tardif-Morency_TFUG
+  doctrine:
+    - no_promotion_without_score_review_rollback
+    - fractal_loop_first_bounded_pilot
+    - drive_first_control_surface
+    - reversible_mutations_preferred
+  control_chain:
+    - user
+    - chatgpt_adapter
+    - tristan2_core
+    - ai7_runtime_bus
+    - local_runtime
+    - drive
+    - github
+    - web
+    - cloud
+  lanes:
+    L1: manifest_inventory
+    L2: runtime_closure
+    L3: canon_source_of_truth
+    L4: bounded_pilot
+    L5: hypergraph_synergy
+    L6: interface_control_plane
+  adapters:
+    zip_adapter:
+      source: local_zip
+      status: scaffolded
+    drive_adapter:
+      source: google_drive
+      status: active
+    github_adapter:
+      source: github_repo
+      status: active
+    web_adapter:
+      source: interactive_site
+      status: scaffolded
+    cloud_adapter:
+      source: cloud_runtime
+      status: scaffolded
+  artifacts:
+    drive_sheet: https://docs.google.com/spreadsheets/d/1B4PmxRJJq3OwNizLzl0MZnJwB1-Gr0olhhnxRXQaNQE/edit?usp=drivesdk
+    drive_manual: https://docs.google.com/document/d/1dR0T78bzOxLA82U8OFg8o990o6bjVlL1M-1yQLY0eEs/edit?usp=drivesdk
