@@ -1,0 +1,65 @@
+{
+  "version": "v1",
+  "rows": [
+    {
+      "object_id": "zip-family-registry",
+      "source_domain": "ZIP",
+      "target_domain": "Drive",
+      "lane": "L1",
+      "status": "staged",
+      "packet_family": "ZIP_REGISTRY",
+      "rollback_pointer": "rb-001",
+      "review_status": "open",
+      "gate_status": "open",
+      "propagation_target": "ACTIVE_TRUNK_MANIFEST",
+      "contradiction_pointer": "cx-zip-001",
+      "sync_version": "v1"
+    },
+    {
+      "object_id": "fractal-loop-pilot",
+      "source_domain": "GitHub",
+      "target_domain": "Cloud",
+      "lane": "L4",
+      "status": "queued",
+      "packet_family": "FRACTAL_LOOP",
+      "rollback_pointer": "rb-002",
+      "review_status": "prepared",
+      "gate_status": "open",
+      "propagation_target": "GLOBAL_PROMOTION_GATE_TABLE",
+      "contradiction_pointer": "cx-fl-001",
+      "sync_version": "v1"
+    },
+    {
+      "object_id": "public-explorer-map",
+      "source_domain": "Drive",
+      "target_domain": "Site",
+      "lane": "L6",
+      "status": "ready",
+      "packet_family": "PUBLIC_EXPLORER",
+      "rollback_pointer": "rb-003",
+      "review_status": "passed",
+      "gate_status": "passed",
+      "propagation_target": "interactive-site-surface",
+      "contradiction_pointer": "cx-site-001",
+      "sync_version": "v1"
+    }
+  ],
+  "command_bus": [
+    "INGEST",
+    "MANIFEST",
+    "PACKETIZE",
+    "REVIEW",
+    "REVIEWPREP",
+    "BENCHMARK",
+    "RUN_PILOT",
+    "SNAPSHOT",
+    "CONTRADICTION",
+    "CANONIZE",
+    "PROPAGATE",
+    "PROMOTE",
+    "DOWNGRADE",
+    "QUARANTINE",
+    "ROLLBACK",
+    "SYNC"
+  ]
+}
