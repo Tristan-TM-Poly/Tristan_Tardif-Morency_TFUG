@@ -1,0 +1,44 @@
+{
+  "version": "v1",
+  "candidates": [
+    {
+      "id": "cand-fractal-loop-runtime",
+      "family": "FRACTAL_LOOP",
+      "metrics": {
+        "fertility": 0.94,
+        "feasibility": 0.78,
+        "coherence": 0.91,
+        "impact": 0.95,
+        "reuse": 0.88,
+        "automation": 0.82,
+        "antiInflation": 0.90
+      }
+    },
+    {
+      "id": "cand-public-explorer-stack",
+      "family": "PUBLIC_EXPLORER",
+      "metrics": {
+        "fertility": 0.86,
+        "feasibility": 0.83,
+        "coherence": 0.88,
+        "impact": 0.89,
+        "reuse": 0.92,
+        "automation": 0.76,
+        "antiInflation": 0.93
+      }
+    },
+    {
+      "id": "cand-meta-orchestration-stack",
+      "family": "META_ORCHESTRATION",
+      "metrics": {
+        "fertility": 0.92,
+        "feasibility": 0.80,
+        "coherence": 0.90,
+        "impact": 0.97,
+        "reuse": 0.95,
+        "automation": 0.94,
+        "antiInflation": 0.88
+      }
+    }
+  ]
+}
