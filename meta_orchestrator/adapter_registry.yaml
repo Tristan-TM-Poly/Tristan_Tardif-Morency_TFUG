@@ -1,0 +1,117 @@
+adapters:
+  - adapter_id: A-ZIP
+    role: artifact intake
+    reads:
+      - zip metadata
+      - manifest
+      - extracted summaries
+      - file list
+    writes:
+      - ingestion packets
+      - classification rows
+      - batch plans
+    trust_default: T1
+    notes: Intake only, promotion forbidden without review
+
+  - adapter_id: A-GITHUB
+    role: versioned code and governance surface
+    reads:
+      - repositories
+      - files
+      - branches
+      - issues
+      - pull requests
+    writes:
+      - scaffolds
+      - implementation notes
+      - review-linked patches
+      - dashboards
+    trust_default: T2
+    notes: Canon-facing code changes require review and rollback path
+
+  - adapter_id: A-DRIVE
+    role: canonical writable control plane
+    reads:
+      - docs
+      - sheets
+      - boards
+      - packets
+      - ledgers
+    writes:
+      - command rows
+      - boards
+      - scorecards
+      - review docs
+      - governance ledgers
+    trust_default: T3
+    notes: Primary command surface
+
+  - adapter_id: A-CHATGPT
+    role: structured human-AI interface
+    reads:
+      - tasks
+      - docs
+      - boards
+      - packets
+    writes:
+      - drafts
+      - command packets
+      - syntheses
+      - critique
+    trust_default: T2
+    notes: Autonomous canon commitment forbidden
+
+  - adapter_id: A-SITE
+    role: interactive visibility layer
+    reads:
+      - command queue
+      - packet queue
+      - wave states
+      - pilot scoreboard
+      - event log
+    writes:
+      - dashboard projections
+      - interaction requests
+    trust_default: T2
+    notes: Projection layer only, not source of truth
+
+  - adapter_id: A-CLOUD
+    role: remote execution and closure
+    reads:
+      - job states
+      - logs
+      - metrics
+      - output artifacts
+    writes:
+      - run events
+      - closure packets
+      - execution summaries
+    trust_default: T1
+    notes: Must return evidence and rollback scope
+
+  - adapter_id: A-WEB
+    role: external falsification and update detection
+    reads:
+      - official docs
+      - standards
+      - references
+      - public data
+    writes:
+      - source packets
+      - falsification packets
+      - implementation update suggestions
+    trust_default: T1
+    notes: No direct canon write
+
+  - adapter_id: A-RUNTIME
+    role: pipeline state and execution routing
+    reads:
+      - pipeline state
+      - local outputs
+      - run logs
+    writes:
+      - packets
+      - run events
+      - pilot closures
+    trust_default: T2
+    notes: Bounded pilot authority only
