@@ -1,0 +1,61 @@
+templates:
+  - template_id: MOCP-001
+    command_type: INGEST_ZIP
+    default_target_scope: zip intake and assimilation
+    default_adapter_chain: A-ZIP -> A-CHATGPT -> A-DRIVE
+    default_packet_family:
+      - AIPacket
+      - MachinePacket
+      - ReviewPacket
+    default_trust: T1
+    default_risk: R1
+    required_gates:
+      - Packet Gate
+      - Review Gate
+    rollback_scope: RB-ASSIM-001
+
+  - template_id: MOCP-002
+    command_type: SYNC_GITHUB
+    default_target_scope: repo scaffold or governed patch path
+    default_adapter_chain: A-CHATGPT -> A-GITHUB -> A-DRIVE
+    default_packet_family:
+      - ImplementationPacket
+      - ReviewPacket
+      - PropagationPacket
+    default_trust: T2
+    default_risk: R2
+    required_gates:
+      - Review Gate
+      - Promotion Gate
+    rollback_scope: RB-GH-001
+
+  - template_id: MOCP-003
+    command_type: BUILD_DASHBOARD
+    default_target_scope: site projection layer
+    default_adapter_chain: A-CHATGPT -> A-GITHUB -> A-SITE
+    default_packet_family:
+      - AIPacket
+      - MachinePacket
+      - PropagationPacket
+    default_trust: T2
+    default_risk: R1
+    required_gates:
+      - Packet Gate
+      - Review Gate
+    rollback_scope: RB-SITE-001
+
+  - template_id: MOCP-004
+    command_type: DISPATCH_CLOUD_JOB
+    default_target_scope: bounded remote execution
+    default_adapter_chain: A-CHATGPT -> A-CLOUD -> A-RUNTIME -> A-DRIVE
+    default_packet_family:
+      - ImplementationPacket
+      - ReviewPacket
+      - RollbackPacket
+      - PromotionPacket
+    default_trust: T1
+    default_risk: R2
+    required_gates:
+      - Pilot Gate
+      - Review Gate
+    rollback_scope: RB-CLOUD-001
