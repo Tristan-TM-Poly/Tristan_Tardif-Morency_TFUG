@@ -1,0 +1,37 @@
+{
+  "version": "v1",
+  "description": "Canonical reusable command schema for META_ORCHESTRATION_POST and AI-BOT execution.",
+  "command_types": [
+    {
+      "id": "INGEST",
+      "required_fields": ["object_id", "source_domain", "lane"],
+      "outputs": ["manifest_row", "status_update"]
+    },
+    {
+      "id": "REVIEW",
+      "required_fields": ["object_id", "review_status", "gate_status"],
+      "outputs": ["review_packet", "next_state"]
+    },
+    {
+      "id": "RUN_PILOT",
+      "required_fields": ["object_id", "packet_family", "lane"],
+      "outputs": ["execution_result", "log_row", "next_state"]
+    },
+    {
+      "id": "PROMOTE",
+      "required_fields": ["object_id", "gate_status", "propagation_target"],
+      "outputs": ["promotion_row", "sync_event"]
+    },
+    {
+      "id": "DOWNGRADE",
+      "required_fields": ["object_id", "contradiction_pointer"],
+      "outputs": ["downgrade_row", "rollback_event"]
+    },
+    {
+      "id": "SYNC",
+      "required_fields": ["object_id", "source_domain", "target_domain", "sync_version"],
+      "outputs": ["sync_row", "snapshot"]
+    }
+  ],
+  "core_rule": "All commands must be typed, lane-aware, rollback-aware, and propagation-aware."
+}
