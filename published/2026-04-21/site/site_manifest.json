@@ -1,0 +1,10 @@
+{
+  "title": "TFUGA Absolute Publication Spine",
+  "entrypoint": "index.html",
+  "type": "static_site",
+  "ready_for": ["local preview", "static hosting", "integration into existing site"],
+  "notes": [
+    "This is a static publishable web surface.",
+    "It mirrors the current best TFUGA / AI-7 / TRISTAN2 publication spine."
+  ]
+}
