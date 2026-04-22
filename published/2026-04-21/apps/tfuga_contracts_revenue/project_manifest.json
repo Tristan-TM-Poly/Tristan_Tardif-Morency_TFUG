@@ -1,0 +1,15 @@
+{
+  "name": "TFUGA Contracts Revenue App",
+  "platforms": ["Android", "Windows"],
+  "framework": "Flutter",
+  "modules": ["Dashboard", "Contrats", "Revenus", "Gouvernance", "Parametres"],
+  "state": "starter_foundation",
+  "route_law": "packet -> score -> review -> receipt -> decision -> rollback",
+  "next_targets": [
+    "backend and auth",
+    "audit trail",
+    "PDF contracts and invoices",
+    "signatures and approvals",
+    "forecasting and risk scoring"
+  ]
+}
