@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/current", "destination": "/published/2026-04-21/current_site.html" },
+    { "source": "/publication", "destination": "/published/2026-04-21/site/index.html" },
+    { "source": "/portal", "destination": "/published/2026-04-21/portal/true_interactive/index.html" },
+    { "source": "/app", "destination": "/published/2026-04-21/apps/tfuga_contracts_revenue/site/index.html" }
+  ]
+}
