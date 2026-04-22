@@ -1,0 +1,38 @@
+{
+  "name": "TFUGA Current Auto-Governed Manifest",
+  "published_at": "2026-04-21",
+  "active_stack": [
+    "TFUGA_ALL_IN_ONE_SOVEREIGN_FINAL.zip",
+    "TFUGA_RECONNECTION_SUPERSPINE_MAX.zip",
+    "TFUGA_TRUE_INTERACTIVE_PORTAL_MAX.zip",
+    "TFUGA_PRODUCT_PORTAL_MAX.zip",
+    "TFUGA_CONTRACTS_REVENUE_APP_ANDROID_WINDOWS.zip",
+    "TFUGA_V2_REAL_CONNECTED_MAX.zip",
+    "AI7_CANONICAL_MANIFEST.zip"
+  ],
+  "operating_law": [
+    "keep trunk compact",
+    "keep archive wide",
+    "packet -> score -> review -> receipt -> decision -> rollback"
+  ],
+  "real_connection_layer": [
+    "FastAPI backend",
+    "Postgres via Docker Compose",
+    "auth bootstrap/login",
+    "contracts API",
+    "revenue API",
+    "receipts API",
+    "audit trail",
+    "connected web portal",
+    "Flutter bridge"
+  ],
+  "next_targets": [
+    "migrations",
+    "roles and permissions",
+    "document storage",
+    "PDF generation",
+    "signature workflows",
+    "cloud deployment",
+    "connected Android and Windows builds"
+  ]
+}
