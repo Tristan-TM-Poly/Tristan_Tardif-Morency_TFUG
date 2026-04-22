@@ -1,0 +1,58 @@
+name: TFUGA Web Automation
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-web-surfaces:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -f index.html
+          test -f vercel.json
+          test -f published/2026-04-21/current_site.html
+          test -f published/2026-04-21/site/index.html
+          test -f published/2026-04-21/portal/true_interactive/index.html
+          test -f published/2026-04-21/apps/tfuga_contracts_revenue/site/index.html
+
+      - name: Validate Vercel routes
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p = pathlib.Path('vercel.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          rewrites = data.get('rewrites', [])
+          needed = {
+            '/current': '/published/2026-04-21/current_site.html',
+            '/publication': '/published/2026-04-21/site/index.html',
+            '/portal': '/published/2026-04-21/portal/true_interactive/index.html',
+            '/app': '/published/2026-04-21/apps/tfuga_contracts_revenue/site/index.html',
+          }
+          got = {r['source']: r['destination'] for r in rewrites}
+          missing = {k:v for k,v in needed.items() if got.get(k) != v}
+          if missing:
+              raise SystemExit(f'Missing or incorrect rewrites: {missing}')
+          print('Vercel rewrites validated.')
+          PY
+
+      - name: Build summary
+        run: |
+          {
+            echo '## TFUGA Web Automation Summary'
+            echo ''
+            echo '- Root entry: `index.html` present'
+            echo '- Vercel config: `vercel.json` present'
+            echo '- `/current` target present'
+            echo '- `/publication` target present'
+            echo '- `/portal` target present'
+            echo '- `/app` target present'
+            echo ''
+            echo 'Route law:'
+            echo '`packet -> score -> review -> receipt -> decision -> rollback`'
+          } >> $GITHUB_STEP_SUMMARY
