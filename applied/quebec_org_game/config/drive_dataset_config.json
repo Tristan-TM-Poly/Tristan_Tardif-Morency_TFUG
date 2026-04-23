@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "mode": "drive_sync_bootstrap",
+  "drive_root_hint": "TTM-TFUGA-AI7-TRISTAN2",
+  "datasets": [
+    {
+      "dataset_id": "quebec_public_contracts",
+      "enabled": true,
+      "expected_patterns": ["*contract*.csv", "*contrat*.csv", "*public*.json"],
+      "target_domain": "public_value",
+      "ingest_mode": "tabular"
+    },
+    {
+      "dataset_id": "quebec_enterprises_registry",
+      "enabled": true,
+      "expected_patterns": ["*entreprise*.csv", "*company*.csv", "*registry*.json"],
+      "target_domain": "transparency",
+      "ingest_mode": "tabular"
+    },
+    {
+      "dataset_id": "quebec_environmental_events",
+      "enabled": true,
+      "expected_patterns": ["*environment*.csv", "*environnement*.csv", "*incident*.jsonl"],
+      "target_domain": "environment",
+      "ingest_mode": "event_stream"
+    },
+    {
+      "dataset_id": "quebec_labour_events",
+      "enabled": true,
+      "expected_patterns": ["*labour*.csv", "*travail*.csv", "*grieve*.jsonl", "*strike*.json"],
+      "target_domain": "labour",
+      "ingest_mode": "event_stream"
+    }
+  ]
+}

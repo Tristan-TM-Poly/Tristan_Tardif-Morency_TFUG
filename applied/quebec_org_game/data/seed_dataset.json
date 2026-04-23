@@ -1,0 +1,64 @@
+{
+  "organizations": [
+    {
+      "org_id": "org_demo_001",
+      "name": "Hydro-Québec",
+      "org_type": "crown_corp",
+      "sector": "energy",
+      "headquarters_region": "Montréal",
+      "ownership_type": "public",
+      "website": "https://www.hydroquebec.com"
+    },
+    {
+      "org_id": "org_demo_002",
+      "name": "Bombardier",
+      "org_type": "company",
+      "sector": "aerospace",
+      "headquarters_region": "Montréal",
+      "ownership_type": "public_company",
+      "website": "https://bombardier.com"
+    }
+  ],
+  "events": [
+    {
+      "event_id": "evt_demo_001",
+      "org_id": "org_demo_001",
+      "event_title": "Community investment program",
+      "event_type": "community_investment",
+      "summary": "Demonstration placeholder event for local community investment.",
+      "status": "reported",
+      "impact_direction": "positive",
+      "severity": 2,
+      "confidence": 0.7
+    },
+    {
+      "event_id": "evt_demo_002",
+      "org_id": "org_demo_002",
+      "event_title": "Labour dispute placeholder",
+      "event_type": "labour_dispute",
+      "summary": "Demonstration placeholder event for labour-related analysis.",
+      "status": "reported",
+      "impact_direction": "negative",
+      "severity": 3,
+      "confidence": 0.6
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "src_demo_001",
+      "source_type": "demo",
+      "title": "Placeholder source 1",
+      "publisher": "Internal seed dataset",
+      "url": "https://example.com/source1",
+      "reliability_tier": 2
+    },
+    {
+      "source_id": "src_demo_002",
+      "source_type": "demo",
+      "title": "Placeholder source 2",
+      "publisher": "Internal seed dataset",
+      "url": "https://example.com/source2",
+      "reliability_tier": 2
+    }
+  ]
+}
