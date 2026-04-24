@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "target_dir": "data/drive_staging",
+  "mode": "approved_download",
+  "max_files": 50
+}

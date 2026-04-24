@@ -1,0 +1,51 @@
+{
+  "schema": "quebec_org_game",
+  "entities": [
+    "organizations",
+    "relationships",
+    "events",
+    "dimensions",
+    "event_dimension_scores",
+    "sources",
+    "event_sources",
+    "claims",
+    "outcomes",
+    "gameplay_profiles",
+    "quests",
+    "quest_targets",
+    "governance_flags",
+    "data_ingestion_runs"
+  ],
+  "core_flow": [
+    "organization -> event -> source -> scoring -> gameplay_profile",
+    "organization -> relationships -> network_graph",
+    "events -> governance_flags -> moderation",
+    "events -> quests -> gameplay"
+  ],
+  "scoring_model": {
+    "dimensions": [
+      "environment",
+      "labour",
+      "transparency",
+      "public_value",
+      "tax_fairness",
+      "competition",
+      "privacy",
+      "indigenous_relations",
+      "regional_development",
+      "safety",
+      "scientific_integrity"
+    ],
+    "range": "-5 to +5",
+    "weighting": "source reliability, recency, outcome severity"
+  },
+  "governance": {
+    "flags": [
+      "unverified_claim",
+      "conflicting_sources",
+      "sensitive_topic",
+      "requires_review"
+    ],
+    "policy": "facts separated from claims; scoring must be evidence-backed"
+  }
+}

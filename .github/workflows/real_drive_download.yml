@@ -1,0 +1,54 @@
+name: Real Drive Download
+
+on:
+  workflow_dispatch:
+
+jobs:
+  real-drive-download:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON }}
+      DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate secrets presence
+        run: |
+          python - <<'PY'
+          import os
+          missing = []
+          for key in ['GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON', 'DRIVE_FOLDER_ID']:
+              if not os.environ.get(key):
+                  missing.append(key)
+          if missing:
+              raise SystemExit(f"Missing required secrets: {', '.join(missing)}")
+          print('Secrets present')
+          PY
+
+      - name: Prepare supervised sync manifest
+        run: |
+          python - <<'PY'
+          import json, os
+          manifest_path = 'zip_governance/google_drive_sync_manifest.json'
+          with open(manifest_path, 'r', encoding='utf-8') as f:
+              manifest = json.load(f)
+          manifest['folders'][0]['drive_id'] = os.environ['DRIVE_FOLDER_ID']
+          with open(manifest_path, 'w', encoding='utf-8') as f:
+              json.dump(manifest, f, indent=2)
+          print(manifest)
+          PY
+
+      - name: Supervised sync readiness report
+        run: |
+          python - <<'PY'
+          from zip_governance.google_drive_sync_client import GoogleDriveSyncClient
+          client = GoogleDriveSyncClient()
+          result = client.sync_manifest('zip_governance/google_drive_sync_manifest.json')
+          print(result)
+          print('Real download step intentionally gated until service download implementation is approved.')
+          PY

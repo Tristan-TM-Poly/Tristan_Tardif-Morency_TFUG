@@ -1,0 +1,76 @@
+name: TFUGA Zero Touch
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/zero-touch-tfuga-drive-runner
+    paths:
+      - "applied/quebec_org_game/**"
+      - "libs/ai7_tristan2_private_lib/**"
+      - ".github/workflows/tfuga_zero_touch.yml"
+  schedule:
+    - cron: "17 9 * * 1"
+
+jobs:
+  bounded-canonical-pilot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      TFUGA_DATA_DIR: data/tfuga_drive
+      TFUGA_OUT_DIR: out/tfuga
+      TFUGA_CANON_TARGET: tfuga.canon
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Seed TFUGA data directory
+        run: |
+          mkdir -p "$TFUGA_DATA_DIR"
+          cp applied/quebec_org_game/data/seed_dataset.json "$TFUGA_DATA_DIR/seed_dataset.json"
+
+      - name: Run bounded pilot
+        run: |
+          python applied/quebec_org_game/examples/demo_bounded_pilot.py
+
+      - name: Build TFUGA zero-touch index
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          data_dir = Path(os.environ['TFUGA_DATA_DIR'])
+          out_dir = Path(os.environ['TFUGA_OUT_DIR'])
+          out_dir.mkdir(parents=True, exist_ok=True)
+
+          files = sorted(str(p) for p in data_dir.rglob('*') if p.is_file())
+          payload = {
+              'generated_at_utc': datetime.now(timezone.utc).isoformat(),
+              'canon_target': os.environ['TFUGA_CANON_TARGET'],
+              'file_count': len(files),
+              'files': files,
+              'mode': 'zero_touch_bootstrap'
+          }
+          (out_dir / 'quebec_real_index.json').write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding='utf-8')
+          (out_dir / 'canon_hook.json').write_text(json.dumps({
+              'target': os.environ['TFUGA_CANON_TARGET'],
+              'status': 'connected',
+              'generated_at_utc': datetime.now(timezone.utc).isoformat()
+          }, indent=2, ensure_ascii=False), encoding='utf-8')
+          PY
+
+      - name: Upload TFUGA artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-zero-touch-artifacts
+          path: |
+            out/tfuga/quebec_real_index.json
+            out/tfuga/canon_hook.json
