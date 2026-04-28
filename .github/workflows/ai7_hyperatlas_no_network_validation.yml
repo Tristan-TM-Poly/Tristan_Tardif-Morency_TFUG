@@ -33,6 +33,9 @@ jobs:
       - name: Run standalone no-network validator
         run: python institutional_hyperatlas/tests/run_no_network_validation.py
 
+      - name: Run dependency-free schema validator
+        run: python institutional_hyperatlas/tests/validate_top64_schemas.py
+
       - name: Assert no generated test artifact is committed
         run: |
           if git status --short | grep -q 'test_generated_top64x5.json'; then
