@@ -1,0 +1,38 @@
+[
+  {
+    "rank": 1,
+    "score": 0.97,
+    "institution_source": "Données Québec",
+    "challenge_sector": "water treatment",
+    "ai7_capability": "open-data-to-prototype mapper",
+    "action": "create DCT packet",
+    "dct_gate": "DCT test exists",
+    "impactops_gate": "water treated measured",
+    "scale_context": "municipal scale",
+    "metacanon_gate": "method reproduced independently"
+  },
+  {
+    "rank": 2,
+    "score": 0.96,
+    "institution_source": "Hydro-Québec",
+    "challenge_sector": "grid resilience",
+    "ai7_capability": "energy digital twin",
+    "action": "generate prototype brief",
+    "dct_gate": "prototype brief generated",
+    "impactops_gate": "resilience increased measured",
+    "scale_context": "provincial scale",
+    "metacanon_gate": "ready for prototype sprint"
+  },
+  {
+    "rank": 3,
+    "score": 0.95,
+    "institution_source": "Polytechnique Montréal",
+    "challenge_sector": "fractal LC circuits",
+    "ai7_capability": "circuit graph spectral analyzer",
+    "action": "create test plan",
+    "dct_gate": "hyperedge proof created",
+    "impactops_gate": "result reproducible",
+    "scale_context": "electronics lab context",
+    "metacanon_gate": "LC circuit transfer candidate"
+  }
+]
