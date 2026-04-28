@@ -1,0 +1,32 @@
+[
+  {
+    "product_uri": "mast:JWST/product/example_i2d.fits",
+    "filename": "example_i2d.fits",
+    "instrument": "NIRCam",
+    "detector": null,
+    "filter_or_grating": "F200W",
+    "product_type": "image mosaic",
+    "stage": "Stage 3 image",
+    "cal_ver": "REPLACE_WITH_FITS_HEADER_CAL_VER",
+    "crds_ctx": "REPLACE_WITH_FITS_HEADER_CRDS_CTX",
+    "program_id": "REPLACE_WITH_PROGRAM_ID",
+    "target_name": "REPLACE_WITH_TARGET",
+    "public": true,
+    "provenance_url": "https://mast.stsci.edu/"
+  },
+  {
+    "product_uri": "mast:JWST/product/example_x1d.fits",
+    "filename": "example_x1d.fits",
+    "instrument": "NIRSpec",
+    "detector": null,
+    "filter_or_grating": "G395H/F290LP",
+    "product_type": "1D spectrum",
+    "stage": "Stage 3 spectrum",
+    "cal_ver": "REPLACE_WITH_FITS_HEADER_CAL_VER",
+    "crds_ctx": "REPLACE_WITH_FITS_HEADER_CRDS_CTX",
+    "program_id": "REPLACE_WITH_PROGRAM_ID",
+    "target_name": "REPLACE_WITH_TARGET",
+    "public": true,
+    "provenance_url": "https://mast.stsci.edu/"
+  }
+]

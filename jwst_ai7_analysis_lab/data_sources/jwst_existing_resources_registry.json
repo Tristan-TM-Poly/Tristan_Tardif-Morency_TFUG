@@ -1,0 +1,113 @@
+{
+  "version": "0.1",
+  "purpose": "Registry of public/official JWST data sources, documentation, GitHub repositories and reusable analysis tools for JWST AI-7 workflows.",
+  "policy": {
+    "default_mode": "manifest_only_no_download",
+    "public_or_authorized_data_only": true,
+    "license_and_citation_check_required": true,
+    "no_unverified_discovery_claims": true,
+    "no_bulk_download_without_review": true,
+    "no_proprietary_data_without_authorization": true
+  },
+  "resources": [
+    {
+      "id": "stsci_jwst_data_access_docs",
+      "name": "STScI JWST data access documentation",
+      "kind": "official_docs",
+      "url": "https://jwst-docs.stsci.edu/accessing-jwst-data",
+      "use_for": ["data_access_rules", "MAST_context", "citation_policy", "product_ecosystem"],
+      "ingest_mode": "metadata_reference_only",
+      "risk_level": "low"
+    },
+    {
+      "id": "mast_jwst_archive",
+      "name": "MAST JWST archive mission page",
+      "kind": "official_archive",
+      "url": "https://archive.stsci.edu/missions-and-data/jwst",
+      "use_for": ["public_products", "instrument_modes", "stage_0_1_2_3_products", "search_tools"],
+      "ingest_mode": "manifest_then_manual_download_review",
+      "risk_level": "low"
+    },
+    {
+      "id": "jwst_science_data_overview",
+      "name": "JWST science data overview",
+      "kind": "official_docs",
+      "url": "https://jwst-docs.stsci.edu/accessing-jwst-data/jwst-science-data-overview",
+      "use_for": ["product_stage_definitions", "file_suffix_semantics", "calibration_lineage"],
+      "ingest_mode": "metadata_reference_only",
+      "risk_level": "low"
+    },
+    {
+      "id": "spacetelescope_jwst_pipeline",
+      "name": "spacetelescope/jwst calibration pipeline",
+      "kind": "github_repo",
+      "url": "https://github.com/spacetelescope/jwst",
+      "use_for": ["official_pipeline", "stage_processing", "calibration_reference_context", "reprocessing"],
+      "ingest_mode": "dependency_reference_only",
+      "risk_level": "medium_due_to_heavy_dependencies"
+    },
+    {
+      "id": "spacetelescope_jwst_pipeline_notebooks",
+      "name": "JWST calibration pipeline notebooks",
+      "kind": "github_repo",
+      "url": "https://github.com/spacetelescope/jwst-pipeline-notebooks",
+      "use_for": ["mode_specific_examples", "pipeline_stage_examples", "demo_data_patterns"],
+      "ingest_mode": "reference_and_adapt_with_citation",
+      "risk_level": "medium_due_to_demo_downloads"
+    },
+    {
+      "id": "mast_astroquery_notebooks",
+      "name": "MAST astroquery notebooks",
+      "kind": "official_notebook_docs",
+      "url": "https://spacetelescope.github.io/mast_notebooks/notebooks/multi_mission/beginner_search/beginner_search.html",
+      "use_for": ["query_region", "query_object", "query_criteria", "product_list", "download_patterns"],
+      "ingest_mode": "reference_only_unless_explicit_download",
+      "risk_level": "medium_due_to_download_capability"
+    },
+    {
+      "id": "spacetelescope_crds",
+      "name": "spacetelescope/crds Calibration Reference Data System",
+      "kind": "github_repo",
+      "url": "https://github.com/spacetelescope/crds",
+      "use_for": ["reference_file_assignment", "calibration_context", "reprocessing_due_to_reference_changes"],
+      "ingest_mode": "dependency_reference_only",
+      "risk_level": "medium_due_to_large_cache"
+    },
+    {
+      "id": "spacetelescope_webbpsf_stpsf",
+      "name": "WebbPSF / STPSF PSF simulation tools",
+      "kind": "github_repo",
+      "url": "https://github.com/spacetelescope/webbpsf",
+      "use_for": ["psf_simulation", "source_validation", "artifact_discrimination"],
+      "ingest_mode": "reference_only_optional_dependency",
+      "risk_level": "medium_due_to_external_psf_data_files"
+    },
+    {
+      "id": "spacetelescope_jdaviz",
+      "name": "spacetelescope/jdaviz visualization ecosystem",
+      "kind": "github_repo",
+      "url": "https://github.com/spacetelescope/jdaviz",
+      "use_for": ["Specviz", "Cubeviz", "Mosviz", "Imviz", "interactive_visualization"],
+      "ingest_mode": "optional_dependency_reference",
+      "risk_level": "low_to_medium"
+    },
+    {
+      "id": "astropy_photutils",
+      "name": "astropy/photutils source detection and photometry",
+      "kind": "github_repo",
+      "url": "https://github.com/astropy/photutils",
+      "use_for": ["source_detection", "aperture_photometry", "segmentation", "psf_photometry"],
+      "ingest_mode": "optional_dependency_reference",
+      "risk_level": "low"
+    },
+    {
+      "id": "mast_hlsp_collections",
+      "name": "MAST High-Level Science Product collections",
+      "kind": "official_archive_collection",
+      "url": "https://outerspace.stsci.edu/display/MASTDATA/HLSP+Data+Collections",
+      "use_for": ["community_products", "science_ready_catalogs", "crossmatch_candidates"],
+      "ingest_mode": "manifest_and_license_review",
+      "risk_level": "medium_due_to_collection_specific_terms"
+    }
+  ]
+}
