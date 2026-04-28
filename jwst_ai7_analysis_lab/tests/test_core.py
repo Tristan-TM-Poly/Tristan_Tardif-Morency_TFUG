@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -8,6 +9,8 @@ from jwst_ai7_lab.spectral import compute_redshift, line_snr, equivalent_width, 
 from jwst_ai7_lab.manifest import stage_from_filename
 from jwst_ai7_lab.quality import QualityVector, quality_gate
 from jwst_ai7_lab.dct import dct_claim_packet
+from jwst_ai7_lab.source_registry import validate_registry
+from jwst_ai7_lab.line_catalog import candidate_line_matches, observed_wavelength
 
 
 def test_spectral_core():
@@ -23,3 +26,14 @@ def test_manifest_quality_dct():
     assert quality_gate(QualityVector(calibration_known=True))['passed']
     packet = dct_claim_packet('candidate line detected', ['example_x1d.fits'])
     assert packet.promotion_status == 'candidate'
+
+
+def test_source_registry_and_line_catalog():
+    registry_path = ROOT / 'data_sources' / 'jwst_existing_resources_registry.json'
+    registry = json.loads(registry_path.read_text(encoding='utf-8'))
+    result = validate_registry(registry)
+    assert result['passed'], result
+    assert result['resource_count'] >= 8
+    assert abs(observed_wavelength(0.656281, 1.0) - 1.312562) < 1e-9
+    matches = candidate_line_matches(2.0, z_min=0, z_max=20)
+    assert any(m['line'] == 'H_alpha' for m in matches)
