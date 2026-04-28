@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI-7 QC-CA Top 64^4 axes schema",
+  "type": "object",
+  "required": [
+    "A_institutions_sources",
+    "B_challenges_sectors",
+    "C_ai7_capabilities",
+    "D_actions_governance",
+    "count_per_axis",
+    "total_combinations"
+  ],
+  "properties": {
+    "A_institutions_sources": {"type": "array", "minItems": 64, "maxItems": 64, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "B_challenges_sectors": {"type": "array", "minItems": 64, "maxItems": 64, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "C_ai7_capabilities": {"type": "array", "minItems": 64, "maxItems": 64, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "D_actions_governance": {"type": "array", "minItems": 64, "maxItems": 64, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "count_per_axis": {"const": 64},
+    "total_combinations": {"const": 16777216},
+    "generated_at": {"type": "string"}
+  },
+  "additionalProperties": true
+}
