@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI-7 QC-CA Top 64^5 E-axis schema",
+  "type": "object",
+  "required": [
+    "E_dct_proof_prototype_maturity_gates",
+    "count",
+    "axis_name",
+    "axis_role",
+    "total_tensor_size_with_existing_axes"
+  ],
+  "properties": {
+    "E_dct_proof_prototype_maturity_gates": {"type": "array", "minItems": 64, "maxItems": 64, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "count": {"const": 64},
+    "axis_name": {"const": "E"},
+    "axis_role": {"type": "string", "minLength": 1},
+    "total_tensor_size_with_existing_axes": {"const": 1073741824}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,45 @@
+name: AI-7 HyperAtlas no-network validation
+
+on:
+  pull_request:
+    paths:
+      - 'institutional_hyperatlas/**'
+      - '.github/workflows/ai7_hyperatlas_no_network_validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai7-hyperatlas-no-network-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-local-only:
+    name: Validate AI-7 HyperAtlas locally
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run standalone no-network validator
+        run: python institutional_hyperatlas/tests/run_no_network_validation.py
+
+      - name: Run dependency-free schema validator
+        run: python institutional_hyperatlas/tests/validate_top64_schemas.py
+
+      - name: Assert no generated test artifact is committed
+        run: |
+          if git status --short | grep -q 'test_generated_top64x5.json'; then
+            echo 'Generated test artifact should not be committed.'
+            git status --short
+            exit 1
+          fi
