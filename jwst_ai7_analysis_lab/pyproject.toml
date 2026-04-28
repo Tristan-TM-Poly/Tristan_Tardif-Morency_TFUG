@@ -1,0 +1,11 @@
+[project]
+name = "jwst-ai7-analysis-lab"
+version = "0.1.0"
+description = "Governed reproducible JWST analysis scaffold for AI-7 / TFUGA workflows"
+requires-python = ">=3.10"
+
+dependencies = []
+
+[project.optional-dependencies]
+mast = ["astroquery", "astropy"]
+dev = ["pytest"]
