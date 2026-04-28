@@ -1,0 +1,36 @@
+[
+  {
+    "id": "org:qc:source:donnees_quebec",
+    "name": "Données Québec",
+    "type": "Dataset",
+    "jurisdiction": "Québec",
+    "privacy_level": "dataset_metadata",
+    "contact_policy": "no_outreach",
+    "canon_status": "seed",
+    "sources": [
+      {
+        "url": "https://www.donneesquebec.ca/",
+        "license": "official open data portal metadata, dataset licences vary",
+        "retrieved_at": "2026-04-28",
+        "confidence": 0.9
+      }
+    ]
+  },
+  {
+    "id": "org:qc:university:polytechnique_montreal",
+    "name": "Polytechnique Montréal",
+    "type": "University",
+    "jurisdiction": "Québec",
+    "privacy_level": "institutional",
+    "contact_policy": "manual_review_required",
+    "canon_status": "seed",
+    "sources": [
+      {
+        "url": "https://www.quebec.ca/en/education/university/studying/list-universities",
+        "license": "public institutional metadata",
+        "retrieved_at": "2026-04-28",
+        "confidence": 0.95
+      }
+    ]
+  }
+]
