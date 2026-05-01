@@ -8,7 +8,9 @@ This directory is the GitHub publication index for `axiom_tristan_master_zip_v10
 
 ## Truth level
 
-T2: local master archive created, manifest generated, source hashes computed, and filesystem/ZIP verification reported.
+T3 for the publication index: GitHub files, Drive index, and mirror indexes exist.
+
+T2 for the binary ZIP: local master archive created, manifest generated, source hashes computed, and filesystem/ZIP verification reported. The binary ZIP still needs an external binary asset upload.
 
 ## Non-claims
 
@@ -19,7 +21,7 @@ No GitHub release asset, cloud deployment, patent/PCT/CIPO/arXiv/CRSNG filing, p
 - `README.md`: master archive overview and canonical use.
 - `MASTER_MANIFEST.json`: machine-readable source registry and non-claims.
 - `SHA256SUMS.txt`: source archive SHA-256 ledger extracted from the master package.
-- `NON_CLAIMS_AND_GATES.md`: AntiHype gate for official actions.
+- `SAFETY_GATE.md`: gate preventing local artifacts from being mislabeled as external deployment or experimental validation.
 
 ## Next zero-touch step
 
