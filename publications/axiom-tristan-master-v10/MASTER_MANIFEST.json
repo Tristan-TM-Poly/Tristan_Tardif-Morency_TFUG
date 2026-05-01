@@ -1,0 +1,46 @@
+{
+  "master_zip": "axiom_tristan_master_zip_v10_2026_05_01.zip",
+  "generated_utc": "2026-05-01T16:22:48.860596Z",
+  "truth_level": "T2: local master archive assembled + manifest/hash verification generated",
+  "non_claims": [
+    "No GitHub push was performed by this archive creation.",
+    "No cloud deployment was performed.",
+    "No official patent, PCT, CIPO, arXiv, CRSNG, or institutional submission was filed.",
+    "No physical validation is claimed without raw data, calibration, controls, replicates, logs, and receipts.",
+    "No purchase or revenue action was performed."
+  ],
+  "canonical_spine": [
+    "v7 monorepo remains the trunk candidate.",
+    "v8 adds intake: SAFE archive discipline + Rosetta/BAT specification.",
+    "v9 adds operational overlays: AntiHype, ZeroTouch, OfficialActionGate, SafeRunContinuous.",
+    "Master v10 packages sources + registry + runnable verification scaffolding."
+  ],
+  "source_entries": [
+    {"filename":"axiom_tristan_monorepo_v7.zip","bytes":4571351,"sha256":"69c33fb381e628c517cdc8ea60c284cef88fdf7bc97c9997b42bb0934e0f942d","role":"source_archive_or_pdf"},
+    {"filename":"axiom_tristan_v8_with_this_intake.zip","bytes":10274,"sha256":"abb4da3e0126c7907e69bcd774c0aff3cf6c61b4a068dbbdf7e040a40036c590","role":"source_archive_or_pdf"},
+    {"filename":"axiom_tristan_v9_improvements_overlay.zip","bytes":9573,"sha256":"73b08b77878684838d53ea29056bcb2198178b052e62b62de99878228781d245","role":"source_archive_or_pdf"},
+    {"filename":"FTTE-AI7_ Universal Constructible Structures Engine - Google Gemini.pdf","bytes":5899374,"sha256":"f82baeee60d6b1daab5c83cfe9fa8e8cf5fcab938a09cadd01a83919bb44dd25","role":"source_archive_or_pdf"},
+    {"filename":"Évolution Épistémologique de l'Écosystème TFUGA - Google Gemini.pdf","bytes":6075388,"sha256":"d3f7cd26071012280d0cc72deed74e44ace6580803bfb0c34c12153585680a87","role":"source_archive_or_pdf"},
+    {"filename":"TFUGA_MAX_PLUS_ULTRA_SAFE_PART_A_CONTROL_GIANT_MODULES_2026-05-01.zip","bytes":35600776,"sha256":"8487e1585f28441b5650cb7f5b12c821c4c48f7237a7fea89132a95166a74d0e","role":"source_archive_or_pdf"},
+    {"filename":"TFUGA_MAX_PLUS_ULTRA_SAFE_PART_B_EXTRACTIONS_RPS_AUTO_MODULES_2026-05-01.zip","bytes":48079839,"sha256":"c54b0a5df30ace738c183b740adca68bb2f6f266bb76c22e4fa8ba16623d71a6","role":"source_archive_or_pdf"},
+    {"filename":"TFUGA_MAX_PLUS_ULTRA_SAFE_PART_C_RAW_GIANT_ONLY_2026-05-01.zip","bytes":43372007,"sha256":"4204f684ff14e8b9731c36d70a01ce2ccc73d22e1c3174719631c61090bb7f1e","role":"source_archive_or_pdf"},
+    {"filename":"TFUGA_MAX_PLUS_ULTRA_SAFE_PART_D_RAW_SECONDARY_ARCHIVES_2026-05-01.zip","bytes":32242767,"sha256":"6989cb359f583c2e87d73defe7d00f9b40c120533706492bb35cb51fe55bd1b1","role":"source_archive_or_pdf"},
+    {"filename":"ai7_raman_centrale_zero_v4.zip","bytes":390501,"sha256":"1aec86f184259609b91d0298eacbc930e1a08ce27e203e40b7f97c37fe658351","role":"source_archive_or_pdf"},
+    {"filename":"ai7_raman_centrale_zero_v3.zip","bytes":197336,"sha256":"eb0af26d9155772ad5808b8c9d95bac6b23c48295b883be5a37179c4c906d9e3","role":"source_archive_or_pdf"},
+    {"filename":"FTTE_AI7_v0_9.zip","bytes":286861,"sha256":"7769226677747544b3153ef5b7ebac93d49b5a394c92e50ce5570c7761260fb9","role":"source_archive_or_pdf"},
+    {"filename":"ftte_ai7_v0_9.zip","bytes":475938,"sha256":"5b529ca844efd48bbe732dc91fcbf4614f2d331b0071bce346f92d7ab2f31871","role":"source_archive_or_pdf"},
+    {"filename":"hgfm_max_plus_ultra_v0_1.zip","bytes":58407,"sha256":"9579586e4a5293dfe19db21f1c29311b5bca452e3462241ed82e29ad1102acec","role":"source_archive_or_pdf"},
+    {"filename":"tfuga_ai7_global_coupling_v0_9.zip","bytes":61268,"sha256":"e3c5690aabe23d420fd53a0f298ab9405886b7e70af273aee4226a3d1e6a5978","role":"source_archive_or_pdf"},
+    {"filename":"top64_8_omega_kernel_v1.zip","bytes":16761,"sha256":"ec66f948d210004abb2c4adc4baaa1af95afd8da646b7d78b2cfc7134d755a02","role":"source_archive_or_pdf"},
+    {"filename":"ai7_omni_executor_v5.zip","bytes":74084,"sha256":"2f1983260be2f67ce6bb900a9c17533bf71bfd2723d3d33de7f699c831643c9a","role":"source_archive_or_pdf"},
+    {"filename":"ai7_omni_executor_v4.zip","bytes":59933,"sha256":"f3f30e771861247e63ef61b72f407a6fcf2f8e04641a6647527c622617c14195","role":"source_archive_or_pdf"},
+    {"filename":"ai7_omni_resolver_v3.zip","bytes":60120,"sha256":"683cb1d6abe65663770df73de23c1f967a31f974c3485ba4d6aba09ac2a386d6","role":"source_archive_or_pdf"},
+    {"filename":"ai7_omni_resolver_v2.zip","bytes":42868,"sha256":"08beb72ac42bd9282d071dd5917ca099d6250c740554ab5d424024a68fd8ce5e","role":"source_archive_or_pdf"},
+    {"filename":"ai7_limitations_solver_v1.zip","bytes":20501,"sha256":"7775e47032723b742387177a0cd759a88cce472945d71350ecc8a99b06fc4de0","role":"source_archive_or_pdf"},
+    {"filename":"ai7_cik_max_plus_ultra.zip","bytes":8066,"sha256":"499ecba545c5c007a6838a8ac43a6b932e92de761c0cb702cc5be43749e1593e","role":"source_archive_or_pdf"},
+    {"filename":"audit_tfuga_github_drive_2026_04_30.zip","bytes":2747,"sha256":"5670a7da3b31e9ba2722d3764dca103ad21feacafa63efa7e3a366bc959cfa8d","role":"source_archive_or_pdf"},
+    {"filename":"tfuga_ai7_multi_zip_audit_2026_05_01.zip","bytes":3265,"sha256":"111cd183c89e1627f031738c6c0a2c65be2f8e9f3e37e6b48d39352e11d37689","role":"source_archive_or_pdf"},
+    {"filename":"axiom_tristan_monorepo_v6.zip","bytes":32183,"sha256":"62bf91c7bdceeb8a13353f840be133775a4bccfdf8a99e44df8bce823c856599","role":"source_archive_or_pdf"}
+  ],
+  "recommended_next_step": "V10 runnable fusion: unpack v7, apply v9 overlay, add real Raman pilot folder with raw CSV + metadata + blank + calibration + controls + 3 replicates + DCT++ report + BAT hashes."
+}
