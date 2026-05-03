@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI-7 Acceleration Slot",
+  "type": "object",
+  "required": [
+    "slot_id",
+    "function",
+    "domain",
+    "packet_type",
+    "objective",
+    "allowed_outputs",
+    "required_gate",
+    "max_status_without_external_evidence",
+    "blocked_claims",
+    "next_least_action"
+  ],
+  "properties": {
+    "slot_id": {"type": "string"},
+    "function": {"type": "string", "enum": ["Produce", "Verify", "Test", "Analyze", "Optimize", "Reproduce", "Integrate"]},
+    "domain": {"type": "string"},
+    "packet_type": {"type": "string", "enum": ["agent", "theory", "system_bridge", "application", "claim_route", "dashboard_card"]},
+    "objective": {"type": "string"},
+    "allowed_outputs": {"type": "array", "items": {"type": "string"}},
+    "required_gate": {"type": "string"},
+    "max_status_without_external_evidence": {"type": "string"},
+    "required_evidence": {"type": "array", "items": {"type": "string"}},
+    "blocked_claims": {"type": "array", "items": {"type": "string"}},
+    "next_least_action": {"type": "string"},
+    "risk_level": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
