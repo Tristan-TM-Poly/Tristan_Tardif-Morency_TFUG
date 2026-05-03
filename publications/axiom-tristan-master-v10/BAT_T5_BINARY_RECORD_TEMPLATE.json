@@ -1,0 +1,30 @@
+{
+  "artifact_name": "axiom_tristan_master_zip_v10_2026_05_01.zip",
+  "version": "v10",
+  "truth_level": "T2 until external binary verification workflow passes",
+  "expected_sha256": "PENDING_MASTER_ZIP_SHA256",
+  "asset_url": "PENDING_EXTERNAL_BINARY_ASSET_URL",
+  "verification_workflow": ".github/workflows/verify-axiom-tristan-master-v10-binary.yml",
+  "gate_issue": "https://github.com/Tristan-TM-Poly/Tristan_Tardif-Morency_TFUG/issues/29",
+  "promotion_requirements": [
+    "external binary asset URL exists",
+    "uploaded SHA-256 equals expected SHA-256",
+    "clean download SHA-256 equals expected SHA-256",
+    "unzip -t passes",
+    "verification receipt artifact exists",
+    "rollback path exists"
+  ],
+  "rollback": [
+    "delete or unpublish incorrect binary asset",
+    "keep text index in place",
+    "downgrade binary status to T2",
+    "leave issue open until verification passes"
+  ],
+  "non_claims": [
+    "no cloud deployment",
+    "no official filing",
+    "no experimental validation",
+    "no purchase",
+    "no revenue action"
+  ]
+}
