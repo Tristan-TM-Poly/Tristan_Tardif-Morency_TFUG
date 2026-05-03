@@ -36,6 +36,10 @@ def ok(message: str) -> None:
     print(f"[OK] {message}")
 
 
+def normalize(text: str) -> str:
+    return "".join(ch for ch in text.lower() if ch.isalnum())
+
+
 def run_route(claim: str) -> dict:
     result = subprocess.run([sys.executable, str(ROUTER), claim], cwd=ROOT, text=True, capture_output=True)
     if result.returncode != 0:
@@ -50,9 +54,10 @@ def main() -> int:
             fail(f"missing required file: {path.relative_to(ROOT)}")
         ok(f"found {path.relative_to(ROOT)}")
 
-    doc = DOC.read_text(encoding="utf-8").lower()
-    for token in ["claimroute", "requiredgate", "maxstatus", "missingevidence", "no claim reaches promotion directly"]:
-        if token not in doc.replace(" ", ""):
+    doc = DOC.read_text(encoding="utf-8")
+    normalized_doc = normalize(doc)
+    for token in ["ClaimRoute", "RequiredGate", "MaxStatus", "MissingEvidence", "No claim reaches promotion directly"]:
+        if normalize(token) not in normalized_doc:
             fail(f"claim router doc missing token: {token}")
     ok("claim router doc tokens")
 
