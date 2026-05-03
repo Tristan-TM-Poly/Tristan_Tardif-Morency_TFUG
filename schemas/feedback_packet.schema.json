@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Human AI Feedback Packet",
+  "type": "object",
+  "required": [
+    "feedback_id",
+    "source_type",
+    "summary",
+    "class",
+    "severity",
+    "suggested_patch",
+    "required_gate",
+    "evidence_needed",
+    "status",
+    "next_least_action"
+  ],
+  "properties": {
+    "feedback_id": {"type": "string"},
+    "source_type": {"type": "string", "enum": ["human", "ai", "github", "beta", "support", "ci", "dashboard", "collaborator", "unknown"]},
+    "source_ref": {"type": "string"},
+    "summary": {"type": "string"},
+    "class": {"type": "string", "enum": ["clarity", "correctness", "evidence", "product", "science", "culture", "governance", "risk", "other"]},
+    "severity": {"type": "string", "enum": ["S0", "S1", "S2", "S3", "S4"]},
+    "suggested_patch": {"type": "string"},
+    "required_gate": {"type": "string"},
+    "evidence_needed": {"type": "array", "items": {"type": "string"}},
+    "status": {"type": "string", "enum": ["new", "triaged", "patched", "tested", "reviewed", "promoted", "archived", "blocked"]},
+    "owner": {"type": "string"},
+    "next_least_action": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
