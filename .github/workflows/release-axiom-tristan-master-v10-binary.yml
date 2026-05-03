@@ -1,0 +1,111 @@
+name: Release Axiom-Tristan Master v10 Binary
+
+on:
+  workflow_dispatch:
+    inputs:
+      asset_url:
+        description: 'External URL for axiom_tristan_master_zip_v10_2026_05_01.zip'
+        required: true
+        type: string
+      expected_sha256:
+        description: 'Expected SHA-256 of the ZIP'
+        required: true
+        type: string
+      tag_name:
+        description: 'Release tag to create or update'
+        required: true
+        type: string
+        default: 'axiom-tristan-master-v10-2026-05-01'
+      release_name:
+        description: 'Human-readable release title'
+        required: true
+        type: string
+        default: 'Axiom-Tristan Master v10 2026-05-01'
+      prerelease:
+        description: 'Mark release as prerelease'
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download external binary asset
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3 --retry-delay 5 -o axiom_tristan_master_zip_v10_2026_05_01.zip "${{ inputs.asset_url }}"
+          ls -lh axiom_tristan_master_zip_v10_2026_05_01.zip
+
+      - name: Verify SHA-256
+        run: |
+          set -euo pipefail
+          actual_sha256="$(sha256sum axiom_tristan_master_zip_v10_2026_05_01.zip | awk '{print $1}')"
+          echo "actual_sha256=${actual_sha256}" | tee sha256_result.txt
+          echo "expected_sha256=${{ inputs.expected_sha256 }}" | tee -a sha256_result.txt
+          test "${actual_sha256}" = "${{ inputs.expected_sha256 }}"
+
+      - name: Test ZIP integrity
+        run: |
+          set -euo pipefail
+          unzip -t axiom_tristan_master_zip_v10_2026_05_01.zip | tee unzip_test.log
+
+      - name: Write release receipt
+        run: |
+          set -euo pipefail
+          {
+            echo "# Axiom-Tristan Master v10 Binary Release Receipt"
+            echo
+            echo "Artifact: axiom_tristan_master_zip_v10_2026_05_01.zip"
+            echo "Release tag: ${{ inputs.tag_name }}"
+            echo "Release name: ${{ inputs.release_name }}"
+            echo "Source asset URL: ${{ inputs.asset_url }}"
+            echo "Expected SHA-256: ${{ inputs.expected_sha256 }}"
+            echo
+            cat sha256_result.txt
+            echo
+            echo "ZIP integrity: passed if this job is green."
+            echo "Workflow run URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo
+            echo "Truth upgrade rule: binary artifact may be promoted to T5 only if this workflow is green and the release asset is present."
+            echo
+            echo "Non-claims: this release does not imply cloud deployment, official filing, experimental validation, purchase, or revenue action."
+          } > AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md
+          cat AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view "${{ inputs.tag_name }}" >/dev/null 2>&1; then
+            echo "Release exists; updating notes and uploading artifact."
+            gh release upload "${{ inputs.tag_name }}" axiom_tristan_master_zip_v10_2026_05_01.zip --clobber
+            gh release upload "${{ inputs.tag_name }}" AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md --clobber
+          else
+            prerelease_flag=""
+            if [ "${{ inputs.prerelease }}" = "true" ]; then
+              prerelease_flag="--prerelease"
+            fi
+            gh release create "${{ inputs.tag_name }}" \
+              axiom_tristan_master_zip_v10_2026_05_01.zip \
+              AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md \
+              --title "${{ inputs.release_name }}" \
+              --notes-file AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md \
+              ${prerelease_flag}
+          fi
+
+      - name: Upload workflow receipt artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: axiom-tristan-master-v10-release-receipt
+          path: |
+            AXIOM_TRISTAN_MASTER_V10_BINARY_RELEASE_RECEIPT.md
+            sha256_result.txt
+            unzip_test.log
