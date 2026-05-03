@@ -1,0 +1,33 @@
+{
+  "disruption_id": "DISRUPT-001",
+  "name": "OmniSpectral EvidenceGate Reporting Disruption",
+  "old_workflow": "Unstructured spectral analysis reports where peak/AUC claims, uncertainty, evidence status, and missing validation are mixed in prose.",
+  "new_workflow": "Local-first spectral reporting packet with AUC/peak structure, uncertainty placeholders, DCT++ claim ledger, EvidenceGate status, and reviewer-ready missing-evidence checklist.",
+  "obsolete_assumption": "A scientific report can be useful without explicitly separating measurement, claim, missing evidence, and promotion status.",
+  "bridge_object": "DCT++ spectral evidence packet linking CSV-like inputs, extracted features, claims, uncertainty, and status ceiling.",
+  "advantage_metric": "Time to identify unsupported claims; number of claims routed to correct gates; reviewer clarity score; reproducibility checklist completion.",
+  "minimum_demo": "Run the starter kit on a sample Raman-like CSV and emit a DCT++ report plus claim ledger without asserting physical validation.",
+  "required_gate": "EvidenceGate + ClaimRouterGate + HumanReviewGate",
+  "required_evidence": [
+    "sample input file",
+    "generated report",
+    "claim ledger",
+    "missing-evidence list",
+    "CI/test result",
+    "review feedback packet"
+  ],
+  "reuse_kernel": "Reusable DCT++ spectral-report template and claim-routing structure.",
+  "feedback_plan": "Collect 5 reviewer responses using Feedback Intake Form and convert objections into patches/tests/blocked claims.",
+  "transaction_or_impact_path": "Private beta R3 -> R4 candidate only after receipt/sponsor log and delivery evidence.",
+  "blocked_claims": [
+    "validated material discovery",
+    "proved TFUGA physics",
+    "guaranteed revenue",
+    "market validation without receipt",
+    "scientific validation without real data"
+  ],
+  "rollback_path": "If reviewers find the promise unclear or overclaimed, downgrade to educational reporting template and archive product claims.",
+  "status": "S3/T3/R3 disruption candidate",
+  "next_least_action": "Run ClaimRouter on public copy and collect one private reviewer feedback packet before any public launch.",
+  "notes": "Disruption candidate targets workflow clarity and evidence routing, not scientific proof."
+}
