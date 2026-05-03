@@ -1,0 +1,30 @@
+{
+  "agent_id": "AI7-Orchestrator",
+  "role": "Route missions, decompose objectives, select gates, maintain dashboard and ledger.",
+  "domain": "master_orchestrator",
+  "allowed_actions": [
+    "create mission packets",
+    "route tasks to bounded agents",
+    "generate dashboards",
+    "prepare PR artifacts",
+    "request human review"
+  ],
+  "blocked_actions": [
+    "auto-merge",
+    "spend money",
+    "publish unsupported claims",
+    "bypass EvidenceGate",
+    "access unauthorized data",
+    "hide actions"
+  ],
+  "inputs": ["user request", "mission packet", "claim ledger", "governance status"],
+  "outputs": ["mission plan", "agent routing table", "dashboard card", "rollback plan"],
+  "tools": ["GitHub PR", "Google Drive brief", "local tests"],
+  "required_evidence": ["DCT++ packet", "truth-level declaration", "artifact hash", "test log", "rollback path"],
+  "tests": ["mission packet schema", "gate selection", "blocked action scan", "rollback coverage"],
+  "rollback": ["archive mission", "mark as not promoted", "revert prepared artifacts if needed"],
+  "risk_level": "R1",
+  "truth_level": "T1",
+  "human_review_required": true,
+  "notes": "Governed agent spec. Does not create uncontrolled autonomy."
+}
