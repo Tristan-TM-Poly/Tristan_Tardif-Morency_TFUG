@@ -4,9 +4,11 @@ on:
   pull_request:
     paths:
       - 'docs/hgfm/**'
+      - 'docs/ethics/**'
       - 'products/tfuga-hyper-revenue-reactor-v0.8/**'
       - 'tools/hgfm_doc_ci.py'
       - 'tools/revenue_evidence_ci.py'
+      - 'tools/knowledge_respect_ci.py'
       - 'tools/tfuga_unified_governance_ci.py'
       - '.github/workflows/**governance*.yml'
   workflow_dispatch:
@@ -38,6 +40,9 @@ jobs:
           path: |
             docs/hgfm/HGFM_DOCUMENTATION_INDEX.md
             docs/hgfm/HGFM_DOCUMENTATION_CI_PROTOCOL.md
+            docs/ethics/KNOWLEDGE_RESPECT_PROTOCOL.md
+            docs/ethics/CULTURAL_CLAIMS_REGISTER.md
+            docs/ethics/knowledge_respect.schema.json
             products/tfuga-hyper-revenue-reactor-v0.8/REVENUE_EVIDENCEGATE_V0_9.md
             products/tfuga-hyper-revenue-reactor-v0.8/PUBLIC_RELEASE_CANDIDATE_CHECKLIST.md
           if-no-files-found: warn
