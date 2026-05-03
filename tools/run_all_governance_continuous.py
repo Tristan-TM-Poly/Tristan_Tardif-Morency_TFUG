@@ -26,6 +26,7 @@ GATES = [
     ("AI7AgentFactoryGate", "tools/ai7_agent_factory_ci.py"),
     ("AI7AccelerationGate", "tools/ai7_acceleration_ci.py"),
     ("ClaimRouterGate", "tools/claim_router_ci.py"),
+    ("FeedbackLoopGate", "tools/feedback_loop_ci.py"),
 ]
 
 OUTPUT_DIR = ROOT / "outputs" / "governance"
