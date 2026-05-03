@@ -1,0 +1,41 @@
+name: AI-7 Agent Factory Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/governance/AI7_GOVERNED_AGENT_FACTORY.md'
+      - 'schemas/ai7_agent_spec.schema.json'
+      - 'examples/ai7_agent_specs/**'
+      - 'tools/ai7_agent_factory_ci.py'
+      - '.github/workflows/ai7_agent_factory_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ai7-agent-factory-governance:
+    name: AI-7 agent factory governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run AI-7 Agent Factory checks
+        run: python tools/ai7_agent_factory_ci.py
+
+      - name: Upload agent factory governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai7-agent-factory-governance-summary
+          path: |
+            docs/governance/AI7_GOVERNED_AGENT_FACTORY.md
+            schemas/ai7_agent_spec.schema.json
+            examples/ai7_agent_specs/master_orchestrator.agent.json
+          if-no-files-found: warn
