@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TFUGA Claim Route Packet",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "claim_text",
+    "claim_type",
+    "required_gate",
+    "max_status_without_external_evidence",
+    "missing_evidence",
+    "blocked_claims",
+    "next_least_action",
+    "human_review_required"
+  ],
+  "properties": {
+    "claim_id": {"type": "string"},
+    "claim_text": {"type": "string"},
+    "claim_type": {"type": "string", "enum": ["science", "software", "revenue", "cultural", "product", "deployment", "governance", "unknown"]},
+    "required_gate": {"type": "string"},
+    "max_status_without_external_evidence": {"type": "string"},
+    "missing_evidence": {"type": "array", "items": {"type": "string"}},
+    "blocked_claims": {"type": "array", "items": {"type": "string"}},
+    "next_least_action": {"type": "string"},
+    "human_review_required": {"type": "boolean"},
+    "risk_level": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
