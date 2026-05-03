@@ -1,0 +1,41 @@
+name: Revenue EvidenceGate Governance
+
+on:
+  pull_request:
+    paths:
+      - 'products/tfuga-hyper-revenue-reactor-v0.8/**'
+      - 'tools/revenue_evidence_ci.py'
+      - '.github/workflows/revenue_evidence_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  revenue-evidence-governance:
+    name: Revenue EvidenceGate governance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Revenue EvidenceGate checks
+        run: python tools/revenue_evidence_ci.py
+
+      - name: Upload revenue governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: revenue-evidencegate-governance-summary
+          path: |
+            products/tfuga-hyper-revenue-reactor-v0.8/REVENUE_EVIDENCEGATE_V0_9.md
+            products/tfuga-hyper-revenue-reactor-v0.8/CHECKOUT_T4_EVIDENCE_PROTOCOL.md
+            products/tfuga-hyper-revenue-reactor-v0.8/DELIVERY_MANIFEST.md
+            products/tfuga-hyper-revenue-reactor-v0.8/SUPPORT_REFUND_PRIVACY_NOTES.md
+            products/tfuga-hyper-revenue-reactor-v0.8/CUSTOMER_VALIDATION_BOARD.md
+          if-no-files-found: warn
