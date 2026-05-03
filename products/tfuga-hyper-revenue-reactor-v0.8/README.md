@@ -1,5 +1,7 @@
 # TFUGA HyperRevenue Reactor v0.8
 
+Status: T3 local artifact and productization plan.
+
 Local artifact for passive/semi-passive digital revenue assets. It prepares product, pricing, claims, checkout requirements, GitHub/Drive structure, and launch board. It does not create payment links, push to GitHub, upload to Drive, file taxes, create legal compliance, or guarantee income.
 
 Run: `PYTHONPATH=src python -m tfuga_hyper_revenue.run --out outputs` and `PYTHONPATH=src python -m unittest discover -s tests -v`.
