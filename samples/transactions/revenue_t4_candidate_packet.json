@@ -1,0 +1,29 @@
+{
+  "transaction_id": "REV-T4-CANDIDATE-001",
+  "transaction_type": "revenue",
+  "status": "draft",
+  "tier": "R3 -> R4 candidate",
+  "description": "OmniSpectral EvidenceGate Starter Kit private beta purchase or sponsorship candidate.",
+  "budget_or_price": "To be set manually after human review.",
+  "required_approval": "Human approval required before checkout/payment link or outreach.",
+  "evidence_needed": [
+    "real buyer or sponsor",
+    "receipt or sponsor log",
+    "delivery evidence",
+    "support contact",
+    "privacy/refund review",
+    "anonymized transaction record"
+  ],
+  "risk_review": "No guaranteed income, no passive-income claim, no legal/tax/privacy claim solved.",
+  "blocked_actions": [
+    "create payment link automatically",
+    "charge buyer automatically",
+    "claim T4 without receipt",
+    "promise income",
+    "public launch without review"
+  ],
+  "ledger_path": "outputs/transactions/revenue_ledger.jsonl",
+  "rollback_or_cancel_path": "Archive candidate or withdraw offer if support/privacy/refund path is not ready.",
+  "next_least_action": "Prepare private beta page for human review; collect one reviewer/sponsor only after approval.",
+  "notes": "This is a transaction-governance packet, not proof of revenue."
+}
