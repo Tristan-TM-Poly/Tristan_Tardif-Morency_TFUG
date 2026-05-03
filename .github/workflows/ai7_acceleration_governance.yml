@@ -1,0 +1,41 @@
+name: AI-7 Acceleration Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/governance/AI7_ACCELERATION_ENGINE.md'
+      - 'schemas/ai7_acceleration_slot.schema.json'
+      - 'examples/acceleration_slots/**'
+      - 'tools/ai7_acceleration_ci.py'
+      - '.github/workflows/ai7_acceleration_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ai7-acceleration-governance:
+    name: AI-7 acceleration governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run AI-7 Acceleration checks
+        run: python tools/ai7_acceleration_ci.py
+
+      - name: Upload acceleration governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai7-acceleration-governance-summary
+          path: |
+            docs/governance/AI7_ACCELERATION_ENGINE.md
+            schemas/ai7_acceleration_slot.schema.json
+            examples/acceleration_slots/ai7_acceleration_seed_slots.json
+          if-no-files-found: warn
