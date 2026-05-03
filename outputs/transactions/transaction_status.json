@@ -1,0 +1,42 @@
+{
+  "status": "T3 transaction dashboard seed",
+  "generated_at": "2026-05-03T00:00:00Z",
+  "hard_law": "No receipt, no R4. No human approval, no spending or payment link.",
+  "revenue": {
+    "current_candidate": "REV-DRAFT-001",
+    "tier": "R3",
+    "next_target": "R4-candidate",
+    "required_evidence": [
+      "real buyer or sponsor",
+      "receipt ID hash or sponsor log",
+      "delivery evidence",
+      "support path",
+      "privacy/refund note",
+      "human confirmation"
+    ],
+    "blocked_claims": [
+      "generated passive income",
+      "autonomous revenue",
+      "stable revenue channel",
+      "market validation without receipt"
+    ]
+  },
+  "purchase": {
+    "current_candidate": "PUR-DRAFT-001",
+    "tier": "P1",
+    "next_target": "P2-candidate",
+    "required_evidence": [
+      "need definition",
+      "alternative comparison",
+      "budget ceiling",
+      "vendor/source review",
+      "cancellation/refund path",
+      "human approval"
+    ],
+    "blocked_claims": [
+      "purchase approved without review",
+      "subscription approved without recurring-cost review",
+      "budget solved without human approval"
+    ]
+  }
+}
