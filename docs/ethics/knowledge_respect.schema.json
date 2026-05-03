@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knowledge Respect Evidence Packet",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "respect_status",
+    "source_type",
+    "intended_use",
+    "attribution",
+    "review_path",
+    "benefit_back",
+    "blocked_claims"
+  ],
+  "properties": {
+    "artifact_id": {"type": "string"},
+    "respect_status": {"type": "string", "enum": ["K0", "K1", "K2", "K3", "K4", "K5", "K6"]},
+    "source_type": {"type": "string", "enum": ["public", "permitted", "restricted", "unknown"]},
+    "intended_use": {"type": "string", "enum": ["education", "research_protocol", "private_notes", "product", "blocked"]},
+    "attribution": {"type": "string"},
+    "context_notes": {"type": "string"},
+    "review_path": {"type": "string"},
+    "benefit_back": {"type": "string"},
+    "withdrawal_or_correction_path": {"type": "string"},
+    "allowed_claims": {"type": "array", "items": {"type": "string"}},
+    "blocked_claims": {"type": "array", "items": {"type": "string"}},
+    "missing_requirements": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
