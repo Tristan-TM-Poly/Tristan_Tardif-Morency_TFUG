@@ -1,0 +1,39 @@
+name: Knowledge Respect Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/ethics/**'
+      - 'tools/knowledge_respect_ci.py'
+      - '.github/workflows/knowledge_respect_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  knowledge-respect-governance:
+    name: Knowledge Respect governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Knowledge Respect checks
+        run: python tools/knowledge_respect_ci.py
+
+      - name: Upload Knowledge Respect artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: knowledge-respect-governance-summary
+          path: |
+            docs/ethics/KNOWLEDGE_RESPECT_PROTOCOL.md
+            docs/ethics/knowledge_respect.schema.json
+            docs/ethics/CULTURAL_CLAIMS_REGISTER.md
+          if-no-files-found: warn
