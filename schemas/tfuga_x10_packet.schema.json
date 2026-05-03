@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TFUGA x10 Amplification Packet",
+  "type": "object",
+  "required": [
+    "amplification_id",
+    "source_artifact",
+    "axis",
+    "factor",
+    "allowed_derivatives",
+    "required_gate",
+    "required_evidence",
+    "blocked_claims",
+    "risk_control",
+    "rollback_path",
+    "next_least_action"
+  ],
+  "properties": {
+    "amplification_id": {"type": "string"},
+    "source_artifact": {"type": "string"},
+    "axis": {"type": "string", "enum": ["agents", "theories", "systems", "applications", "evidence", "tests", "feedback", "visibility", "reuse", "crystallization"]},
+    "factor": {"type": "integer", "minimum": 1, "maximum": 10},
+    "allowed_derivatives": {"type": "array", "items": {"type": "string"}},
+    "required_gate": {"type": "string"},
+    "required_evidence": {"type": "array", "items": {"type": "string"}},
+    "blocked_claims": {"type": "array", "items": {"type": "string"}},
+    "risk_control": {"type": "string"},
+    "rollback_path": {"type": "string"},
+    "next_least_action": {"type": "string"},
+    "status": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
