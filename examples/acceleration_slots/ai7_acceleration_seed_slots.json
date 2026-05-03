@@ -1,0 +1,58 @@
+[
+  {
+    "slot_id": "ACC-001",
+    "function": "Produce",
+    "domain": "TFUGA theory / math / proof",
+    "packet_type": "theory",
+    "objective": "Generate one TheoryPacket with equation, assumptions, invariants, falsifier, and next proof action.",
+    "allowed_outputs": ["theory packet", "DCT++ draft", "claim route"],
+    "required_gate": "HGFMDocGate + EvidenceGate",
+    "max_status_without_external_evidence": "S3",
+    "required_evidence": ["definition", "assumptions", "test or falsifier", "missing evidence"],
+    "blocked_claims": ["proven physical theory", "complete unification", "canon S6"],
+    "next_least_action": "Create a bounded toy model and route claims through EvidenceGate.",
+    "risk_level": "R1"
+  },
+  {
+    "slot_id": "ACC-002",
+    "function": "Verify",
+    "domain": "Raman / OmniSpectral / signal",
+    "packet_type": "application",
+    "objective": "Verify Raman AUC workflow requirements for S4-ready data packets.",
+    "allowed_outputs": ["requirements checklist", "missing evidence list", "DCT++ report"],
+    "required_gate": "EvidenceGate + Raman S4Gate",
+    "max_status_without_external_evidence": "S3",
+    "required_evidence": ["real instrument data", "metadata", "blank", "control", "calibration", "replicates", "uncertainty"],
+    "blocked_claims": ["validated material effect", "proved TFUGA", "instrumental validation without real data"],
+    "next_least_action": "Prepare one S4-ready Raman evidence packet template.",
+    "risk_level": "R2"
+  },
+  {
+    "slot_id": "ACC-003",
+    "function": "Integrate",
+    "domain": "Revenue / digital products",
+    "packet_type": "claim_route",
+    "objective": "Route product and revenue claims for OmniSpectral EvidenceGate Starter Kit.",
+    "allowed_outputs": ["T3 product readiness card", "T4 missing evidence list", "private beta route"],
+    "required_gate": "RevenueEvidenceGate",
+    "max_status_without_external_evidence": "T3",
+    "required_evidence": ["payment mechanism", "receipt or sponsor log", "delivery evidence", "support contact", "privacy terms review"],
+    "blocked_claims": ["guaranteed passive income", "autonomous revenue", "risk-free return"],
+    "next_least_action": "Run private beta with one reviewer or sponsor after human review.",
+    "risk_level": "R2"
+  },
+  {
+    "slot_id": "ACC-004",
+    "function": "Analyze",
+    "domain": "Knowledge Respect / ethics",
+    "packet_type": "claim_route",
+    "objective": "Route cultural/community knowledge claims through K0-K6 RespectGate.",
+    "allowed_outputs": ["K-status assessment", "blocked claims list", "review path"],
+    "required_gate": "KnowledgeRespectGate",
+    "max_status_without_external_evidence": "K3",
+    "required_evidence": ["public source", "attribution", "review path", "benefit back", "permission if needed"],
+    "blocked_claims": ["AI replaces knowledge holders", "TFUGA owns community knowledge", "translate everything"],
+    "next_least_action": "Keep only public educational summaries unless review/permission exists.",
+    "risk_level": "R3"
+  }
+]
