@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Auto-Governed Revenue and Purchase Packet",
+  "type": "object",
+  "required": [
+    "transaction_id",
+    "transaction_type",
+    "status",
+    "tier",
+    "description",
+    "budget_or_price",
+    "required_approval",
+    "evidence_needed",
+    "risk_review",
+    "blocked_actions",
+    "ledger_path",
+    "next_least_action"
+  ],
+  "properties": {
+    "transaction_id": {"type": "string"},
+    "transaction_type": {"type": "string", "enum": ["revenue", "purchase", "subscription", "refund", "sponsor", "unknown"]},
+    "status": {"type": "string", "enum": ["draft", "blocked", "review", "approved", "executed", "archived"]},
+    "tier": {"type": "string"},
+    "description": {"type": "string"},
+    "budget_or_price": {"type": "string"},
+    "required_approval": {"type": "string"},
+    "evidence_needed": {"type": "array", "items": {"type": "string"}},
+    "risk_review": {"type": "string"},
+    "blocked_actions": {"type": "array", "items": {"type": "string"}},
+    "ledger_path": {"type": "string"},
+    "rollback_or_cancel_path": {"type": "string"},
+    "next_least_action": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}
