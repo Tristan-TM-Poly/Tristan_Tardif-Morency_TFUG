@@ -1,0 +1,41 @@
+name: Revolutionary Reusable Disruption Engine Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/governance/REVOLUTIONARY_REUSABLE_DISRUPTION_ENGINE.md'
+      - 'schemas/disruption_packet.schema.json'
+      - 'samples/disruption_packets/**'
+      - 'tools/disruption_engine_ci.py'
+      - '.github/workflows/disruption_engine_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  disruption-engine-governance:
+    name: Disruption engine governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run disruption engine checks
+        run: python tools/disruption_engine_ci.py
+
+      - name: Upload disruption engine artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: disruption-engine-governance-summary
+          path: |
+            docs/governance/REVOLUTIONARY_REUSABLE_DISRUPTION_ENGINE.md
+            schemas/disruption_packet.schema.json
+            samples/disruption_packets/omnispectral_disruption_packet.json
+          if-no-files-found: warn
