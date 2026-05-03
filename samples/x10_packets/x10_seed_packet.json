@@ -1,0 +1,36 @@
+{
+  "amplification_id": "X10-001",
+  "source_artifact": "BestFusionKernel + ContinuousGovernance + ClaimRouter + FeedbackLoop",
+  "axis": "crystallization",
+  "factor": 10,
+  "allowed_derivatives": [
+    "proof derivative",
+    "product derivative",
+    "education derivative",
+    "visibility derivative",
+    "ethics derivative",
+    "dashboard derivative",
+    "rollback derivative"
+  ],
+  "required_gate": "HumanReviewGate + EvidenceGate + ClaimRouter + ContinuousGovernance",
+  "required_evidence": [
+    "status line",
+    "claim route",
+    "blocked claims",
+    "missing evidence list",
+    "CI result",
+    "human review path"
+  ],
+  "blocked_claims": [
+    "x10 means claims are true",
+    "x10 means public launch",
+    "x10 means revenue validated",
+    "x10 means scientific validation",
+    "x10 means cultural/community permission"
+  ],
+  "risk_control": "Amplify only packets, gates, dashboards, tests, and review paths until external evidence exists.",
+  "rollback_path": "Archive weak derivatives and keep only the smallest reusable canon kernel.",
+  "next_least_action": "Use x10 packet schema to generate ten governed derivatives from the Best Fusion Kernel, then route each through ClaimRouter and ContinuousGovernance.",
+  "status": "S3/T3/K3 seed packet",
+  "notes": "Capacity x10, not hype x10. Evidence passports x10 before claims x10."
+}
