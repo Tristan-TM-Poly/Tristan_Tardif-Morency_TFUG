@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="label" for="node" attr.name="label" attr.type="string"/>
+  <key id="type" for="node" attr.name="type" attr.type="string"/>
+  <key id="relation" for="edge" attr.name="relation" attr.type="string"/>
+  <graph id="HGFMDocumentation" edgedefault="directed">
+    <node id="canon"><data key="label">Canon and Definitions</data><data key="type">documentation-hypergraph</data></node>
+    <node id="theory"><data key="label">Theory Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="code"><data key="label">Code Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="evidence"><data key="label">Evidence Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="lab"><data key="label">Lab Protocol Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="product"><data key="label">Product Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="visual"><data key="label">Graph and Visualization Docs</data><data key="type">documentation-hypergraph</data></node>
+    <node id="dctpp"><data key="label">DCT++</data><data key="type">governance</data></node>
+    <node id="evidencegate"><data key="label">EvidenceGate</data><data key="type">governance</data></node>
+    <node id="antihype"><data key="label">AntiHype</data><data key="type">governance</data></node>
+    <node id="s4lock"><data key="label">S4 Evidence Lock</data><data key="type">status-gate</data></node>
+    <edge id="e1" source="theory" target="canon"><data key="relation">defines and refines</data></edge>
+    <edge id="e2" source="code" target="theory"><data key="relation">implements</data></edge>
+    <edge id="e3" source="evidence" target="theory"><data key="relation">supports or blocks claims</data></edge>
+    <edge id="e4" source="lab" target="evidence"><data key="relation">produces validation requirements</data></edge>
+    <edge id="e5" source="product" target="evidence"><data key="relation">requires safe claims and receipts</data></edge>
+    <edge id="e6" source="visual" target="canon"><data key="relation">projects and exports</data></edge>
+    <edge id="e7" source="dctpp" target="evidencegate"><data key="relation">feeds structured packet</data></edge>
+    <edge id="e8" source="evidencegate" target="s4lock"><data key="relation">enforces promotion gate</data></edge>
+    <edge id="e9" source="antihype" target="evidencegate"><data key="relation">blocks inflated claims</data></edge>
+    <edge id="e10" source="canon" target="dctpp"><data key="relation">requires status and missing evidence</data></edge>
+  </graph>
+</graphml>

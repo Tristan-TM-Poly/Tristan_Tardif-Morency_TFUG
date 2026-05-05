@@ -1,0 +1,22 @@
+{
+  "claim_id": "CLAIM-REV-001",
+  "claim_text": "OmniSpectral EvidenceGate Starter Kit generated passive income",
+  "claim_type": "revenue",
+  "required_gate": "RevenueEvidenceGate",
+  "max_status_without_external_evidence": "T3",
+  "missing_evidence": [
+    "payment mechanism",
+    "receipt or sponsor log",
+    "delivery evidence",
+    "support contact",
+    "privacy/refund review"
+  ],
+  "blocked_claims": [
+    "guaranteed passive income",
+    "autonomous revenue",
+    "risk-free return"
+  ],
+  "next_least_action": "Route through RevenueEvidenceGate; collect missing evidence before promotion.",
+  "human_review_required": true,
+  "risk_level": "R2"
+}

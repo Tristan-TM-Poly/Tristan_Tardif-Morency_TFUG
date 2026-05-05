@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HGFM Documentation Evidence Packet",
+  "type": "object",
+  "required": ["artifact_id", "status", "claim_class", "claims", "evidence", "missing_evidence", "blocked_claims"],
+  "properties": {
+    "artifact_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["S0", "S1", "S2", "S3", "S4", "S5", "S6", "T0", "T1", "T2", "T3", "T4", "T5", "T6"]},
+    "claim_class": {"type": "string", "enum": ["definition", "software", "proxy", "protocol", "real-data", "external-reproduction", "product", "revenue"]},
+    "claims": {"type": "array", "items": {"type": "string"}},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "tests": {"type": "array", "items": {"type": "string"}},
+    "uncertainty": {"type": "array", "items": {"type": "string"}},
+    "missing_evidence": {"type": "array", "items": {"type": "string"}},
+    "blocked_claims": {"type": "array", "items": {"type": "string"}},
+    "next_least_action": {"type": "string"},
+    "graphml_ref": {"type": "string"},
+    "dctpp_ref": {"type": "string"}
+  },
+  "additionalProperties": true
+}

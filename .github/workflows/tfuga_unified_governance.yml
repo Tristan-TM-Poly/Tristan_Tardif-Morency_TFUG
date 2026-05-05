@@ -1,0 +1,48 @@
+name: TFUGA Unified Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/hgfm/**'
+      - 'docs/ethics/**'
+      - 'products/tfuga-hyper-revenue-reactor-v0.8/**'
+      - 'tools/hgfm_doc_ci.py'
+      - 'tools/revenue_evidence_ci.py'
+      - 'tools/knowledge_respect_ci.py'
+      - 'tools/tfuga_unified_governance_ci.py'
+      - '.github/workflows/**governance*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unified-governance:
+    name: Unified TFUGA governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run unified governance gate
+        run: python tools/tfuga_unified_governance_ci.py
+
+      - name: Upload unified governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-unified-governance-summary
+          path: |
+            docs/hgfm/HGFM_DOCUMENTATION_INDEX.md
+            docs/hgfm/HGFM_DOCUMENTATION_CI_PROTOCOL.md
+            docs/ethics/KNOWLEDGE_RESPECT_PROTOCOL.md
+            docs/ethics/CULTURAL_CLAIMS_REGISTER.md
+            docs/ethics/knowledge_respect.schema.json
+            products/tfuga-hyper-revenue-reactor-v0.8/REVENUE_EVIDENCEGATE_V0_9.md
+            products/tfuga-hyper-revenue-reactor-v0.8/PUBLIC_RELEASE_CANDIDATE_CHECKLIST.md
+          if-no-files-found: warn

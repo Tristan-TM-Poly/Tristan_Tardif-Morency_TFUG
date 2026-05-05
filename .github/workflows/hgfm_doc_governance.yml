@@ -1,0 +1,41 @@
+name: HGFM Documentation Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/hgfm/**'
+      - 'products/tfuga-hyper-revenue-reactor-v0.8/**'
+      - 'tools/hgfm_doc_ci.py'
+      - '.github/workflows/hgfm_doc_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hgfm-doc-governance:
+    name: HGFM doc governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run HGFM documentation governance checks
+        run: python tools/hgfm_doc_ci.py
+
+      - name: Upload documentation governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hgfm-doc-governance-summary
+          path: |
+            docs/hgfm/HGFM_DOCUMENTATION_INDEX.md
+            docs/hgfm/HGFM_DOCUMENTATION_GRAPH.graphml
+            docs/hgfm/HGFM_DOCUMENTATION_EVIDENCE_SCHEMA.json
+            products/tfuga-hyper-revenue-reactor-v0.8/REVENUE_EVIDENCEGATE_V0_9.md
+          if-no-files-found: warn

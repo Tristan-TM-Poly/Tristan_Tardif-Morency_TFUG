@@ -1,0 +1,41 @@
+name: TFUGA x10 Amplification Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/governance/TFUGA_X10_AMPLIFICATION_PROTOCOL.md'
+      - 'schemas/tfuga_x10_packet.schema.json'
+      - 'samples/x10_packets/**'
+      - 'tools/x10_amplification_ci.py'
+      - '.github/workflows/x10_amplification_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  x10-amplification-governance:
+    name: x10 amplification governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run x10 amplification checks
+        run: python tools/x10_amplification_ci.py
+
+      - name: Upload x10 governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: x10-amplification-governance-summary
+          path: |
+            docs/governance/TFUGA_X10_AMPLIFICATION_PROTOCOL.md
+            schemas/tfuga_x10_packet.schema.json
+            samples/x10_packets/x10_seed_packet.json
+          if-no-files-found: warn

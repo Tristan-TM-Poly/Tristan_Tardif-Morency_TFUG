@@ -1,0 +1,41 @@
+name: Auto-Governed Revenue and Purchases
+
+on:
+  pull_request:
+    paths:
+      - 'docs/governance/AUTO_GOVERNED_REVENUE_AND_PURCHASES.md'
+      - 'schemas/transaction_governance_packet.schema.json'
+      - 'samples/transactions/**'
+      - 'tools/transaction_governance_ci.py'
+      - '.github/workflows/transaction_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transaction-governance:
+    name: Transaction governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run transaction governance checks
+        run: python tools/transaction_governance_ci.py
+
+      - name: Upload transaction governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: transaction-governance-summary
+          path: |
+            docs/governance/AUTO_GOVERNED_REVENUE_AND_PURCHASES.md
+            schemas/transaction_governance_packet.schema.json
+            samples/transactions/revenue_t4_candidate_packet.json
+          if-no-files-found: warn

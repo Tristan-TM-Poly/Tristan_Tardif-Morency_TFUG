@@ -1,0 +1,9 @@
+test_graphml (test_revenue.RevenueTests.test_graphml) ... ok
+test_has_parallel_hyperedges (test_revenue.RevenueTests.test_has_parallel_hyperedges) ... ok
+test_packet_blocks_unproven_revenue (test_revenue.RevenueTests.test_packet_blocks_unproven_revenue) ... ok
+test_with_t3_evidence_still_not_t4 (test_revenue.RevenueTests.test_with_t3_evidence_still_not_t4) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.212s
+
+OK

@@ -1,0 +1,41 @@
+name: Human AI Feedback Loop Governance
+
+on:
+  pull_request:
+    paths:
+      - 'docs/feedback/**'
+      - 'schemas/feedback_packet.schema.json'
+      - 'tools/feedback_loop_ci.py'
+      - '.github/workflows/feedback_loop_governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  feedback-loop-governance:
+    name: Feedback loop governance gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Feedback Loop checks
+        run: python tools/feedback_loop_ci.py
+
+      - name: Upload feedback governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feedback-loop-governance-summary
+          path: |
+            docs/feedback/HUMAN_AI_FEEDBACK_LOOP.md
+            docs/feedback/FEEDBACK_REVIEW_BOARD.md
+            docs/feedback/HUMAN_AI_INTERACTION_PROTOCOL.md
+            schemas/feedback_packet.schema.json
+          if-no-files-found: warn

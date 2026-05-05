@@ -1,0 +1,43 @@
+name: TFUGA Governance Dashboard
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'products/**'
+      - 'schemas/**'
+      - 'examples/**'
+      - 'samples/**'
+      - 'tools/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance-dashboard:
+    name: Generate TFUGA governance dashboard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate dashboard
+        run: python tools/generate_governance_dashboard.py
+
+      - name: Upload governance dashboard
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfuga-governance-dashboard
+          path: |
+            outputs/governance/TFUGA_GOVERNANCE_DASHBOARD.md
+            outputs/governance/governance_dashboard.json
+            outputs/governance/continuous_governance_status.json
+          if-no-files-found: warn
